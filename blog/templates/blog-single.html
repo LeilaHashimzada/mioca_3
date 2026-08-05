@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+`{% extends "base.html" %}
 {% load static %}
 
     {% block title %}
@@ -38,10 +38,10 @@
                             </div>
                             <div class="blog-post-content-inner mt-30px" data-aos="fade-up" data-aos-delay="400">
                                 <div class="blog-athor-date">
-                                    <span> By,<a class="blog-author cercle-shape" href="#"> June Cha</a></span>
+                                    <span> By,<a class="blog-author cercle-shape" href="#"> {{blog.user}}</a></span>
                                     <span class="blog-date" href="#">25 May, 2023</span>
                                 </div>
-                                <h4 class="blog-title">How the 10 Worst Handmade Product Fails of All Time Could Have Been Prevented</h4>
+                                <h4 class="blog-title">{{blog.title}}</h4>
                                 <p data-aos="fade-up">
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                     incididunt ut labore et dolore magl aliqua. Ut enim ad minim veniam, quis nostrud
@@ -107,7 +107,7 @@
                         <div class="blog-single-tags d-flex" data-aos="fade-up" data-aos-delay="200">
                             <span class="title"><i class="fa fa-tags" aria-hidden="true"></i></span>
                             <ul class="tag-list">
-                                <li><a href="#">Fashion,</a></li>
+                                <li><a href="#">{{review.tag}},</a></li>
                                 <li><a href="#">eCommerce,</a></li>
                                 <li class="m-0"><a href="#">Dress</a></li>
                             </ul>
@@ -131,8 +131,9 @@
                     </div>
 
                     <div class="comment-area">
-                        <h2 class="comment-heading" data-aos="fade-up" data-aos-delay="200">Comments (03)</h2>
+                        <h2 class="comment-heading" data-aos="fade-up" data-aos-delay="200">Comments</h2>
                         <div class="review-wrapper">
+                            {% for comment in blog.comments.all %}
                             <div class="single-review" data-aos="fade-up" data-aos-delay="200">
                                 <div class="review-img">
                                     <img src="assets/images/comment-image/1.png" alt="" />
@@ -141,16 +142,14 @@
                                     <div class="review-top-wrap">
                                         <div class="review-left">
                                             <div class="review-name">
-                                                <h4 class="title">Aaron Nunez </h4>
+                                                <h4 class="title">{{comment.user}}</h4>
                                                 <span class="date">21 July 2023</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="review-bottom">
                                         <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisi elit, sed do eiusmod tempor
-                                            incidid ut labore etl dolore magna aliqua. Ut enim ad minim veniam, quis
-                                            nostrud exercitati ullam laboris nisi ut aliquiex ea commodo consequat.
+                                            {{comment.message}}
                                         </p>
                                         <div class="review-left">
                                             <a href="#"><i class="fa fa-reply-all"></i> Reply</a>
@@ -158,54 +157,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="single-review child-review" data-aos="fade-up" data-aos-delay="200">
-                                <div class="review-img">
-                                    <img src="assets/images/comment-image/2.png" alt="" />
-                                </div>
-                                <div class="review-content">
-                                    <div class="review-top-wrap">
-                                        <div class="review-left">
-                                            <div class="review-name">
-                                                <h4 class="title">Fox Mccloud </h4>
-                                                <span class="date">21 July 2023</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="review-bottom">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisi elit, sed do eiusmoddl tempor
-                                            incidid ut labore etl dolore magna aliqua. Ut enim ad minimlkill veniam,
-                                            quis nostrud exercitati ullam .</p>
-                                        <div class="review-left">
-                                            <a href="#"> <i class="fa fa-reply-all"></i> Reply</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-review" data-aos="fade-up" data-aos-delay="200">
-                                <div class="review-img">
-                                    <img src="assets/images/comment-image/1.png" alt="" />
-                                </div>
-                                <div class="review-content">
-                                    <div class="review-top-wrap">
-                                        <div class="review-left">
-                                            <div class="review-name">
-                                                <h4 class="title">Korbyn Colon </h4>
-                                                <span class="date">21 July 2023</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="review-bottom">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisi elit, sed do eiusmod tempor
-                                            incidid ut labore etl dolore magna aliqua. Ut enim ad minim veniam, quis
-                                            nostrud exercitati ullam laboris nisi ut aliquiex ea commodo consequat.
-                                        </p>
-                                        <div class="review-left">
-                                            <a href="#"> <i class="fa fa-reply-all"></i> Reply</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="blog-comment-form">
