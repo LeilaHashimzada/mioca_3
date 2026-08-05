@@ -4,7 +4,7 @@ from core.models import AbstractModel
 
 User = get_user_model()
 
-class ProductCategory(models.Model):
+class ProductCategory(AbstractModel):
     title = models.CharField(max_length=200)
     
     def __str__(self):
@@ -20,6 +20,7 @@ class Product(AbstractModel):
     rating = models.IntegerField()
     description = models.TextField()
     is_available = models.BooleanField(default=False)
+    is_added = models.BooleanField(default=False)
     information = models.TextField()
     review = models.TextField() 
     cover_image = models.ImageField(upload_to = "media", height_field=None, width_field=None, max_length=None)
