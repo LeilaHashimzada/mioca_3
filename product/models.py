@@ -1,7 +1,8 @@
 from django.db import models
-from account.models import Account
+from django.contrib.auth import get_user_model
 from core.models import AbstractModel
 
+User = get_user_model()
 
 class ProductCategory(models.Model):
     title = models.CharField(max_length=200)
@@ -39,11 +40,9 @@ class ProductPhoto(AbstractModel):
     
 class ProductReview(AbstractModel):
     rating =  models.IntegerField()
-    name = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
     message = models.TextField()
-    product_id = models.ForeignKey(Product, related_name="product_reviews", on_delete=models.CASCADE)
-    #user_id = models.ForeignKey(Account, related_name="user_review", on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, related_name="reviews", on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, related_name="reviews", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
