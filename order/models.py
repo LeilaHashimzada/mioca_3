@@ -2,24 +2,18 @@ from django.db import models
 
 # Create your models here.
 
-COUNTRY = {
-    "Azerbaijan",
-    "Bangladesh",
-    "Barbados" 
-    }
-
-class Cart:
+class Cart(models.Model):
     coupon = models.CharField(max_length=50, null=True)
-    country = models.CharField(choices=COUNTRY)
-    region = models.CharField(choices=COUNTRY)
+    country = models.CharField()
+    region = models.CharField()
     zip = models.CharField(max_length=50)
-    shipping = models.CharField(choices={"Standart", "Express"})
+    shipping = models.CharField()
 
-class OrderCheckout:
+class OrderCheckout(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     company = models.CharField(max_length=50)
-    country = models.CharField(choices=COUNTRY)
+    country = models.CharField()
     street = models.CharField(max_length=50)
     appartment = models.CharField(max_length=50)
     city = models.CharField(max_length=50)

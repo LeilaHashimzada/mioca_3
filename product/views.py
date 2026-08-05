@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from product.models import Product
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -9,8 +10,17 @@ def compare(request):
 def wishlist(request):
     return render(request, "wishlist.html")
 
-def single_product(request):
-    return render(request,"single-product.html")
+def single_product(request,pk):
+
+    # item = Product.objects.get(id = pk)
+    item = get_object_or_404(Product,id=pk)
+
+    context = {
+        'item' : item
+    }
+
+    return render(request,"single-product.html" , context)
+
 
 def shop(request):
     product_list = Product.objects.all()
