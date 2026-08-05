@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = "django-insecure-95^awmu&sc%yz*_vr%l@4yufue+=3b0++ud&*y-el&clgkmc%r"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -83,11 +83,11 @@ WSGI_APPLICATION = "mioca.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DATABASE_DB"),
-        "USER": os.getenv("DATABASE_USER"), 
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-        "PORT": os.getenv("DATABASE_PORT"),
-        "HOST": os.getenv("DATABASE_HOST")
+        "NAME": "mioca_db",
+        "USER": "hp",
+        "PASSWORD": "123456",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
@@ -131,3 +131,8 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+# Absolute filesystem path to the directory that holds user-uploaded files
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# URL that handles the media served from MEDIA_ROOT
+MEDIA_URL = '/media/'

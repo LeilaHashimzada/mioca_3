@@ -14,7 +14,7 @@
 
     <!-- Add site Favicon -->
     <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}" type="image/png">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- vendor css (Icon Font) -->
     <!-- <link rel="stylesheet" href="{% static '/css/vendor/bootstrap.bundle.min.css' %}" />
@@ -55,25 +55,25 @@
                     <div class="col align-self-center d-none d-lg-block"> 
                         <div class="main-menu">
                             <ul>
-                                <li class="dropdown"><a href="index.html">Home </a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li class="dropdown position-static"><a href="about.html">Pages <i class="fa fa-angle-down"></i></a>
+                                <li class="dropdown"><a href="{% url 'index'%}">Home </a></li>
+                                <li><a href="{% url 'about'%}">About</a></li>
+                                <li class="dropdown position-static"><a href="{% url 'about'%}">Pages <i class="fa fa-angle-down"></i></a>
                                     <ul class="mega-menu d-block">
                                         <li class="d-flex">
                                             <ul class="d-block">
                                                 <li class="title"><a href="#">Inner Pages</a></li>
                                                 <li><a href="404.html">404 Page</a></li>
-                                                <li><a href="faq.html">Faq Page</a></li>
+                                                <li><a href="{% url 'faq'%}">Faq Page</a></li>
                                             </ul>
                                             <ul class="d-block">
-                                                <li class="title"><a href="#">Other Shop Pages</a></li>
+                                                <li class="title"><a href="{% url 'shop'%}">Other Shop Pages</a></li>
                                                 <li><a href="cart.html">Cart Page</a></li>
                                                 <li><a href="checkout.html">Checkout Page</a></li>
                                                 <li><a href="compare.html">Compare Page</a></li>
                                                 <li><a href="wishlist.html">Wishlist Page</a></li>
                                             </ul>
                                             <ul class="d-block">
-                                                <li class="title"><a href="#">Related Shop Pages</a></li>
+                                                <li class="title"><a href="{% url 'shop'%}">Related Shop Pages</a></li>
                                                 <li><a href="my-account.html">Account Page</a></li>
                                                 <li><a href="login.html">Login & Register Page</a></li>
                                                 <li><a href="empty-cart.html">Empty Cart Page</a></li>
@@ -81,7 +81,7 @@
                                             </ul>
                                             <ul class="d-flex align-items-center p-0 border-0">
                                                 <li>
-                                                    <a class="p-0" href="shop-left-sidebar.html"><img
+                                                    <a class="p-0" href="{% url 'shop'%}"><img
                                                             class="img-responsive w-100"
                                                             src="{% static 'images/banner/menu-banner-1.jpg' %}" alt=""></a>
                                                 </li>
@@ -89,11 +89,11 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="dropdown position-static"><a href="shop-left-sidebar.html">Shop </a>                                   
+                                <li class="dropdown position-static"><a href="{% url 'shop'%}">Shop </a>                                   
                                 </li>
-                                <li class="dropdown "><a href="blog-single.html">Blog</a>
+                                <li class="dropdown "><a href="{% url 'blog' %}">Blog</a>
                                     
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="{% url 'contact' %}">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -102,12 +102,11 @@
                         <div class="header-actions">
                             <!-- Single Wedge Start -->
                             <a href="#" class="header-action-btn" data-bs-toggle="modal" data-bs-target="#searchActive">
-                                <i class="pe-7s-search"></i>
+                                <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
                             <!-- Single Wedge End -->
                             <div class="header-bottom-set dropdown">
-                                <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
-                                        class="pe-7s-users"></i></button>
+                                <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i class="fa-solid fa-circle-user"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a class="dropdown-item" href="my-account.html">My account</a></li>
                                     <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
@@ -116,11 +115,11 @@
                             </div>
                             <!-- Single Wedge Start -->
                             <a href="#offcanvas-wishlist" class="header-action-btn offcanvas-toggle">
-                                <i class="pe-7s-like"></i>
+                                <i class="fa-solid fa-heart"></i>
                             </a>
                             <!-- Single Wedge End -->
                             <a href="#offcanvas-cart" class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
-                                <i class="pe-7s-shopbag"></i>
+                               <i class="fa-solid fa-cart-shopping"></i>
                                 <span class="header-action-num">01</span>
                                 <!-- <span class="cart-amount">€30.00</span> -->
                             </a>
@@ -372,7 +371,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="newsletter-content mb-lm-30px">
-                        <i class="pe-7s-mail-open-file"></i>
+                       <i class="fa-solid fa-envelope-open"></i>
                         <div class="newsletter-text">
                             <h3 class="title">Newsletter & Get Updates</h3>
                             <p>Sign up for our newsletter to get update from us</p>
@@ -477,10 +476,10 @@
                                 <div class="footer-links">
                                     <!-- News letter area -->
                                     <p class="mail">If you have any question.please <br> contact us at <a href="mailto:demo@example.com">demo@example.com</a> </p>
-                                    <p class="address"><i class="pe-7s-map-marker"></i> <span>Your address goes here.
+                                    <p class="address"><i class="fa-solid fa-location-dot"></i><span>Your address goes here.
                                             <br>
                                             123, Address.</span> </p>
-                                    <p class="phone m-0"><i class="pe-7s-phone"></i><span><a href="tel:0123456789">+ 0 123
+                                    <p class="phone m-0"><i class="fa-solid fa-phone"></i><span><a href="tel:0123456789">+ 0 123
                                                 456 789</a> <br> <a href="tel:0123456789">+ 0 123 456 789</a></span></p>
 
                                     <!-- News letter area  End -->
@@ -539,7 +538,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="pe-7s-close"></i></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                     <div class="row">
                         <div class="col-lg-6 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px">
                             <!-- Swiper -->

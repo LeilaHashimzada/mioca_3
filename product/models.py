@@ -40,3 +40,6 @@ class ProductReview(models.Model):
     message = models.TextField()
     product_id = models.ForeignKey(Product, related_name="product_reviews", on_delete=models.CASCADE)
     #user_id = models.ForeignKey(Account, related_name="user_review", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
