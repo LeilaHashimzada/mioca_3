@@ -31,7 +31,7 @@ class Product(AbstractModel):
     information = models.TextField()
     cover_image = models.ImageField(upload_to = "media", height_field=None, width_field=None, max_length=None)
     category = models.ForeignKey(ProductCategory, related_name="products", on_delete=models.CASCADE)
-    tag = models.ForeignKey(ProductTag, related_name="products", on_delete=models.CASCADE)
+    tag = models.ManyToManyField(ProductTag)
     
     def __str__(self):
         return self.title
@@ -49,6 +49,8 @@ class ProductPhoto(AbstractModel):
 class ProductReview(AbstractModel):
     rating =  models.IntegerField()
     message = models.TextField()
+    image = models.ImageField(null=True, blank=True)
+    
     product = models.ForeignKey(Product, related_name="reviews", on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name="reviews", on_delete=models.CASCADE)
 

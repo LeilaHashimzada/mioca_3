@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Blog
 from django.shortcuts import get_object_or_404
-
+from django.http import Http404
 
 
 # Create your views here.
@@ -18,10 +18,12 @@ def blog(request):
 
 def blog_single(request, pk):
     
-    item = get_object_or_404(Blog, id = pk)
-    
-    context = {
-        "blog": item
-    }
-    
-    return render(request, "blog-single.html", context)
+    try:
+        item = get_object_or_404(Blog, id = pk)
+    except Http404:
+        return render(request, "404.html")
+    else:
+        context = {
+            "blog": item
+        }
+        return render(request, "blog-single.html", context)

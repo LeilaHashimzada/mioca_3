@@ -22,7 +22,7 @@
                                         <span class="old"> <del>$25.00</del></span>
                                     <span class="new">- $18.00</span>
                                     </span>
-                                    <a href="shop-left-sidebar.html" class="btn btn-primary m-auto text-uppercase">View
+                                    <a href="{% url 'shop' %}" class="btn btn-primary m-auto text-uppercase">View
                                         Collection</a>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                         <span class="old"> <del>$25.00</del></span>
                                     <span class="new">- $18.00</span>
                                     </span>
-                                    <a href="shop-left-sidebar.html" class="btn btn-primary m-auto text-uppercase">View
+                                    <a href="{% url 'shop' %}" class="btn btn-primary m-auto text-uppercase">View
                                         Collection</a>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                             <span class="category">Best Seller</span>
                             <span class="title">Flower Vase <br>
                                 & Poot</span>
-                            <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">Shop
+                            <a href="{% url 'shop'  %}" class="shop-link btn btn-primary text-uppercase">Shop
                                 Now</a>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                             <span class="category">Best Seller</span>
                             <span class="title">Wool Silk Dress <br>
                                 & Offer 2023</span>
-                            <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">Shop
+                            <a href="{% url 'shop'  %}" class="shop-link btn btn-primary text-uppercase">Shop
                                 Now</a>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                             <span class="category">Best Seller</span>
                             <span class="title">Pen Holder<br>
                                 & Poot</span>
-                            <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">Shop
+                            <a href="{% url 'shop'  %}" class="shop-link btn btn-primary text-uppercase">Shop
                                 Now</a>
                         </div>
                     </div>
@@ -211,7 +211,7 @@
 
                                             </span>
                                         </div>
-                                        <button title="Add To Cart" class=" add-to-cart">Add
+                                        <button title="Add To Cart" class=" add-to-cart" href = "{% url 'shop' %}">Add
                                             To Cart</button>
                                     </div>
                                 </div>
@@ -1292,7 +1292,7 @@
                             <span class="category">Best Seller</span>
                             <span class="title">Handmade Pot <br>
                                 & Pen Holder</span>
-                            <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">Shop
+                            <a href="{% url 'shop'  %}" class="shop-link btn btn-primary text-uppercase">Shop
                                 Now</a>
                         </div>
                     </div>
@@ -1304,7 +1304,7 @@
                             <span class="category">Best Seller</span>
                             <span class="title">Wool Silk Pod <br>
                                 -20% Off</span>
-                            <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">Shop
+                            <a href="{% url 'shop'  %}" class="shop-link btn btn-primary text-uppercase">Shop
                                 Now</a>
                         </div>
                     </div>
@@ -1314,7 +1314,7 @@
                             <span class="category">Best Seller</span>
                             <span class="title">Handmade Plate <br>
                                 -40 Off</span>
-                            <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">Shop
+                            <a href="{% url 'shop'  %}" class="shop-link btn btn-primary text-uppercase">Shop
                                 Now</a>
                         </div>
                     </div>
@@ -1353,7 +1353,7 @@
                             </div>
                             <h5 class="blog-heading"><a class="blog-heading-link" href="blog-single.html">How to Explain Handmade Product to Your Boss</a></h5>
 
-                            <a href="{% url 'blog-single' %}" class="btn btn-primary blog-btn"> Read More</a>
+                            <a href="blog-single.html" class="btn btn-primary blog-btn"> Read More</a>
                         </div>
                     </div>
                 </div>
@@ -1372,7 +1372,7 @@
                             <h5 class="blog-heading"><a class="blog-heading-link" href="blog-single.html">7 Best Blogs to Follow About Handmade Goods
                                 </a></h5>
 
-                            <a href="{% url 'blog-single' %}" class="btn btn-primary blog-btn"> Read More</a>
+                            <a href="blog-single.html" class="btn btn-primary blog-btn"> Read More</a>
                         </div>
                     </div>
                 </div>
@@ -1392,7 +1392,7 @@
                                 </a></h5>
 
 
-                            <a href="{% url 'blog-single' %}" class="btn btn-primary blog-btn"> Read More</a>
+                            <a href="blog-single.html" class="btn btn-primary blog-btn"> Read More</a>
                         </div>
                     </div>
                 </div>

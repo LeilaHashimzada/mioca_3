@@ -11,8 +11,8 @@ class Blog(AbstractModel):
     user = models.ForeignKey(User, related_name="blogs", on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     content = models.TextField()
-    tag = models.ForeignKey(ProductTag,related_name="blogs", on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="media/blog_images/", height_field=None, width_field=None, max_length=None, null = True, blank=True)
+    tag = models.ManyToManyField(ProductTag)
+    image = models.ImageField(upload_to="media", height_field=None, width_field=None, max_length=None, null = True, blank=True)
 
 
 class BlogComment(AbstractModel):

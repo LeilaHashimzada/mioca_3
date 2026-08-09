@@ -91,8 +91,14 @@
                             <span class="read-review"><a class="reviews" href="#">{{item.rating}}</a></span>
                         </div>
                         <div class="stock mt-30px">
-                            <span class="avallabillty">Availability: <span class="in-stock"><i
-                                        class="fa fa-check"></i>In Stock</span></span>
+                            <span class="avallabillty">Availability: 
+                                {% if item.is_available %}
+                                    <span class="in-stock"><i
+                                        class="fa fa-check"></i>In Stock</span>
+                                {% else %}
+                                    <span class="in-stock">No product available</span>
+                                {% endif %}
+                            </span>
                         </div>
                         <p class="mt-30px mb-0">{{item.description}} </p>
                         <div class="pro-details-quality">
@@ -183,13 +189,13 @@
                                 <div class="review-wrapper">
                                     <div class="single-review">
                                         <div class="review-img">
-                                            <img src="assets/images/review-image/1.png" alt="" />
+                                            <img src="{{ review.image.url }}" alt="{{ review.product.title }}" />
                                         </div>
                                         <div class="review-content">
                                             <div class="review-top-wrap">
                                                 <div class="review-left">
                                                     <div class="review-name">
-                                                        <h4>{{ review.user }}</h4>
+                                                        <h4>{{ review.user.name }}</h4>
                                                     </div>
                                                     <div class="rating-product">
                                                         <i class="fa fa-star"></i>
