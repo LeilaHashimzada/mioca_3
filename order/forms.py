@@ -1,5 +1,6 @@
 from django import forms
 from .models import OrderCheckout
+from django.core.validators import ValidationError
 
 class CheckoutFrom(forms.ModelForm):
     
@@ -29,3 +30,8 @@ class CheckoutFrom(forms.ModelForm):
                 "placeholder" : "Notes about your order, e.g. special notes for delivery."
                 })
         }
+        
+    def clean_email(self):
+        value = self.cleaned_data['email']
+        if not value.endswith("gmail.com"):
+            raise ValidationError("Email must contain gmail.com")

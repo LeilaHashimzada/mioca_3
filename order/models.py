@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from core.models import AbstractModel
 from product.models import Product
+from core.validators import validate_country
 
 User = get_user_model()
 # Create your models here.
@@ -28,7 +29,7 @@ class OrderCheckout(AbstractModel):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50, null = True, blank=True)
     company = models.CharField(max_length=50, null=True, blank=True)
-    country = models.CharField()
+    country = models.CharField(max_length=100, validators=[validate_country])
     street = models.CharField(max_length=50)
     appartment = models.CharField(max_length=50, null = True, blank=True)
     city = models.CharField(max_length=50)
