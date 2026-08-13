@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Cart, CartItem
 from django.contrib.auth.decorators import login_required
+from .forms import CheckoutFrom
+from django.contrib import messages
 
 # Create your views here.
 
@@ -15,7 +17,6 @@ def cart(request):
     items = cart.items.select_related('product').all()
     
     context = {
-        "cart": cart,
         "items": items
     }
     
@@ -23,4 +24,14 @@ def cart(request):
 
 
 def checkout(request):
-    return render(request, "checkout.html")
+    form = CheckoutFrom
+    if request.method == "POST":
+        form = CheckoutFrom(data = request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, "Successfully sent!")
+        
+    context = {
+        "form": form
+    }
+    return render(request, "checkout.html", context)

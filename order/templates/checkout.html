@@ -33,74 +33,73 @@
                 <div class="col-lg-7">
                     <div class="billing-info-wrap">
                         <h3>Billing Details</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% include "includes/message.html" %}
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label>First Name</label>
-                                    <input type="text" />
+                                    {{form.first_name}}
+                                    {{form.first_name.errors}}
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label>Last Name</label>
-                                    <input type="text" />
+                                    {{form.last_name}}
+                                     {{form.last_name.errors}}
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-info mb-4">
                                     <label>Company Name</label>
-                                    <input type="text" />
+                                    {{form.company}}
+                                     {{form.company.errors}}
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-select mb-4">
                                     <label>Country</label>
-                                    <select>
-                                        <option>Select a country</option>
-                                        <option>Azerbaijan</option>
-                                        <option>Bahamas</option>
-                                        <option>Bahrain</option>
-                                        <option>Bangladesh</option>
-                                        <option>Barbados</option>
-                                    </select>
+                                    {{form.country}}
+                                     {{form.country.errors}}
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-info mb-4">
                                     <label>Street Address</label>
-                                    <input class="billing-address" placeholder="House number and street name"
-                                        type="text" />
-                                    <input placeholder="Apartment, suite, unit etc." type="text" />
+                                    {{form.street}}
+                                    {{form.appartment}}
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-info mb-4">
                                     <label>Town / City</label>
-                                    <input type="text" />
+                                    {{form.city}}
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label>State / County</label>
-                                    <input type="text" />
+                                    {{form.state}}
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label>Postcode / ZIP</label>
-                                    <input type="text" />
+                                    {{form.zip}}
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label>Phone</label>
-                                    <input type="text" />
+                                   {{form.phone}}
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label>Email Address</label>
-                                    <input type="text" />
+                                    {{form.email}}
                                 </div>
                             </div>
                         </div>
@@ -117,32 +116,35 @@
                             <h4>Additional information</h4>
                             <div class="additional-info">
                                 <label>Order notes</label>
-                                <textarea placeholder="Notes about your order, e.g. special notes for delivery. "
-                                    name="message"></textarea>
+                                {{form.note}}
                             </div>
                         </div>
                         <div class="checkout-account mt-25">
                             <input class="checkout-toggle w-auto h-auto" type="checkbox" />
                             <label>Ship to a different address?</label>
                         </div>
+                         <div class="Place-order mt-25">
+                            <a class="btn-hover" href="#"><button type="submit">Place Order</button></a>
+                        </div>
+                    </form>
                         <div class="different-address open-toggle mt-30px">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>First Name</label>
-                                        <input type="text" />
+                                        {{form.first_name}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>Last Name</label>
-                                        <input type="text" />
+                                        {{form.last_name}}
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="billing-info mb-4">
                                         <label>Company Name</label>
-                                        <input type="text" />
+                                        form.company
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -161,39 +163,38 @@
                                 <div class="col-lg-12">
                                     <div class="billing-info mb-4">
                                         <label>Street Address</label>
-                                        <input class="billing-address" placeholder="House number and street name"
-                                            type="text" />
-                                        <input placeholder="Apartment, suite, unit etc." type="text" />
+                                        {{form.street}}
+                                        {{form.appartment}}
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="billing-info mb-4">
                                         <label>Town / City</label>
-                                        <input type="text" />
+                                        {{form.city}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>State / County</label>
-                                        <input type="text" />
+                                        {{form.state}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>Postcode / ZIP</label>
-                                        <input type="text" />
+                                        {{form.zip}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>Phone</label>
-                                        <input type="text" />
+                                        {{form.phone}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>Email Address</label>
-                                        <input type="text" />
+                                        {{form.email}}
                                     </div>
                                 </div>
                             </div>
@@ -284,9 +285,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="Place-order mt-25">
-                            <a class="btn-hover" href="#">Place Order</a>
-                        </div>
+
                     </div>
                 </div>
             </div>

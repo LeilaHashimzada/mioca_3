@@ -1,4 +1,4 @@
-{% load static %}
+{% load static tags %}
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -192,13 +192,14 @@
             
             <div class="body customScroll">
                 <ul class="minicart-product-list">
-                    {% for cart_item in cart_items %}
+                    {% get_cart_items as items %}
+                    {% for item in items %}
                     <li>
                         <a href="single-product.html" class="image"><img src="{% static 'images/product-image/1.jpg' %}"
                                 alt="Cart product Image"></a>
                         <div class="content">
-                            <a href="single-product.html" class="title">Hand-Made Garlic Mortar</a>
-                            <span class="quantity-price">1 x <span class="amount">$18.86</span></span>
+                            <a href="single-product.html" class="title">{{item.product.title}}</a>
+                            <span class="quantity-price">1 x <span class="amount">${{item.product.price}}</span></span>
                             <a href="#" class="remove">×</a>
                         </div>
                     </li>
@@ -255,7 +256,6 @@
                                 <ul class="sub-menu">
                                     <li><a href="my-account.html">Account Page</a></li>
                                     <li><a href="login.html">Login & Register Page</a></li>
-                                    <li><a href="empty-cart.html">Empty Cart Page</a></li>
                                     <li><a href="thank-you-page.html">Thank You Page</a></li>
                                 </ul>
                             </li>

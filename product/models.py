@@ -5,13 +5,19 @@ from core.models import AbstractModel
 User = get_user_model()
 
 class ProductCategory(AbstractModel):
-    title = models.CharField(max_length=200)
     
-    def __str__(self):
-        return self.title
+    parent = models.ForeignKey('self', related_name="child", on_delete=models.CASCADE, blank=True, null=True)
+    
+    title = models.CharField(max_length=200)
     
     class Meta:
         verbose_name_plural = "Product Categories"
+        
+    def __str__(self):
+        if self.parent:
+            return f"{self.parent.title} / {self.title}"
+        return self.title
+    
         
         
 class ProductTag(AbstractModel):

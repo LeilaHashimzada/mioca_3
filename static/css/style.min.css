@@ -10580,3 +10580,22 @@ only screen and (max-width:767px) {
 .single-blog-post:hover .blog-image img {
     transform: scale(1.08);
     }
+
+
+.collapsible-list {
+  padding-left: 15px;
+  list-style: none;
+}
+
+.collapse {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease-out, opacity 0.25s ease-out;
+}
+
+
+.sidebar-widget-category li:hover > .collapsible-list.collapse {
+  max-height: 500px; 
+  opacity: 1;
+}

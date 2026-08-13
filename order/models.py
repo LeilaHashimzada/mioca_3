@@ -25,16 +25,20 @@ class CartItem(AbstractModel):
     
     
 class OrderCheckout(AbstractModel):
-    user = models.ForeignKey(User, related_name="checkout_form", on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50, null = True, blank=True)
     company = models.CharField(max_length=50, null=True, blank=True)
     country = models.CharField()
     street = models.CharField(max_length=50)
-    appartment = models.CharField(max_length=50)
+    appartment = models.CharField(max_length=50, null = True, blank=True)
     city = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
+    state = models.CharField(max_length=50, null=True, blank=True)
     phone = models.CharField(max_length=50)
     email = models.CharField()
-    zip = models.CharField(max_length=50)
+    zip = models.CharField(max_length=50, null = True, blank=True)
     accountCreate = models.BooleanField(default=False)
-    note = models.TextField()
+    note = models.TextField(null=True, blank=True)
     addressDifference = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.first_name
