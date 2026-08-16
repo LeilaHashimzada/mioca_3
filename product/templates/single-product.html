@@ -39,7 +39,7 @@
                             </div>
                             
                             <div class="swiper-slide zoom-image-hover">
-                                <img class="img-responsive m-auto" src="{{item.cover-image.url}}"
+                                <img class="img-responsive m-auto" src="{{item.cover_image.url}}"
                                     alt="">
                             </div>
                             
@@ -48,26 +48,13 @@
                     </div>
                     <div class="swiper-container mt-20px zoom-thumbs ">
                         <div class="swiper-wrapper">
+                            {% for photo in item.product_photos.all %}
                             <div class="swiper-slide">
-                                <img class="img-responsive m-auto" src="assets/images/product-image/small-image/1.jpg"
+                                <img class="img-responsive m-auto" src="{{photo.photo.url}}"
                                     alt="">
                             </div>
-                            <div class="swiper-slide">
-                                <img class="img-responsive m-auto" src="assets/images/product-image/small-image/2.jpg"
-                                    alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img class="img-responsive m-auto" src="assets/images/product-image/small-image/3.jpg"
-                                    alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img class="img-responsive m-auto" src="assets/images/product-image/small-image/4.jpg"
-                                    alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img class="img-responsive m-auto" src="assets/images/product-image/small-image/5.jpg"
-                                    alt="">
-                            </div>
+                            {% endfor %}
+                           
                         </div>
                     </div>
                 </div>
@@ -94,9 +81,7 @@
                             <span class="avallabillty">Availability: <span class="in-stock"><i
                                         class="fa fa-check"></i>In Stock</span></span>
                         </div>
-                        <p class="mt-30px mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                            eiusmodol tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veni nostrud
-                            exercitation ullamco laboris </p>
+                        <p class="mt-30px mb-0">{{item.description}} </p>
                         <div class="pro-details-quality">
                             <div class="cart-plus-minus">
                                 <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
@@ -161,13 +146,7 @@
                 </div>
                 <div class="tab-content description-review-bottom">
                     <div id="des-details2" class="tab-pane">
-                        <div class="product-anotherinfo-wrapper text-start">
-                            <ul>
-                                <li><span>Weight</span> 400 g</li>
-                                <li><span>Dimensions</span>10 x 10 x 15 cm</li>
-                                <li><span>Materials</span> 60% cotton, 40% polyester</li>
-                                <li><span>Other Info</span> American heirloom jean shorts pug seitan letterpress</li>
-                            </ul>
+                        <div class="product-anotherinfo-wrapper text-start"> {{item.information}}
                         </div>
                     </div>
                     <div id="des-details1" class="tab-pane active">
@@ -182,22 +161,19 @@
                         <div class="row">
                             <div class="col-lg-7">
                                 <div class="review-wrapper">
+                                    {% for review in item.reviews.all %}
                                     <div class="single-review">
                                         <div class="review-img">
-                                            <img src="assets/images/review-image/1.png" alt="" />
+                                            <img src="{% static 'assets/images/review-image/1.png' %}" alt="" />
                                         </div>
                                         <div class="review-content">
                                             <div class="review-top-wrap">
                                                 <div class="review-left">
                                                     <div class="review-name">
-                                                        <h4>White Lewis</h4>
+                                                        <h4>{{review.user_id.get_full_name}}</h4>
                                                     </div>
                                                     <div class="rating-product">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <span class="star" style="width: {% widthratio product.rating 5 100 %}%"></span>
                                                     </div>
                                                 </div>
                                                 <div class="review-left">
@@ -206,40 +182,13 @@
                                             </div>
                                             <div class="review-bottom">
                                                 <p>
-                                                    Vestibulum ante ipsum primis aucibus orci luctustrices posuere
-                                                    cubilia Curae Suspendisse viverra ed viverra. Mauris ullarper
-                                                    euismod vehicula. Phasellus quam nisi, congue id nulla.
+                                                   {{review.message}}
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="single-review child-review">
-                                        <div class="review-img">
-                                            <img src="assets/images/review-image/2.png" alt="" />
-                                        </div>
-                                        <div class="review-content">
-                                            <div class="review-top-wrap">
-                                                <div class="review-left">
-                                                    <div class="review-name">
-                                                        <h4>White Lewis</h4>
-                                                    </div>
-                                                    <div class="rating-product">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="review-left">
-                                                    <a href="#">Reply</a>
-                                                </div>
-                                            </div>
-                                            <div class="review-bottom">
-                                                <p>Vestibulum ante ipsum primis aucibus orci luctustrices posuere
-                                                    cubilia Curae Sus pen disse viverra ed viverra. Mauris ullarper
-                                                    euismod vehicula.</p>
-                                            </div>
+                                    {% endfor %}
+                                   
                                         </div>
                                     </div>
                                 </div>
