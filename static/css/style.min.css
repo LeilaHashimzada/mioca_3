@@ -10566,3 +10566,36 @@ only screen and (max-width:767px) {
         border-radius: 0
     }
 }
+
+.single-blog-post .blog-image {
+    overflow: hidden;
+    display: block;
+    }
+.single-blog-post .blog-image img {
+    transition: transform 0.4s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+.single-blog-post:hover .blog-image img {
+    transform: scale(1.08);
+    }
+
+
+.collapsible-list {
+  padding-left: 15px;
+  list-style: none;
+}
+
+.collapse {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease-out, opacity 0.25s ease-out;
+}
+
+
+.sidebar-widget-category li:hover > .collapsible-list.collapse {
+  max-height: 500px; 
+  opacity: 1;
+}
