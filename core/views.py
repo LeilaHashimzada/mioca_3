@@ -20,7 +20,7 @@ def contact(request):
     return render('contact', "contact.html")
 
 def faq(request):
-    return render('faq', "faq.html")
+    return render(request,'faq.html')
 
 def contact(request):
     form = ContactForm()
