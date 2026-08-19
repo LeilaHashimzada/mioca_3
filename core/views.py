@@ -4,6 +4,7 @@ from core.forms import ContactForm
 from django.contrib import messages
 
 # Create your views here.
+
 def index(request):
     product_list = Product.objects.all()
     context = {

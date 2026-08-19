@@ -1,4 +1,4 @@
-{% load static %}
+{% load static tags %}
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -81,7 +81,7 @@
                                             </ul>
                                             <ul class="d-flex align-items-center p-0 border-0">
                                                 <li>
-                                                    <a class="p-0" href="{% url 'shop'%}"><img
+                                                    <a class="p-0" href="{% url 'shop' %}"><img
                                                             class="img-responsive w-100"
                                                             src="{% static 'images/banner/menu-banner-1.jpg' %}" alt=""></a>
                                                 </li>
@@ -165,7 +165,7 @@
                     </li>
                     <li>
                         <a href="single-product.html" class="image"><img src="{% static 'images/product-image/3.jpg' %}"
-                                alt="Cart product Image"></a>
+                                alt="Cart product Image"></a>shop
                         <div class="content">
                             <a href="single-product.html" class="title">Hand Painted Bowls</a>
                             <span class="quantity-price">1 x <span class="amount">$17.34</span></span>
@@ -192,33 +192,18 @@
             
             <div class="body customScroll">
                 <ul class="minicart-product-list">
+                    {% get_cart_items as items %}
+                    {% for item in items %}
                     <li>
                         <a href="single-product.html" class="image"><img src="{% static 'images/product-image/1.jpg' %}"
                                 alt="Cart product Image"></a>
                         <div class="content">
-                            <a href="single-product.html" class="title">Hand-Made Garlic Mortar</a>
-                            <span class="quantity-price">1 x <span class="amount">$18.86</span></span>
+                            <a href="single-product.html" class="title">{{item.product.title}}</a>
+                            <span class="quantity-price">1 x <span class="amount">${{item.product.price}}</span></span>
                             <a href="#" class="remove">×</a>
                         </div>
                     </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{% static 'images/product-image/2.jpg' %}"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Handmade Ceramic Pottery</a>
-                            <span class="quantity-price">1 x <span class="amount">$43.28</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{% static 'images/product-image/3.jpg' %}"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Hand Painted Bowls</a>
-                            <span class="quantity-price">1 x <span class="amount">$37.34</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="foot">
@@ -252,7 +237,6 @@
                             <li>
                                 <a href="#"><span class="menu-text">Inner Pages</span></a>
                                 <ul class="sub-menu">
-                                    <li><a href="404.html">404 Page</a></li>
                                     <li><a href="privacy-policy.html">Privacy Policy</a></li>
                                     <li><a href="faq.html">Faq Page</a></li>
                                     <li><a href="coming-soon.html">Coming Soon Page</a></li>
@@ -272,7 +256,6 @@
                                 <ul class="sub-menu">
                                     <li><a href="my-account.html">Account Page</a></li>
                                     <li><a href="login.html">Login & Register Page</a></li>
-                                    <li><a href="empty-cart.html">Empty Cart Page</a></li>
                                     <li><a href="thank-you-page.html">Thank You Page</a></li>
                                 </ul>
                             </li>

@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from product.models import Product,ProductCategory
+from product.models import Product, ProductCategory
 from django.shortcuts import get_object_or_404
+from django.http import Http404
 
 # Create your views here.
 
@@ -12,12 +13,14 @@ def wishlist(request):
 
 def single_product(request,pk):
 
-    # item = Product.objects.get(id = pk)
-    item = get_object_or_404(Product,id=pk)
-
-    context = {
-        'item' : item
-    }
+    try:
+        item = get_object_or_404(Product,id=pk)
+    except Http404:
+        render(request, "404.html")
+    else:
+        context = {
+            'item' : item
+        }
 
     return render(request,"single-product.html" , context)
 
@@ -25,8 +28,12 @@ def single_product(request,pk):
 def shop(request):
     product_list = Product.objects.all()
     categories = ProductCategory.objects.filter(parent = None)
+    
     context = {
         "product_list" : product_list,
         "categories" : categories
     }
-    return render(request,"shop-left-sidebar.html",context)
+    return render(request,"shop-left-sidebar.html", context)
+
+
+    
