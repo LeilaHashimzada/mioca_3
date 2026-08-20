@@ -11,12 +11,14 @@ class Blog(AbstractModel):
     user = models.ForeignKey(User, related_name="blogs", on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     content = models.TextField()
-    tag = models.ManyToManyField(ProductTag)
+    tag = models.ManyToManyField(ProductTag, related_name="blogs")
     image = models.ImageField(upload_to="media", height_field=None, width_field=None, max_length=None, null = True, blank=True)
 
 
 class BlogComment(AbstractModel):
-    user =  models.ForeignKey(User, related_name="omments", on_delete=models.CASCADE)
+    user =  models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
     subject = models.TextField(null=True, blank=True)
     message = models.TextField()
     blog = models.ForeignKey(Blog, related_name="comments", on_delete=models.CASCADE)
