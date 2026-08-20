@@ -15,11 +15,6 @@ class ProductCategory(AbstractModel):
     
     class Meta:
         verbose_name_plural = "Product Categories"
-        
-    def __str__(self):
-        if self.parent:
-            return f"{self.parent.title} / {self.title}"
-        return self.title
     
         
         
@@ -64,4 +59,4 @@ class ProductReview(AbstractModel):
     user = models.ForeignKey(User, related_name="reviews", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.product_id.title
+        return self.product.title

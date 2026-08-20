@@ -1,18 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from core.models import AbstractModel
 # Create your models here.
 
 class User(AbstractUser):
-    middle_name = models.CharField(max_length=150)
-    
-class Account(models.Model):
-    GENDER = {
-        "Mr": "Mister",
-        "Mrs": "Missis"
-    }  
-    gender = models.CharField(choices=GENDER)
-    birthday = models.DateField(auto_now=False, auto_now_add=False)
-    offers_receive = models.BooleanField(default=False)
-    newsletter_sign_up = models.BooleanField(default=False)
-
-
+    pass
