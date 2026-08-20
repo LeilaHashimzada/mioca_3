@@ -184,21 +184,29 @@
                         <div class="sidebar-widget">
                             <h4 class="sidebar-title">Categories</h4>
                             <div class="sidebar-widget-category">
-                                <ul>
-                                    <li><a href="#" class="selected m-0"><i class="fa fa-angle-right"></i> All
-                                            <span>(65)</span> </a></li>
-                                    {% for category in categories %}
-                                    <li><a href="#" class="dropdown position-static"><i class="fa fa-angle-right"></i>{{category.title}}
-                                            <span>(12)</span></a>
-                                            <!-- dropdaow menu -->
-                                    <!--   <ul id="{{category.title}}" class="mega-menu d-block">
-                                            {% for child in category.child.all %}
-                                            <li><a href="#" class="dollapsible-list collapse-flex">{{child.title}}</a></li>
-                                            {% endfor %}
-                                            </ul> --> 
-                                    </li>
-                                    {% endfor %}
-                                </ul>
+        <ul>
+            {% for category in categories %}
+        <li>
+            <a href="#category{{ category.id }}"
+               data-bs-toggle="collapse"
+               aria-expanded="false">
+                <i class="fa fa-angle-right"></i>
+                {{ category.title }}
+                <span>(65)</span>
+            </a>
+
+            <ul id="category{{ category.id }}" class="collapse">
+                {% for subcategory in category.child.all %}
+                    <li>
+                        <a href="#">
+                            {{ subcategory.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+            {% endfor %}
+        </ul>
                             </div>
                         </div>
                         <!-- Sidebar single item -->

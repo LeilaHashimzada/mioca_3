@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from product.models import Product
+from core.forms import ContactForm
+from django.contrib import messages
+
 # Create your views here.
 
 def index(request):
@@ -18,4 +21,17 @@ def contact(request):
     return render('contact', "contact.html")
 
 def faq(request):
-    return render('faq', "faq.html")
+    return render(request,'faq.html')
+
+def contact(request):
+    form = ContactForm()
+    if request.method == 'POST':
+        form = ContactForm(data=request.POST)
+        print(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, "SUCCESS","Successfully sent!")
+    context = {
+        'form' : form
+    }
+    return render(request,'contact.html' ,context)

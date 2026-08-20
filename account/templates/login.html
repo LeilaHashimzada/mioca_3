@@ -44,9 +44,21 @@
                             <div id="lg1" class="tab-pane active">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form action="#" method="post">
-                                            <input type="text" name="user-name" placeholder="Username" />
-                                            <input type="password" name="user-password" placeholder="Password" />
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <!-- <input type="text" name="user-name" placeholder="Username" /> -->
+                                             <!-- <label class="text-black" for="name">Name</label> -->
+                                             {{form.username}}
+                                             
+                                            <!-- <input type="password" name="user-password" placeholder="Password" /> -->
+                                             <!-- <label class="text-black" for="email">Email</label> -->
+                                            
+                                            
+
+                                            <!-- <label class="text-black" for="password">Password</label> -->
+                                            {{form.password}}
+                                            {{form.password.errors}}
+
                                             <div class="button-box">
                                                 <div class="login-toggle-btn">
                                                     <input type="checkbox" />
@@ -62,10 +74,17 @@
                             <div id="lg2" class="tab-pane">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form action="#" method="post">
-                                            <input type="text" name="user-name" placeholder="Username" />
-                                            <input type="password" name="user-password" placeholder="Password" />
-                                            <input name="user-email" placeholder="Email" type="email" />
+                                        <form  method="post">
+                                            {% csrf_token %}
+                                            <!-- <input type="text" name="user-name" placeholder="Username" /> -->
+                                             {{form.username}}
+                                             {{form.username.errors}}
+                                            <!-- <input type="password" name="user-password" placeholder="Password" /> -->
+                                            {{form.password}}
+                                            {{form.password.errors}}
+                                            <!-- <input name="user-email" placeholder="Email" type="email" /> -->
+                                            {{form.email}}
+                                            {{form.email.errors}}
                                             <div class="button-box">
                                                 <button type="submit"><span>Register</span></button>
                                             </div>

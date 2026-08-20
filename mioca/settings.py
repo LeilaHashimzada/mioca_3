@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "dbbackup",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -85,9 +86,9 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "mioca_db",
         "USER": "hp",
-        "PASSWORD": "123456",
+        "PASSWORD": 123456,
         "HOST": "localhost",
-        "PORT": "5432",
+        "PORT": 5432,
     }
 }
 

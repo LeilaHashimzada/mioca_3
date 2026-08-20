@@ -108,8 +108,13 @@
                             <div class="header-bottom-set dropdown">
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i class="fa-solid fa-circle-user"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
+<<<<<<< HEAD
                                     <li><a class="dropdown-item" href="{%url 'my-account'%}">My account</a></li>
                                     <li><a class="dropdown-item" href="{%url 'checkout'%}">Checkout</a></li>
+=======
+                                    <li><a class="dropdown-item" href="{% url 'my-account' %}">My account</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'checkout' %}">Checkout</a></li>
+>>>>>>> 306a9b963a901dd9e5feaf100a7f69ae613f813d
                                     <li><a class="dropdown-item" href="{% url 'login' %}">Sign in</a></li>
                                 </ul>
                             </div>
@@ -176,7 +181,7 @@
             </div>
             <div class="foot">
                 <div class="buttons">
-                    <a href="wishlist.html" class="btn btn-dark btn-hover-primary mt-30px">view wishlist</a>
+                    <a href="{% url 'wishlist' %}" class="btn btn-dark btn-hover-primary mt-30px">view wishlist</a>
                 </div>
             </div>
         </div>
@@ -566,28 +571,27 @@
                         </div>
                         <div class="col-lg-6 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
                             <div class="product-details-content quickview-content">
-                                <h2>Hand-Made Garlic Mortar</h2>
+                                <h2>{{product.title}}</h2>
                                 <div class="pricing-meta">
                                     <ul class="d-flex">
-                                        <li class="new-price">$20.90</li>
-                                        <li class="old-price"><del>$30.90</del></li>
+                                        <li class="new-price">${{product.price}}</li>
+                                        <!-- <li class="old-price"><del>${{product.price}}</del></li> -->
                                     </ul>
                                 </div>
                                 <div class="pro-details-rating-wrap">
-                                    <div class="rating-product">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
+                                    <span class="ratings">
+                                                <span class="rating-wrap">
+                                                    <span class="star" style="width: {% widthratio product.rating 5 100 %}%"></span>
+                                            </span>
+                                            <span class="rating-num">{{product.rating}}</span>
+                                            </span>
                                     <span class="read-review"><a class="reviews" href="#">( 2 Review )</a></span>
                                 </div>
                                 <div class="stock mt-30px">
                                     <span class="avallabillty">Availability: <span class="in-stock"><i
                                                 class="fa fa-check"></i>In Stock</span></span>
                                 </div>
-                                <p class="mt-30px mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodol tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veni nostrud exercitation ullamco laboris </p>
+                                <p class="mt-30px mb-0">{{product.description}} </p>
                                 <div class="pro-details-quality">
                                     <div class="cart-plus-minus">
                                         <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
@@ -672,7 +676,7 @@
     <!-- Main Js -->
     <script src="{% static 'js/main.js' %}"></script>
          {%block js%}
-     {% endblock %}
+         {% endblock %}
 </body>
 
 </html>

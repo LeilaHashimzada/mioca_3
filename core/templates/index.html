@@ -180,30 +180,30 @@
                                     <!-- Single Prodect -->
                                     <div class="product">
                                         <div class="thumb">
-                                            <a href="single-product.html" class="image">
+                                            <a href="{% url 'single_product' product.pk %}" class="image">
                                                 <img src="{{product.cover_image.url}}" alt="Product" />
-                                                <img class="hover-image" src="{% static 'images/product-image/1.jpg' %}"
+                                                <img class="hover-image" src="{{product.cover_image.url}}"
                                                     alt="Product" />
                                             </a>
                                             <span class="badges">
                                                 <span class="new">New</span>
                                             </span>
                                             <div class="actions">
-                                                <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                                        class="pe-7s-like"></i></a>
-                                                <a href="#" class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="pe-7s-look"></i></a>
-                                                <a href="compare.html" class="action compare" title="Compare"><i
-                                                        class="pe-7s-refresh-2"></i></a>
+                                                <a href="{% url 'wishlist' %}" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
+                                                <a href="#" class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-expand"></i></a>
+                                                <a href="{% url 'compare' %}" class="action compare" title="Compare"><i class="fa-regular fa-chart-bar"></i></a>
                                             </div>
                                         </div>
                                         <div class="content">
-                                            <span class="ratings">
-                                                <span class="rating-wrap">
-                                                    <span class="star" style="width: 100%"></span>
+                                           <span class="ratings">
+                                            <span class="rating-wrap">
+                                                <span class="star" style="width: {% widthratio product.rating 5 100 %}%"></span>\
                                             </span>
-                                            <span class="rating-num">( 5 Review )</span>
-                                            </span>
-                                            <h5 class="title"><a href="single-product.html">{{product.title}}
+                                            
+                                            <span class="rating-num">{{ product.rating }}</span>
+                                        </span>
+                                        
+                                            <h5 class="title"><a href="{% url 'single_product' product.pk %}">{{product.title}}
                                                 </a>
                                             </h5>
                                             <span class="price">

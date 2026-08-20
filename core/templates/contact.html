@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-<title>FContact</title>
+<title>Contact</title>
 {% endblock %}
 
 {% block main %}
@@ -83,20 +83,33 @@
                                 <h2 class="title" data-aos="fade-up" data-aos-delay="200">Leave a Message</h2>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod incididunt ut labore et dolore magna aliqua. </p>
                             </div>
-                            <form class="contact-form-style" id="contact-form"
-                                action="http://whizthemes.com/nazmul/php/mail.php" method="post">
+                            <form  method="post" class="contact-form-style" id="contact-form">
+                                {% csrf_token %}
+                                {% include 'includes/messages.html' %}
                                 <div class="row">
                                     <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                                        <input name="name" placeholder="Name*" type="text" />
+                                        <label class="text-black" for="name">Name</label>
+                                        <!-- <input name="name" placeholder="Name*" type="text" /> -->
+                                         {{form.name}}
+                                         {{form.name.errors}}
                                     </div>
                                     <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                                        <input name="email" placeholder="Email*" type="email" />
+                                           <label class="text-black" for="name">Email</label>
+                                        <!-- <input name="email" placeholder="Email*" type="email" /> -->
+                                         {{form.email}}
+                                         {{form.email.errors}}
                                     </div>
                                     <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
-                                        <input name="subject" placeholder="Subject*" type="text" />
+                                           <label class="text-black" for="name">Subject</label>
+                                        <!-- <input name="subject" placeholder="Subject*" type="text" /> -->
+                                         {{form.subject}}
+                                         {{form.subject.errors}}
                                     </div>
                                     <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
-                                        <textarea name="message" placeholder="Your Message*"></textarea>
+                                           <label class="text-black" for="name">Message</label>
+                                        <!-- <textarea name="message" placeholder="Your Message*"></textarea> -->
+                                         {{form.message}}
+                                         {{form.message.errors}}
                                         <button class="btn btn-primary mt-4" data-aos="fade-up" data-aos-delay="200"
                                             type="submit">Send Message</button>
                                     </div>
