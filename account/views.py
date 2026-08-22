@@ -26,6 +26,8 @@ def auth(request):
             if userAuthentificate:
                 login(request, userAuthentificate)
                 return redirect(reverse_lazy('my-account'))
+            else:
+                return redirect(reverse_lazy('404'))
             
     context = {
         'register_form': register_form,

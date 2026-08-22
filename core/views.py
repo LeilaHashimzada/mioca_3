@@ -13,7 +13,6 @@ def index(request):
 
     return render(request, "index.html" , context)
 
-
 def about(request):
     return render("about", "about.html")
 
@@ -35,3 +34,6 @@ def contact(request):
         'form' : form
     }
     return render(request,'contact.html' ,context)
+
+def code_404(request):
+    return render(request, "404.html")
