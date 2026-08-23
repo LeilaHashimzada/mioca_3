@@ -5,6 +5,11 @@ import django.utils.timezone
 from django.db import migrations, models
 
 
+def create_default_tag(apps, schema_editor):
+    ProductTag = apps.get_model("product", "ProductTag")
+    ProductTag.objects.get_or_create(id=1, defaults={"name": "Default"})
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -35,6 +40,7 @@ class Migration(migrations.Migration):
                 "abstract": False,
             },
         ),
+        migrations.RunPython(create_default_tag, migrations.RunPython.noop),
         migrations.AddField(
             model_name="product",
             name="tag",

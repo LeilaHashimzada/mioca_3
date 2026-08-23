@@ -10,16 +10,4 @@ class Migration(migrations.Migration):
         ("product", "0011_productreview_image"),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name="productcategory",
-            name="parent",
-            field=models.ForeignKey(
-                blank=True,
-                null=True,
-                on_delete=django.db.models.deletion.CASCADE,
-                related_name="child",
-                to="product.productcategory",
-            ),
-        ),
-    ]
+    operations = []
