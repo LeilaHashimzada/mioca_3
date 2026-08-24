@@ -46,26 +46,19 @@
                                     <div class="login-register-form">
                                         <form method="post">
                                             {% csrf_token %}
-                                            <!-- <input type="text" name="user-name" placeholder="Username" /> -->
-                                             <!-- <label class="text-black" for="name">Name</label> -->
-                                             {{form.username}}
-                                             
-                                            <!-- <input type="password" name="user-password" placeholder="Password" /> -->
-                                             <!-- <label class="text-black" for="email">Email</label> -->
-                                            
-                                            
+                                            {{login_form.username}}
+                                            {{login_form.username.errors}}
 
-                                            <!-- <label class="text-black" for="password">Password</label> -->
-                                            {{form.password}}
-                                            {{form.password.errors}}
+                                            {{login_form.password}}
+                                            {{login_form.password.errors}}
 
                                             <div class="button-box">
                                                 <div class="login-toggle-btn">
                                                     <input type="checkbox" />
                                                     <a class="flote-none" href="javascript:void(0)">Remember me</a>
-                                                    <a href="#">Forgot Password?</a>
+                                                    <a href="#lg2">Forgot Password?</a>
                                                 </div>
-                                                <button type="submit"><span>Login</span></button>
+                                                <button type="submit", name="login"><span>Login</span></button>
                                             </div>
                                         </form>
                                     </div>
@@ -77,16 +70,16 @@
                                         <form  method="post">
                                             {% csrf_token %}
                                             <!-- <input type="text" name="user-name" placeholder="Username" /> -->
-                                             {{form.username}}
-                                             {{form.username.errors}}
+                                             {{register_form.username}}
+                                             {{register_form.username.errors}}
                                             <!-- <input type="password" name="user-password" placeholder="Password" /> -->
-                                            {{form.password}}
-                                            {{form.password.errors}}
+                                            {{register_form.password}}
+                                            {{register_form.password.errors}}
                                             <!-- <input name="user-email" placeholder="Email" type="email" /> -->
-                                            {{form.email}}
-                                            {{form.email.errors}}
+                                            {{register_form.email}}
+                                            {{register_form.email.errors}}
                                             <div class="button-box">
-                                                <button type="submit"><span>Register</span></button>
+                                                <button type="submit" name = "register"><span>Register</span></button>
                                             </div>
                                         </form>
                                     </div>

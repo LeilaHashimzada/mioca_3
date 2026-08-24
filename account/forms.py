@@ -2,6 +2,10 @@ from django import forms
 from django.contrib.auth import get_user_model
 User=get_user_model()
 
+class LoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
@@ -9,7 +13,6 @@ class RegisterForm(forms.ModelForm):
             'username',
             'email',
             'password',
-
         ]
 
         widgets = {

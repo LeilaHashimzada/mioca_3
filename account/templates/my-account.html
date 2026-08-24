@@ -41,7 +41,7 @@
                             <li><a href="#address" data-bs-toggle="tab" class="nav-link">Addresses</a></li>
                             <li><a href="#account-details" data-bs-toggle="tab" class="nav-link">Account details</a>
                             </li>
-                            <li><a href="login.html" class="nav-link">logout</a></li>
+                            <li><a href="{% url 'auth' %}" class="nav-link">logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -68,20 +68,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    {% for cart in carts %}
                                         <tr>
                                             <td>1</td>
-                                            <td>May 10, 2023</td>
-                                            <td><span class="success">Completed</span></td>
+                                            <td>{{cart.updated_at}}</td>
+                                            <td>
+                                                {% if cart.is_active %}
+                                                    <span class="success">Processing</span>
+                                                {% else %}
+                                                    <span class="success">Completed</span>
+                                                {% endif %}
+                                            </td>
                                             <td>$25.00 for 1 item </td>
-                                            <td><a href="cart.html" class="view">view</a></td>
+                                            <td><a href="{% url 'cart' %}" class="view">view</a></td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>May 10, 2023</td>
-                                            <td>Processing</td>
-                                            <td>$17.00 for 1 item </td>
-                                            <td><a href="cart.html" class="view">view</a></td>
-                                        </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>

@@ -107,9 +107,9 @@
                         <div class="blog-single-tags d-flex" data-aos="fade-up" data-aos-delay="200">
                             <span class="title"><i class="fa fa-tags" aria-hidden="true"></i></span>
                             <ul class="tag-list">
-                                <li><a href="#">{{review.tag}},</a></li>
-                                <li><a href="#">eCommerce,</a></li>
-                                <li class="m-0"><a href="#">Dress</a></li>
+                                {% for tag in blog.tag.all %}
+                                <li><a href="#" class="m-0">{{tag.name}}</a></li>
+                                {% endfor %}
                             </ul>
                         </div>
                         <div class="blog-single-share mb-xs-15px d-flex" data-aos="fade-up" data-aos-delay="200">
@@ -143,7 +143,7 @@
                                         <div class="review-left">
                                             <div class="review-name">
                                                 <h4 class="title">{{comment.user}}</h4>
-                                                <span class="date">21 July 2023</span>
+                                                <span class="date">{{comment.created_at}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -162,26 +162,33 @@
                     </div>
                     <div class="blog-comment-form">
                         <h2 class="comment-heading" data-aos="fade-up" data-aos-delay="200">Leave a Comment</h2>
+                        <form method="post">
+                        {% csrf_token %}
+                        {% include "includes/message.html" %}
                         <div class="form-inner">
                             <div class="row">
                                 <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
                                     <div class="single-form mb-lm-15px">
-                                        <input type="text" placeholder="Name *" />
+                                    {{form.name}}
+                                    {{form.name.errors}}
                                     </div>
                                 </div>
                                 <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
                                     <div class="single-form mb-lm-15px">
-                                        <input type="email" placeholder="Email *" />
+                                        {{form.email}}
+                                        {{form.email.errors}}
                                     </div>
                                 </div>
                                 <div class="col-md-12" data-aos="fade-up" data-aos-delay="500">
                                     <div class="single-form mb-lm-15px">
-                                        <input type="email" placeholder="Subject (Optinal)" />
+                                        {{form.subject}}
+                                        {{form.subject.errors}}
                                     </div>
                                 </div>
                                 <div class="col-md-12" data-aos="fade-up" data-aos-delay="200">
                                     <div class="single-form m-0">
-                                        <textarea placeholder="Message"></textarea>
+                                        {{form.message}}
+                                        {{form.message.errors}}
                                     </div>
                                 </div>
                                 <div class="col-md-12" data-aos="fade-up" data-aos-delay="200">
@@ -189,6 +196,7 @@
                                 </div>
                             </div>
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>
