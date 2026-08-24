@@ -34,27 +34,29 @@
                     <div class="swiper-container zoom-top">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide zoom-image-hover">
-                                <img class="img-responsive m-auto" src="#"
-                                    alt="">
-                            </div>
-                            
-                            <div class="swiper-slide zoom-image-hover">
                                 <img class="img-responsive m-auto" src="{{item.cover_image.url}}"
                                     alt="">
                             </div>
-                            
-                            
+                            {% for photo in item.product_photos.all %}
+                            <div class="swiper-slide zoom-image-hover">
+                                <img class="img-responsive m-auto" src="{{photo.photo.url}}"
+                                    alt="">
+                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="swiper-container mt-20px zoom-thumbs ">
                         <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img class="img-responsive m-auto" src="{{item.cover_image.url}}"
+                                    alt="">
+                            </div>
                             {% for photo in item.product_photos.all %}
                             <div class="swiper-slide">
                                 <img class="img-responsive m-auto" src="{{photo.photo.url}}"
                                     alt="">
                             </div>
                             {% endfor %}
-                           
                         </div>
                     </div>
                 </div>
@@ -132,7 +134,7 @@
                             </ul>
                         </div>
                         <div class="payment-img">
-                            <a href="#"><img src="assets/images//icons/payment.png" alt=""></a>
+                            <a href="#"><img src="{% static 'images/icons/payment.png' %}" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -148,7 +150,7 @@
                 <div class="description-review-topbar nav">
                     <a data-bs-toggle="tab" href="#des-details2">Information</a>
                     <a class="active" data-bs-toggle="tab" href="#des-details1">Description</a>
-                    <a data-bs-toggle="tab" href="#des-details3">Reviews (02)</a>
+                    <a data-bs-toggle="tab" href="#des-details3">Reviews ({{item.reviews.count}})</a>
                 </div>
                 <div class="tab-content description-review-bottom">
                     <div id="des-details2" class="tab-pane">
@@ -165,19 +167,18 @@
                     </div>
                     <div id="des-details3" class="tab-pane">
                         <div class="row">
-                        {% for review in item.reviews.all %}
                             <div class="col-lg-7">
                                 <div class="review-wrapper">
                                     {% for review in item.reviews.all %}
                                     <div class="single-review">
                                         <div class="review-img">
-                                            <img src="{% static 'assets/images/review-image/1.png' %}" alt="" />
+                                            <img src="{% static 'images/blog-image/1.jpg' %}" alt="" />
                                         </div>
                                         <div class="review-content">
                                             <div class="review-top-wrap">
                                                 <div class="review-left">
                                                     <div class="review-name">
-                                                        <h4>{{review.user_id.get_full_name}}</h4>
+                                                        <h4>{% firstof review.name review.user.username %}</h4>
                                                     </div>
                                                     <div class="rating-product">
                                                         <span class="star" ></span>
@@ -195,47 +196,34 @@
                                         </div>
                                     </div>
                                     {% endfor %}
-                                   
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
                             <div class="col-lg-5">
                                 <div class="ratting-form-wrapper pl-50">
                                     <h3>Add a Review</h3>
                                     <div class="ratting-form">
-                                        <form action="#">
-                                            <div class="star-box">
-                                                <span>Your rating:</span>
-                                                <div class="rating-product">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                            </div>
+                                        {% include 'includes/messages.html' %}
+                                        <form method="post" action="">
+                                            {% csrf_token %}
+                                            
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="rating-form-style">
-                                                        <input placeholder="Name" type="text" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="rating-form-style">
-                                                        <input placeholder="Email" type="email" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="rating-form-style form-submit">
-                                                        <textarea name="Your Review" placeholder="Message"></textarea>
+                                                {{review_form.name}}
+                                                {{review_form.name.errors}}                                                <div class="col-md-12">
+                                                    <!-- <div class="rating-form-style form-submit"> -->
+                                                        {{ review_form.message }}
+                                                        {{ review_form.message.errors }}
                                                         <button class="btn btn-primary btn-hover-color-primary "
                                                             type="submit" value="Submit">Submit</button>
-                                                    </div>
+                                                    <!-- </div> -->
                                                 </div>
                                             </div>
                                         </form>
+                                        {% if not user.is_authenticated %}
+                                        <p class="mt-2">Review yazmaq ucun <a href="{% url 'login' %}">login</a> olun.</p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -267,8 +255,8 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/9.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/9.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/9.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/9.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="new">New</span>
@@ -306,8 +294,8 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/10.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/10.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/10.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/10.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="sale">-10%</span>
@@ -348,8 +336,8 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/11.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/11.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/11.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/11.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="new">Sale</span>
@@ -387,8 +375,8 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/12.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/1.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/12.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/1.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="sale">-5%</span>
@@ -429,8 +417,8 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/6.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/6.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/6.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/6.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                 </span>
@@ -467,8 +455,8 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/7.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/7.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/7.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/7.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="new">New</span>

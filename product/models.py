@@ -51,7 +51,8 @@ class ProductPhoto(AbstractModel):
     
     
 class ProductReview(AbstractModel):
-    rating =  models.IntegerField()
+    name =  models.CharField(max_length=100,null=True)
+    email = models.EmailField(max_length=50,null=True)
     message = models.TextField()
     image = models.ImageField(null=True, blank=True)
     

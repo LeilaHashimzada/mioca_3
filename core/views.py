@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from product.models import Product
 from core.forms import ContactForm
 from django.contrib import messages
@@ -15,23 +15,20 @@ def index(request):
 
 
 def about(request):
-    return render("about", "about.html")
-
-def contact(request):
-    return render('contact', "contact.html")
-
-def faq(request):
-    return render(request,'faq.html')
+    return render(request, "about.html")
 
 def contact(request):
     form = ContactForm()
     if request.method == 'POST':
         form = ContactForm(data=request.POST)
-        print(request.POST)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.INFO, "SUCCESS","Successfully sent!")
+            messages.success(request, "Successfully sent!")
+            return redirect('contact')
     context = {
         'form' : form
     }
     return render(request,'contact.html' ,context)
+
+def faq(request):
+    return render(request,'faq.html')
