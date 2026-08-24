@@ -4,7 +4,7 @@ from account.forms import RegisterForm
 
 # Create your views here.
 def login(request):
-    form = RegisterForm()
+    form = RegisterForm
     if request.method == 'POST':
             form =  RegisterForm(data=request.POST)
             print(request.POST)
