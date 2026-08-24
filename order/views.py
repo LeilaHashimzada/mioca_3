@@ -5,6 +5,19 @@ from .forms import CheckoutFrom
 from django.contrib import messages
 
 # Create your views here.
+<<<<<<< HEAD
+
+def cart(request):
+    return render("cart", "cart.html")
+
+def checkout(request):
+    return render('checkout', "checkout.html")
+
+def empty_cart(request):
+    return render('empty_cart', "empty-cart.html")
+
+=======
+>>>>>>> 136a70182762f445b45dce367db4d896163c73b4
 
 @login_required
 def cart(request):
@@ -35,3 +48,7 @@ def checkout(request):
         "form": form
     }
     return render(request, "checkout.html", context)
+<<<<<<< HEAD
+
+=======
+>>>>>>> 136a70182762f445b45dce367db4d896163c73b4

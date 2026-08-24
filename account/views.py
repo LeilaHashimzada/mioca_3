@@ -36,9 +36,14 @@ def auth(request):
     return render(request, "login.html", context)
 
 def account(request):
+<<<<<<< HEAD
     carts = Cart.objects.all()
     
     context = {
         "carts": carts    
     }
     return render(request,"my-account.html", context)
+=======
+    return render(request,"my-account.html")
+
+>>>>>>> main
