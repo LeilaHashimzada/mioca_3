@@ -1,35 +1,30 @@
 from django.shortcuts import render
 from .models import Blog
-from django.shortcuts import get_object_or_404
-from django.http import Http404
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 from .forms import BlogCommentForm
-from django.views.generic import ListView
-
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormMixin
 
 class BlogListView(ListView):
     template_name = "blog.html"
     context_object_name = "blogs"
     model = Blog
+    paginate_by = 3
 
-@login_required
-def blog_single(request, pk):
+class BlogDetailView(DetailView, FormMixin):
+    template_name = "blog-single.html"
+    context_object_name = "blog"
+    model = Blog
+    form_class = BlogCommentForm
+    success_url = reverse_lazy('blog')
     
-    try:
-        item = get_object_or_404(Blog, id = pk)
-    except Http404:
-        return render(request, "404.html")
-    else:
-        form = BlogCommentForm
-        if (request.method == "POST"):
-            form = BlogCommentForm(data = request.POST)
-            if form.is_valid():
-                comment = form.save(commit=False)
-                comment.blog = item
-                comment.user = request.user
-                comment.save()
-        context = {
-            "blog": item,
-            "form": form
-        }
-        return render(request, "blog-single.html", context)
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        blog = self.get_object()
+        if form.is_valid():
+            form.instance.blog = blog
+            if self.request.user.is_authenticated:
+                form.instance.user = self.request.user
+            form.save()
+        return super().form_valid(form)
+        

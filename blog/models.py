@@ -16,12 +16,12 @@ class Blog(AbstractModel):
 
 
 class BlogComment(AbstractModel):
-    user =  models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
+    user =  models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE, null = True, blank=True)
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
     subject = models.TextField(null=True, blank=True)
     message = models.TextField()
-    blog = models.ForeignKey(Blog, related_name="comments", on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, related_name="comments", on_delete=models.CASCADE, null=True, blank=True)
     
     
     def __str__(self):

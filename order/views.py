@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Cart, CartItem
+from .models import Cart
 from django.contrib.auth.decorators import login_required
 from .forms import CheckoutFrom
 from django.contrib import messages
