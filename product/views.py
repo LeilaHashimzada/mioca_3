@@ -33,7 +33,7 @@ def shop(request):
         "product_list" : product_list,
         "categories" : categories
     }
-    return render(request,"shop-left-sidebar.html", context)
+    return render(request,"shop.html", context)
 
 
     

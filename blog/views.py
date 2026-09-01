@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Blog
 from django.urls import reverse_lazy
+from django.contrib import messages
 from .forms import BlogCommentForm
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
@@ -25,6 +26,9 @@ class BlogDetailView(DetailView, FormMixin):
             form.instance.blog = blog
             if self.request.user.is_authenticated:
                 form.instance.user = self.request.user
+                
             form.save()
         return super().form_valid(form)
+    
+#messages.add_message(request, messages.SUCCESS, "Successfully sent!")
         

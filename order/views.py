@@ -1,33 +1,25 @@
 from django.shortcuts import render
 from .models import Cart
-from django.contrib.auth.decorators import login_required
 from .forms import CheckoutFrom
 from django.contrib import messages
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-@login_required
-def cart(request):
+
+class CartDetailView(LoginRequiredMixin, TemplateView):
+    template_name = "cart.html"
     
-    user_carts = Cart.objects.filter(user=request.user, is_active=True).order_by('id')
-    
-    if user_carts.exists():
-        cart = user_carts.first()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         
-        if user_carts.count() > 1:
-            duplicate_carts = user_carts[1:]
-            for dup_cart in duplicate_carts:
-                dup_cart.items.update(cart=cart)
-                dup_cart.delete()
-    else:
-        cart = Cart.objects.create(user=request.user, is_active=True)
+        cart = Cart.objects.filter(user=self.request.user, is_active=True).first()
+        
+        context["cart"] = cart
+        context["items"] = cart.items.select_related('product').all() if cart else []
+        
+        return context
     
-    items = cart.items.select_related('product').all()
     
-    context = {
-        "cart": cart,
-        "items": items,
-    }
-    
-    return render(request, "cart.html", context)
 
 def checkout(request):
     form = CheckoutFrom

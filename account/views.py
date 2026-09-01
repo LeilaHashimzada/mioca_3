@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from order.models import Cart
 from account.forms import RegisterForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 
