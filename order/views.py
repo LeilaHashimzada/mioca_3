@@ -4,37 +4,30 @@ from django.contrib.auth.decorators import login_required
 from .forms import CheckoutFrom
 from django.contrib import messages
 
-# Create your views here.
-<<<<<<< HEAD
-
-def cart(request):
-    return render("cart", "cart.html")
-
-def checkout(request):
-    return render('checkout', "checkout.html")
-
-def empty_cart(request):
-    return render('empty_cart', "empty-cart.html")
-
-=======
->>>>>>> 136a70182762f445b45dce367db4d896163c73b4
-
 @login_required
 def cart(request):
     
-    cart, created = Cart.objects.get_or_create(
-        user = request.user,
-        is_active = True
-    )
+    user_carts = Cart.objects.filter(user=request.user, is_active=True).order_by('id')
+    
+    if user_carts.exists():
+        cart = user_carts.first()
+        
+        if user_carts.count() > 1:
+            duplicate_carts = user_carts[1:]
+            for dup_cart in duplicate_carts:
+                dup_cart.items.update(cart=cart)
+                dup_cart.delete()
+    else:
+        cart = Cart.objects.create(user=request.user, is_active=True)
     
     items = cart.items.select_related('product').all()
     
     context = {
-        "items": items
+        "cart": cart,
+        "items": items,
     }
     
     return render(request, "cart.html", context)
-
 
 def checkout(request):
     form = CheckoutFrom
@@ -48,7 +41,3 @@ def checkout(request):
         "form": form
     }
     return render(request, "checkout.html", context)
-<<<<<<< HEAD
-
-=======
->>>>>>> 136a70182762f445b45dce367db4d896163c73b4

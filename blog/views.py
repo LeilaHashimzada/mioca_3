@@ -4,18 +4,13 @@ from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from .forms import BlogCommentForm
+from django.views.generic import ListView
 
 
-# Create your views here.
-def blog(request):
-    
-    item = Blog.objects.all()
-    
-    context = {
-        "blogs": item
-    }
-    
-    return render(request, "blog.html", context)
+class BlogListView(ListView):
+    template_name = "blog.html"
+    context_object_name = "blogs"
+    model = Blog
 
 @login_required
 def blog_single(request, pk):
