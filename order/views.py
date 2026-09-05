@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-
 class CartDetailView(LoginRequiredMixin, TemplateView):
     template_name = "cart.html"
     
@@ -18,7 +17,6 @@ class CartDetailView(LoginRequiredMixin, TemplateView):
         context["items"] = cart.items.select_related('product').all() if cart else []
         
         return context
-    
     
 
 def checkout(request):

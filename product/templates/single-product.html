@@ -93,7 +93,7 @@
                                 <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
                             </div>
                             <div class="pro-details-cart">
-                                <button class="add-cart"> Add To
+                                <button class="add-cart" data-product="{{item.id}}" data-action = "add"> Add To
                                     Cart</button>
                             </div>
                             <div class="pro-details-cart">
@@ -513,4 +513,7 @@
         </div>
     </div>
     <!-- Related product Area End -->
+          {% block js %}
+    <script src="{% static 'js/cart.js' %}"></script>
+    {% endblock %}
 {% endblock main %}

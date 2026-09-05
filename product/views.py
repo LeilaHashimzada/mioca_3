@@ -2,7 +2,9 @@ from django.shortcuts import render
 from product.models import Product, ProductCategory
 from django.shortcuts import get_object_or_404
 from django.http import Http404
-
+import json
+from django.http import JsonResponse
+from order.models import Cart, CartItem
 # Create your views here.
 
 def compare(request):
@@ -36,4 +38,22 @@ def shop(request):
     return render(request,"shop.html", context)
 
 
+def update_item(request):
+    data = json.loads(request.body)
+    productId = data["productId"]
+    action = data["action"]
     
+    product = Product.objects.get(id = productId)
+    cart, created = Cart.objects.get_or_create(user = request.user, is_active=True)
+    cartItem, created = CartItem.objects.get_or_create(cart = cart, product= product)
+    
+    if action == "add":
+        if created:
+            cartItem.quantity = 1
+        else:
+            cartItem.quantity += 1
+    if action == "remove":
+        cartItem.quantity -=1
+            
+    cartItem.save()
+    return JsonResponse(data, safe=False)
