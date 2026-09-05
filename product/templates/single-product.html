@@ -5,6 +5,13 @@
 <title>Single_Product</title>
 {% endblock title %}
 
+{% block css %}
+<style>
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+</style>
+{% endblock css %}    
+
 {% block main %}
 
     <!-- breadcrumb-area start -->
@@ -171,26 +178,31 @@
                                 <div class="review-wrapper">
                                     {% for review in item.reviews.all %}
                                     <div class="single-review">
-                                        <div class="review-img">
-                                            <img src="{% static 'images/blog-image/1.jpg' %}" alt="" />
-                                        </div>
+                                        
                                         <div class="review-content">
                                             <div class="review-top-wrap">
                                                 <div class="review-left">
-                                                    <div class="review-name">
-                                                        <h4>{% firstof review.name review.user.username %}</h4>
-                                                    </div>
+                                                    
                                                     <div class="rating-product">
                                                         <span class="star" ></span>
                                                     </div>
                                                 </div>
                                                 <div class="review-left">
-                                                    <a href="#">Reply</a>
+                                                        <div class="review-name">
+                                                            <h4>{{ review.user.username }}</h4> 
+                                                        </div>
+                                                <div class="rating-product">
+                                                        <span class="star"></span>
+                                                        </div>
+
+
+                                                    
                                                 </div>
                                             </div>
                                             <div class="review-bottom">
                                                 <p>
                                                    {{review.message}}
+                                                   
                                                 </p>
                                             </div>
                                         </div>
@@ -199,8 +211,6 @@
 
                                         </div>
                                     </div>
-                                </div>
-                            </div>
                             <div class="col-lg-5">
                                 <div class="ratting-form-wrapper pl-50">
                                     <h3>Add a Review</h3>
@@ -210,20 +220,16 @@
                                             {% csrf_token %}
                                             
                                             <div class="row">
-                                                {{review_form.name}}
-                                                {{review_form.name.errors}}                                                <div class="col-md-12">
-                                                    <!-- <div class="rating-form-style form-submit"> -->
-                                                        {{ review_form.message }}
-                                                        {{ review_form.message.errors }}
-                                                        <button class="btn btn-primary btn-hover-color-primary "
-                                                            type="submit" value="Submit">Submit</button>
-                                                    <!-- </div> -->
+                                            <div class="col-md-12">
+                                            <div class="rating-form-style form-submit">
+                                                {{ review_form.message }}
+                                                {{ review_form.message.errors }}
+                                                <button class="btn btn-primary btn-hover-color-primary "
+                                                    type="submit" value="Submit">Submit</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
-                                        {% if not user.is_authenticated %}
-                                        <p class="mt-2">Review yazmaq ucun <a href="{% url 'login' %}">login</a> olun.</p>
-                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
