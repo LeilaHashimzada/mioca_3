@@ -1,27 +1,25 @@
 from django.shortcuts import render
-from .models import Cart, CartItem
-from django.contrib.auth.decorators import login_required
+from .models import Cart
 from .forms import CheckoutFrom
 from django.contrib import messages
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-# Create your views here.
 
-@login_required
-def cart(request):
+class CartDetailView(LoginRequiredMixin, TemplateView):
+    template_name = "cart.html"
     
-    cart, created = Cart.objects.get_or_create(
-        user = request.user,
-        is_active = True
-    )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        cart = Cart.objects.filter(user=self.request.user, is_active=True).first()
+        
+        context["cart"] = cart
+        context["items"] = cart.items.select_related('product').all() if cart else []
+        
+        return context
     
-    items = cart.items.select_related('product').all()
     
-    context = {
-        "items": items
-    }
-    
-    return render(request, "cart.html", context)
-
 
 def checkout(request):
     form = CheckoutFrom

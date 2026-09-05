@@ -17,7 +17,6 @@ class RegisterForm(forms.ModelForm):
             'username',
             'email',
             'password',
-
         ]
 
         widgets = {
@@ -33,5 +32,4 @@ class RegisterForm(forms.ModelForm):
                 'class' : 'form-control',
                 'placeholder' : 'Password'
             }),
-           
         }

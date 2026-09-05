@@ -1,18 +1,18 @@
 from django import template
-from order.models import Cart
+from order.models import Cart, CartItem
 
 register = template.Library()
 
 @register.simple_tag(takes_context=True)
 def get_cart_items(context):
-    request = context['request']
+    request = context.get("request")
 
-    if not request.user.is_authenticated:
-        return []
+    if not request or not request.user.is_authenticated:
+        return CartItem.objects.none()
 
-    cart, _ = Cart.objects.get_or_create(
-        user=request.user,
-        is_active=True
-    )
+    cart = Cart.objects.filter(user=request.user, is_active=True).first()
 
-    return cart.items.select_related('product').all()
+    if cart:
+        return cart.items.select_related('product').all()
+        
+    return CartItem.objects.none()
