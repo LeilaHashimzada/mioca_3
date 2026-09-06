@@ -1,4 +1,6 @@
-let addBtns = document.getElementsByClassName('add-cart')
+let dcrBtns = document.getElementsByClassName('dec')
+let incBtns = document.getElementsByClassName('inc')
+let dltBtns = document.getElementsByClassName('remove')
 
 function getCookie(name) {
     let cookieValue = null;
@@ -17,11 +19,39 @@ function getCookie(name) {
 }
 const csrftoken = getCookie('csrftoken');
 
-for (let i = 0; i < addBtns.length; i++){
-    addBtns[i].addEventListener('click', function(event){
+
+for(let i=0; i<dcrBtns.length; i++){
+
+    dcrBtns[i].addEventListener('click', function(event){
         event.preventDefault()
-        productId = this.dataset.product
-        action= this.dataset.action
+        let productId = this.dataset.product
+        let action= this.dataset.action
+
+        console.log("Item Removed!", productId, action)
+
+        let url = "update-item/"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken
+            },
+            body: JSON.stringify({
+                "productId": productId,
+                "action": action
+            })
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            location.reload()
+        })
+    })
+
+    incBtns[i].addEventListener('click', function(event){
+        event.preventDefault()
+        let productId = this.dataset.product
+        let action= this.dataset.action
 
         console.log("Item Added!", productId, action)
 
@@ -43,4 +73,31 @@ for (let i = 0; i < addBtns.length; i++){
             location.reload()
         })
     })
-}
+
+    dltBtns[i].addEventListener('click', function(event){
+        event.preventDefault()
+        let productId = this.dataset.product
+        let action= this.dataset.action
+
+        console.log("Item Removed!", productId, action)
+
+        let url = "update-item/"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken
+            },
+            body: JSON.stringify({
+                "productId": productId,
+                "action": action
+            })
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            location.reload()
+        })
+    })
+
+}  

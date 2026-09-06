@@ -52,8 +52,11 @@ def update_item(request):
             cartItem.quantity = 1
         else:
             cartItem.quantity += 1
-    if action == "remove":
+    elif action == "decrease":
         cartItem.quantity -=1
+    elif action == "remove":
+        cartItem.delete()
+        
             
     cartItem.save()
     return JsonResponse(data, safe=False)

@@ -53,15 +53,16 @@
                                         <td class="product-name"><a href="#">{{item.product.title}}</a></td>
                                         <td class="product-price-cart"><span class="amount">${{item.product.price}}</span></td>
                                         <td class="product-quantity">
-                                            <div class="cart-plus-minus add-cart" data-product="{{item.product.id}}" data-action="add remove">
+                                            <div class="cart-plus-minus">
+                                                <div class="dec qtybutton" data-product="{{item.product.id}}" data-action="decrease">-</div>
                                                 <input class="cart-plus-minus-box" type="text" name="qtybutton"
                                                     value="{{item.quantity}}" />
+                                                <div class="inc qtybutton" data-product="{{item.product.id}}" data-action="add">+</div>
                                             </div>
                                         </td>
                                         <td class="product-subtotal">${{item.price}}</td>
                                         <td class="product-remove">
-                                            <a href="#"><i class="fa fa-pencil"></i></a>
-                                            <a href="#"><i class="fa fa-times"></i></a>
+                                            <a href="#"><i class="fa fa-times remove" data-product="{{item.product.id}}" data-action="remove"></i></a>
                                         </td>
                                     </tr>
                                     {% endfor %}
