@@ -35,7 +35,7 @@
                         <h3>Billing Details</h3>
                     <form method="post">
                         {% csrf_token %}
-                        {% include "includes/message.html" %}
+                        {% include "includes/messages.html" %}
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
@@ -216,8 +216,6 @@
                                     <ul>
                                         <li><span class="order-middle-left">Product Name X 1</span> <span
                                                 class="order-price">$100 </span></li>
-                                        <li><span class="order-middle-left">Product Name X 1</span> <span
-                                                class="order-price">$100 </span></li>
                                     </ul>
                                 </div>
                                 <div class="your-order-bottom">
@@ -229,7 +227,7 @@
                                 <div class="your-order-total">
                                     <ul>
                                         <li class="order-total">Total</li>
-                                        <li>$100</li>
+                                        <li>${{cart.price}}</li>
                                     </ul>
                                 </div>
                             </div>
