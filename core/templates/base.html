@@ -196,7 +196,7 @@
                         <div class="content">
                             <a href="single-product.html" class="title">{{item.product.title}}</a>
                             <span class="quantity-price">{{item.quantity}} x <span class="amount">${{item.price}}</span></span>
-                            <a href="#" class="remove">×</a>
+                            <button class="remove"  data-product="{{item.product.id}}" data-action="remove"  data-url="{% url 'update-item' %}">×</button>
                         </div>
                     </li>
                     {% endfor %}

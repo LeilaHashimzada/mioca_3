@@ -64,7 +64,6 @@
                         <div class="pricing-meta">
                             <ul class="d-flex">
                                 <li class="new-price">${{item.price}}</li>
-                                <li class="old-price"><del>$30.90</del></li>
                             </ul>
                         </div>
                         <div class="pro-details-rating-wrap">
@@ -97,7 +96,7 @@
                                     Cart</button>
                             </div>
                             <div class="pro-details-cart">
-                                <button class="add-cart buy-button"> Buy It Now</button>
+                                <button class="add-cart buy-button" data-product="{{item.id}}" data-action = "add" data-url="{% url 'update-item' %}"> Buy It Now</button>
                             </div>
                             <div class="pro-details-compare-wishlist pro-details-wishlist ">
                                 <a class="add-wishlist" href="#" data-product="{{item.id}}" data-action = "add"><i class="pe-7s-like"></i></a>
