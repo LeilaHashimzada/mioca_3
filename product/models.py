@@ -61,8 +61,8 @@ class ProductReview(AbstractModel):
 
 
 class Wishlist(AbstractModel):
-    user = models.ForeignKey(User, related_name="wishlist", on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, related_name="wishlist", on_delete=models.CASCADE)
+    user = models.ManyToManyField(User, related_name="wishlist")
+    product = models.ManyToManyField(Product, related_name="wishlist")
     
     def __str__(self):
         return f"{self.user.username}-{self.product.title}"

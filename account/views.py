@@ -20,13 +20,19 @@ def auth(request):
         elif "login" in request.POST:
             login_form = LoginForm(data=request.POST)
             if login_form.is_valid():
-                userAuthentificate = authenticate(request, username=login_form.cleaned_data['username'],
-                                                    password=login_form.cleaned_data['password'])
-            if userAuthentificate:
-                login(request, userAuthentificate)
-                return redirect(reverse_lazy('my-account'))
-            else:
-                return redirect(reverse_lazy('404'))
+                user = authenticate(
+                    request, 
+                    username=login_form.cleaned_data['username'],
+                    password=login_form.cleaned_data['password']
+                )
+                if user is not None:
+                    login(request, user)
+                    return redirect('my-account')
+            return redirect('404')
+
+        elif "logout" in request.POST:
+            logout(request)
+            return redirect('index')
             
     context = {
         'register_form': register_form,

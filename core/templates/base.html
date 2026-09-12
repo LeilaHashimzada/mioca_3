@@ -106,11 +106,20 @@
                             <!-- Single Wedge End -->
                             <div class="header-bottom-set dropdown">
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i class="fa-solid fa-circle-user"></i></button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a class="dropdown-item" href="{%url 'my-account'%}">My account</a></li>
-                                    <li><a class="dropdown-item" href="{%url 'checkout'%}">Checkout</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'auth' %}">Sign in</a></li>
-                                </ul>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        {% if request.user.is_authenticated %}
+                                                <li><a class="dropdown-item" href="{%url 'my-account'%}">My account</a></li>
+                                                <li><a class="dropdown-item" href="{%url 'checkout'%}">Checkout</a></li>
+                                                <li>
+                                                    <form action="{% url 'auth' %}" method="post" class="d-inline">
+                                                        {% csrf_token %}
+                                                        <button name="logout" type="submit" class="dropdown-item">Logout</button>
+                                                    </form>
+                                                </li>
+                                        {% else %}
+                                                <li><a class="dropdown-item" href="{% url 'auth' %}">Sign in</a></li>
+                                        {% endif %}
+                                    </ul>
                             </div>
                             <!-- Single Wedge Start -->
                             <a href="#offcanvas-wishlist" class="header-action-btn offcanvas-toggle">
@@ -153,7 +162,7 @@
                         <div class="content">
                             <a href="single-product.html" class="title">{{wishlist.product.title}}</a>
                             <span class="quantity-price">1 x <span class="amount">${{wishlist.product.price}}</span></span>
-                            <a href="#" class="remove">×</a>
+                            <a href="#" class="remove add-wishlist" data-product="{{item.id}}" data-action="remove">×</a>
                         </div>
                     </li>
                     {% endfor %}
@@ -662,6 +671,7 @@
 
     <!-- Main Js -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/wishlist.js' %}"></script>
          {%block js%}
          {% endblock %}
 </body>

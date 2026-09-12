@@ -100,7 +100,7 @@
                                 <button class="add-cart buy-button"> Buy It Now</button>
                             </div>
                             <div class="pro-details-compare-wishlist pro-details-wishlist ">
-                                <a href="wishlist.html"><i class="pe-7s-like"></i></a>
+                                <a class="add-wishlist" href="#" data-product="{{item.id}}" data-action = "add"><i class="pe-7s-like"></i></a>
                             </div>
                         </div>
                         <div class="pro-details-categories-info pro-details-same-style d-flex">
@@ -515,5 +515,6 @@
     <!-- Related product Area End -->
           {% block js %}
     <script src="{% static 'js/product.js' %}"></script>
+    <script src="{% static 'js/wishlist.js' %}"></script>
     {% endblock %}
 {% endblock main %}
