@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from account.forms import RegisterForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
+from django.views.generic import DetailView
+from .models import User
 
 
 # Create your views here.
@@ -16,7 +18,7 @@ def auth(request):
                 user = register_form.save()
                 user.set_password(register_form.cleaned_data['password'])
                 user.save()
-                return redirect(reverse_lazy('my-account'))
+                return redirect(reverse_lazy('my-account', pk=request.user.id))
         elif "login" in request.POST:
             login_form = LoginForm(data=request.POST)
             if login_form.is_valid():
@@ -27,7 +29,7 @@ def auth(request):
                 )
                 if user is not None:
                     login(request, user)
-                    return redirect('my-account')
+                    return redirect('my-account', pk=request.user.id)
             return redirect('404')
 
         elif "logout" in request.POST:
@@ -40,6 +42,8 @@ def auth(request):
     }
     return render(request, "login.html", context)
 
-def account(request):
-    return render(request,"my-account.html")
+class AccountView(DetailView):
+    template_name = "my-account.html"
+    model = User
+    context_object_name = "person"
 

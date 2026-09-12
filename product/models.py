@@ -61,7 +61,7 @@ class ProductReview(AbstractModel):
 
 
 class Wishlist(AbstractModel):
-    user = models.ManyToManyField(User, related_name="wishlist")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="wishlist")
     product = models.ManyToManyField(Product, related_name="wishlist")
     
     def __str__(self):

@@ -1,14 +1,9 @@
-let dcrBtns = document.getElementsByClassName('dec')
-let incBtns = document.getElementsByClassName('inc')
-let dltBtns = document.getElementsByClassName('remove')
-
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -17,21 +12,12 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
 const csrftoken = getCookie('csrftoken');
 
+async function updateCartItem(productId, action, url){
 
-for(let i=0; i<dcrBtns.length; i++){
-
-    dcrBtns[i].addEventListener('click', function(event){
-        event.preventDefault()
-        let productId = this.dataset.product
-        let action= this.dataset.action
-
-        console.log("Item Removed!", productId, action)
-
-        let url = "update-item/"
-
-        fetch(url, {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -41,63 +27,26 @@ for(let i=0; i<dcrBtns.length; i++){
                 "productId": productId,
                 "action": action
             })
-        }).then((response) => {
-            return response.json()
-        }).then((data) => {
-            location.reload()
-        })
-    })
+        });
 
-    incBtns[i].addEventListener('click', function(event){
-        event.preventDefault()
-        let productId = this.dataset.product
-        let action= this.dataset.action
+        const data = await response.json();
+        location.reload();
+        return data;
+}
 
-        console.log("Item Added!", productId, action)
 
-        let url = "update-item/"
+const cartButtons = document.querySelectorAll('.dec, .inc, .remove');
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken
-            },
-            body: JSON.stringify({
-                "productId": productId,
-                "action": action
-            })
-        }).then((response) => {
-            return response.json()
-        }).then((data) => {
-            location.reload()
-        })
-    })
+cartButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+        const btn = event.currentTarget;
+        const productId = btn.dataset.product;
+        const action = btn.dataset.action;
+        const url = btn.dataset.url || "/update-item/";
 
-    dltBtns[i].addEventListener('click', function(event){
-        event.preventDefault()
-        let productId = this.dataset.product
-        let action= this.dataset.action
-
-        console.log("Item Removed!", productId, action)
-
-        let url = "update-item/"
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken
-            },
-            body: JSON.stringify({
-                "productId": productId,
-                "action": action
-            })
-        }).then((response) => {
-            return response.json()
-        }).then((data) => {
-            location.reload()
-        })
-    })
-
-}  
+        if (productId && action) {
+            updateCartItem(productId, action, url);
+        }
+    });
+});

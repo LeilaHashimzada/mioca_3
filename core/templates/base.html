@@ -75,8 +75,6 @@
                                                 <li class="title"><a href="{% url 'shop'%}">Related Shop Pages</a></li>
                                                 <li><a href="my-account.html">Account Page</a></li>
                                                 <li><a href="login.html">Login & Register Page</a></li>
-                                                <li><a href="empty-cart.html">Empty Cart Page</a></li>
-                                                <li><a href="thank-you-page.html">Thank You Page</a></li>
                                             </ul>
                                             <ul class="d-flex align-items-center p-0 border-0">
                                                 <li>
@@ -108,7 +106,7 @@
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i class="fa-solid fa-circle-user"></i></button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         {% if request.user.is_authenticated %}
-                                                <li><a class="dropdown-item" href="{%url 'my-account'%}">My account</a></li>
+                                                <li><a class="dropdown-item" href="{%url 'my-account' request.user.id %}">My account</a></li>
                                                 <li><a class="dropdown-item" href="{%url 'checkout'%}">Checkout</a></li>
                                                 <li>
                                                     <form action="{% url 'auth' %}" method="post" class="d-inline">

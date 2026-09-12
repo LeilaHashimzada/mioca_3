@@ -28,6 +28,9 @@ class CartItem(AbstractModel):
     product = models.ForeignKey(Product,related_name="items", on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     
+    class Meta:
+        unique_together = ("cart", "product")
+    
     def price(self):
         return self.product.price * self.quantity
     

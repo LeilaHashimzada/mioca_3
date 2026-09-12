@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import CartDetailView, CheckoutView
-from product.views import update_item
+from order.views import update_item
 
 urlpatterns = [
     path('cart/', CartDetailView.as_view(), name = "cart"),

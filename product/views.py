@@ -56,7 +56,7 @@ def wish_item(request):
         return JsonResponse(status=200)
 
 
-def update_item(request):
+def update_item(request, pk):
     data = json.loads(request.body)
     productId = data["productId"]
     action = data["action"]
@@ -64,17 +64,33 @@ def update_item(request):
     product = Product.objects.get(id = productId)
     cart, created = Cart.objects.get_or_create(user = request.user, is_active=True)
     cartItem, created = CartItem.objects.get_or_create(cart = cart, product= product)
+   
+    item_delete = False 
     
     if action == "add":
         if created:
             cartItem.quantity = 1
         else:
             cartItem.quantity += 1
+            
     elif action == "decrease":
         cartItem.quantity -=1
+        if cartItem.quantity <=0:
+            cartItem.delete()
+            item_delete = True
+        else:
+            cartItem.save()
+        
     elif action == "remove":
         cartItem.delete()
-        
-            
-    cartItem.save()
-    return JsonResponse(data, safe=False)
+        item_delete = True
+
+    else:
+        return JsonResponse({"error": "Invalid action"}, status=400)
+    
+    return JsonResponse({
+            "status": "success",
+            "productId": product.id,
+            "quantity": 0 if item_delete else cartItem.quantity,
+            "itemDeleted": item_delete,
+        }, status=200, safe=False)
