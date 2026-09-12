@@ -143,35 +143,24 @@
                 <button class="offcanvas-close">×</button>
             </div>
             <div class="body customScroll">
+                {% get_wishlist_items as wishlists %}
+                {% if wishlists %}
                 <ul class="minicart-product-list">
+                    {% for wishlist in wishlists %}
                     <li>
-                        <a href="single-product.html" class="image"><img src=" {% static 'images/product-image/1.jpg' %}"
+                        <a href="single-product.html" class="image"><img src="{{wishlist.product.cover_image.url}}"
                                 alt="Cart product Image"></a>
                         <div class="content">
-                            <a href="single-product.html" class="title">Hand-Made Garlic Mortar</a>
-                            <span class="quantity-price">1 x <span class="amount">$21.86</span></span>
+                            <a href="single-product.html" class="title">{{wishlist.product.title}}</a>
+                            <span class="quantity-price">1 x <span class="amount">${{wishlist.product.price}}</span></span>
                             <a href="#" class="remove">×</a>
                         </div>
                     </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{% static 'images/product-image/2.jpg' %}"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Handmade Ceramic Pottery</a>
-                            <span class="quantity-price">1 x <span class="amount">$13.28</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{% static 'images/product-image/3.jpg' %}"
-                                alt="Cart product Image"></a>shop
-                        <div class="content">
-                            <a href="single-product.html" class="title">Hand Painted Bowls</a>
-                            <span class="quantity-price">1 x <span class="amount">$17.34</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
+                    {% endfor %}
                 </ul>
+                {%else%}
+                <h3>Empty Wishlist</h3>
+                {%endif%}
             </div>
             <div class="foot">
                 <div class="buttons">
