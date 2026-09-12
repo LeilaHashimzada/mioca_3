@@ -1,17 +1,22 @@
 from django.shortcuts import render
-from product.models import Product, ProductCategory
+from product.models import Product, ProductCategory, Wishlist
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 import json
 from django.http import JsonResponse
 from order.models import Cart, CartItem
+from django.views.generic import ListView
 # Create your views here.
 
 def compare(request):
     return render(request, "compare.html")
     
-def wishlist(request):
-    return render(request, "wishlist.html")
+class WishlistView(ListView):
+    template_name = "wishlist.html"
+    model = Wishlist
+    context_object_name = "wishlists"
+    
+    
 
 def single_product(request,pk):
 

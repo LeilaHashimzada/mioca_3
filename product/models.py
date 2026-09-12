@@ -17,7 +17,6 @@ class ProductCategory(AbstractModel):
         verbose_name_plural = "Product Categories"
     
         
-        
 class ProductTag(AbstractModel):
     name = models.CharField(max_length=50)
     
@@ -49,7 +48,6 @@ class ProductPhoto(AbstractModel):
         return self.product_id.title
     
     
-    
 class ProductReview(AbstractModel):
     rating =  models.IntegerField()
     message = models.TextField()
@@ -60,3 +58,11 @@ class ProductReview(AbstractModel):
 
     def __str__(self):
         return self.product.title
+
+
+class Wishlist(AbstractModel):
+    user = models.ForeignKey(User, related_name="wishlist", on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name="wishlist", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"{self.user.username}-{self.product.title}"
