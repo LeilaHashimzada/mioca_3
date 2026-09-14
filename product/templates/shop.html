@@ -5,6 +5,23 @@
 <title>Shop</title>
 {% endblock title %}
 
+{% block css %}
+<style>
+    .sidebar-widget-category .collapse {
+        max-height: none !important;
+        opacity: 1 !important;
+        overflow: visible !important;
+        display: none;
+    }
+    .sidebar-widget-category .collapse.show {
+        display: block;
+    }
+    .sidebar-widget-category li > .collapse.collapsing {
+        display: block;
+    }
+</style>
+{% endblock css %}
+
 {% block main %}
 
 
@@ -163,13 +180,25 @@
                         <div class="pro-pagination-style text-center text-lg-end" data-aos="fade-up" data-aos-delay="200">
                             <div class="pages">
                                 <ul>
-                                    <li class="li"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a>
+                                    {% if page_obj.has_previous %}
+                                    <li class="li"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
                                     </li>
-                                    <li class="li"><a class="page-link" href="#">1</a></li>
-                                    <li class="li"><a class="page-link active" href="#">2</a></li>
-                                    <li class="li"><a class="page-link" href="#">3</a></li>
-                                    <li class="li"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a>
+                                    {% endif %}
+                                    {% for page in page_obj.paginator.page_range %}
+                                    <li class="li">
+                                        {% if page == page_obj.number %}
+                                        <a class="page-link active" href="?page={{page}}">{{page}}</a>
+                                        {% else %}
+                                        <a class="page-link" href="?page={{page}}">{{page}}</a>
+                                        {% endif %}
                                     </li>
+                                    {% endfor %}
+
+                                    {% if page_obj.has_next %}
+                                    <li class="li"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right"></i></a>
+                                    </li>
+                                    {% endif %}
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -187,18 +216,28 @@
         <ul>
             {% for category in categories %}
         <li>
-            <a href="#category{{ category.id }}"
-               data-bs-toggle="collapse"
-               aria-expanded="false">
-                <i class="fa fa-angle-right"></i>
-                {{ category.title }}
-                <span>(65)</span>
-            </a>
+            <div style="display:flex;align-items:center;">
+                <a href="{% url 'shop' %}?category={{ category.id }}" style="flex:1;text-decoration:none;color:inherit;padding:0;">
+                    <i class="fa fa-angle-right"></i>
+                    {{ category.title }}
+                </a>
+                {% if category.child.all %}
+                <button type="button"
+                   class="btn-link"
+                   data-bs-toggle="collapse"
+                   data-bs-target="#cat-{{ forloop.counter }}"
+                   aria-expanded="false"
+                   aria-controls="cat-{{ forloop.counter }}"
+                   style="background:none;border:none;color:inherit;padding:0 5px;cursor:pointer;font-size:10px;">
+                    <i class="fa fa-plus"></i>
+                </button>
+                {% endif %}
+            </div>
 
-            <ul id="category{{ category.id }}" class="collapse">
+            <ul id="cat-{{ forloop.counter }}" class="collapse">
                 {% for subcategory in category.child.all %}
                     <li>
-                        <a href="#">
+                        <a href="{% url 'shop' %}?category={{subcategory.id}}">
                             {{ subcategory.title }}
                         </a>
                     </li>
@@ -268,12 +307,10 @@
                             <h4 class="sidebar-title">Tags</h4>
                             <div class="sidebar-widget-tag">
                                 <ul>
-                                    <li><a href="#">Fashion</a></li>
-                                    <li><a href="#">Organic</a></li>
-                                    <li><a href="#">Old Fashion</a></li>
-                                    <li><a href="#">Men</a></li>
-                                    <li><a href="#">Fashion</a></li>
-                                    <li><a href="#">Dress</a></li>
+                                    {% for tag in tags %}
+                                    <li><a href="?tag={{tag.id}}">{{tag.name}}</a></li>
+                                    {% endfor %}
+
                                 </ul>
                             </div>
                         </div>
@@ -285,4 +322,3 @@
     </div>
     <!-- Shop Page End  -->
 {% endblock main %}
-

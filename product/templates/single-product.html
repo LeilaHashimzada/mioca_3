@@ -5,6 +5,13 @@
 <title>Single_Product</title>
 {% endblock title %}
 
+{% block css %}
+<style>
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+</style>
+{% endblock css %}    
+
 {% block main %}
 
     <!-- breadcrumb-area start -->
@@ -34,27 +41,29 @@
                     <div class="swiper-container zoom-top">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide zoom-image-hover">
-                                <img class="img-responsive m-auto" src="#"
-                                    alt="">
-                            </div>
-                            
-                            <div class="swiper-slide zoom-image-hover">
                                 <img class="img-responsive m-auto" src="{{item.cover_image.url}}"
                                     alt="">
                             </div>
-                            
-                            
+                            {% for photo in item.product_photos.all %}
+                            <div class="swiper-slide zoom-image-hover">
+                                <img class="img-responsive m-auto" src="{{photo.photo.url}}"
+                                    alt="">
+                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="swiper-container mt-20px zoom-thumbs ">
                         <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img class="img-responsive m-auto" src="{{item.cover_image.url}}"
+                                    alt="">
+                            </div>
                             {% for photo in item.product_photos.all %}
                             <div class="swiper-slide">
                                 <img class="img-responsive m-auto" src="{{photo.photo.url}}"
                                     alt="">
                             </div>
                             {% endfor %}
-                           
                         </div>
                     </div>
                 </div>
@@ -98,10 +107,15 @@
                             <div class="pro-details-cart">
                                 <button class="add-cart buy-button" data-product="{{item.id}}" data-action = "add" data-url="{% url 'update-item' %}"> Buy It Now</button>
                             </div>
-                            <div class="pro-details-compare-wishlist pro-details-wishlist ">
-                                <a class="add-wishlist" href="#" data-product="{{item.id}}" data-action = "add"><i class="pe-7s-like"></i></a>
-                            </div>
-                        </div>
+                        <div class="pro-details-compare-wishlist pro-details-wishlist">
+                            <form method="post" action="{% url 'add_to_wishlist' item.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </form>
+                        </div>                        
+                    </div>
                         <div class="pro-details-categories-info pro-details-same-style d-flex">
                             <span>Categories: </span>
                             <ul class="d-flex">
@@ -131,7 +145,7 @@
                             </ul>
                         </div>
                         <div class="payment-img">
-                            <a href="#"><img src="assets/images//icons/payment.png" alt=""></a>
+                            <a href="#"><img src="{% static 'images/icons/payment.png' %}" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -147,7 +161,7 @@
                 <div class="description-review-topbar nav">
                     <a data-bs-toggle="tab" href="#des-details2">Information</a>
                     <a class="active" data-bs-toggle="tab" href="#des-details1">Description</a>
-                    <a data-bs-toggle="tab" href="#des-details3">Reviews (02)</a>
+                    <a data-bs-toggle="tab" href="#des-details3">Reviews ({{item.reviews.count}})</a>
                 </div>
                 <div class="tab-content description-review-bottom">
                     <div id="des-details2" class="tab-pane">
@@ -164,73 +178,58 @@
                     </div>
                     <div id="des-details3" class="tab-pane">
                         <div class="row">
-                        {% for review in item.reviews.all %}
                             <div class="col-lg-7">
                                 <div class="review-wrapper">
                                     {% for review in item.reviews.all %}
                                     <div class="single-review">
-                                        <div class="review-img">
-                                            <img src="{% static 'assets/images/review-image/1.png' %}" alt="" />
-                                        </div>
+                                        
                                         <div class="review-content">
                                             <div class="review-top-wrap">
                                                 <div class="review-left">
-                                                    <div class="review-name">
-                                                        <h4>{{review.user_id.get_full_name}}</h4>
-                                                    </div>
+                                                    
                                                     <div class="rating-product">
                                                         <span class="star" ></span>
                                                     </div>
                                                 </div>
                                                 <div class="review-left">
-                                                    <a href="#">Reply</a>
+                                                        <div class="review-name">
+                                                            <h4>{{ review.user.username }}</h4> 
+                                                        </div>
+                                                <div class="rating-product">
+                                                        <span class="star"></span>
+                                                        </div>
+
+
+                                                    
                                                 </div>
                                             </div>
                                             <div class="review-bottom">
                                                 <p>
                                                    {{review.message}}
+                                                   
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                     {% endfor %}
-                                   
+
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        {% endfor %}
                             <div class="col-lg-5">
                                 <div class="ratting-form-wrapper pl-50">
                                     <h3>Add a Review</h3>
                                     <div class="ratting-form">
-                                        <form action="#">
-                                            <div class="star-box">
-                                                <span>Your rating:</span>
-                                                <div class="rating-product">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                            </div>
+                                        {% include 'includes/messages.html' %}
+                                        <form method="post" action="">
+                                            {% csrf_token %}
+                                            
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="rating-form-style">
-                                                        <input placeholder="Name" type="text" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="rating-form-style">
-                                                        <input placeholder="Email" type="email" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="rating-form-style form-submit">
-                                                        <textarea name="Your Review" placeholder="Message"></textarea>
-                                                        <button class="btn btn-primary btn-hover-color-primary "
-                                                            type="submit" value="Submit">Submit</button>
+                                            <div class="col-md-12">
+                                            <div class="rating-form-style form-submit">
+                                                {{ review_form.message }}
+                                                {{ review_form.message.errors }}
+                                                <button class="btn btn-primary btn-hover-color-primary "
+                                                    type="submit" value="Submit">Submit</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -266,15 +265,14 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/9.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/9.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/9.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/9.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="new">New</span>
                                 </span>
                                 <div class="actions">
-                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                            class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                     <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="pe-7s-look"></i></a>
@@ -305,16 +303,15 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/10.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/10.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/10.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/10.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="sale">-10%</span>
                                     <span class="new">New</span>
                                 </span>
                                 <div class="actions">
-                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                            class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                     <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="pe-7s-look"></i></a>
@@ -347,15 +344,14 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/11.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/11.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/11.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/11.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="new">Sale</span>
                                 </span>
                                 <div class="actions">
-                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                            class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                     <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="pe-7s-look"></i></a>
@@ -386,15 +382,14 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/12.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/1.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/12.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/1.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="sale">-5%</span>
                                 </span>
                                 <div class="actions">
-                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                            class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                     <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="pe-7s-look"></i></a>
@@ -428,8 +423,8 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/6.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/6.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/6.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/6.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                 </span>
@@ -466,15 +461,14 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="single-product.html" class="image">
-                                    <img src="assets/images/product-image/7.jpg" alt="Product" />
-                                    <img class="hover-image" src="assets/images/product-image/7.jpg" alt="Product" />
+                                    <img src="{% static 'images/product-image/7.jpg' %}" alt="Product" />
+                                    <img class="hover-image" src="{% static 'images/product-image/7.jpg' %}" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="new">New</span>
                                 </span>
                                 <div class="actions">
-                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                            class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                     <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="pe-7s-look"></i></a>

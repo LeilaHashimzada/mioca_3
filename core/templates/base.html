@@ -104,20 +104,11 @@
                             <!-- Single Wedge End -->
                             <div class="header-bottom-set dropdown">
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i class="fa-solid fa-circle-user"></i></button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        {% if request.user.is_authenticated %}
-                                                <li><a class="dropdown-item" href="{%url 'my-account' request.user.id %}">My account</a></li>
-                                                <li><a class="dropdown-item" href="{%url 'checkout'%}">Checkout</a></li>
-                                                <li>
-                                                    <form action="{% url 'auth' %}" method="post" class="d-inline">
-                                                        {% csrf_token %}
-                                                        <button name="logout" type="submit" class="dropdown-item">Logout</button>
-                                                    </form>
-                                                </li>
-                                        {% else %}
-                                                <li><a class="dropdown-item" href="{% url 'auth' %}">Sign in</a></li>
-                                        {% endif %}
-                                    </ul>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a class="dropdown-item" href="{%url 'my-account'%}">My account</a></li>
+                                    <li><a class="dropdown-item" href="{%url 'checkout'%}">Checkout</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'login' %}">Sign in</a></li>
+                                </ul>
                             </div>
                             <!-- Single Wedge Start -->
                             <a href="#offcanvas-wishlist" class="header-action-btn offcanvas-toggle">
@@ -153,17 +144,20 @@
                 {% get_wishlist_items as wishlists %}
                 {% if wishlists %}
                 <ul class="minicart-product-list">
-                    {% for wishlist in wishlists %}
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{{wishlist.product.cover_image.url}}"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">{{wishlist.product.title}}</a>
-                            <span class="quantity-price">1 x <span class="amount">${{wishlist.product.price}}</span></span>
-                            <a href="#" class="remove add-wishlist" data-product="{{item.id}}" data-action="remove">×</a>
-                        </div>
-                    </li>
-                    {% endfor %}
+            {% get_wishlist_items as wishlist_items %}
+            {% for item in wishlist_items %}
+            <li>
+                <a href="#" class="image"><img src="{{ item.product.cover_image.url }}" alt=""></a>
+                <div class="content">
+                    <a href="#" class="title">{{ item.product.title }}</a>
+                    <span class="quantity-price">1 x <span class="amount">${{ item.product.price }}</span></span>
+                     <form method="post" action="{% url 'remove_from_wishlist' item.product.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="remove">×</button>
+                     </form>                    
+                </div>
+            </li>
+            {% endfor %}                
                 </ul>
                 {%else%}
                 <h3>Empty Wishlist</h3>
@@ -187,9 +181,8 @@
             
             <div class="body customScroll">
                 <ul class="minicart-product-list">
-                    {% get_cart_items as items %}
-                    {% if items %}
-                    {% for item in items %}
+                    {% get_cart_items as cart_items %}
+                    {% for item in cart_items %}
                     <li>
                         <a href="{%url 'single_product' item.product.id %}" class="image"><img src="{{item.product.cover_image.url}}"
                                 alt="Cart product Image"></a>
@@ -575,7 +568,7 @@
                                 <div class="pro-details-rating-wrap">
                                     <span class="ratings">
                                                 <span class="rating-wrap">
-                                                    <span class="star" style="width: {% widthratio product.rating 5 100 %}%"></span>
+                                                    <span class="star" style="width:auto"></span>
                                             </span>
                                             <span class="rating-num">{{product.rating}}</span>
                                             </span>
@@ -654,7 +647,7 @@
     <script src="{% static 'js/vendor/modernizr-3.11.2.min.js' %}"></script> -->
 
     <!--Plugins JS-->
-    <!-- <script src="{% static js/plugins/swiper-bundle.min.js"></script>
+    <!-- <script src="{% static 'js/plugins/swiper-bundle.min.js' %}"></script>
     <script src="{% static 'js/plugins/jquery-ui.min.js' %}"></script>
     <script src="{% static 'js/plugins/jquery.nice-select.min.js' %}"></script>
     <script src="{% static 'js/plugins/countdown.js' %}"></script>

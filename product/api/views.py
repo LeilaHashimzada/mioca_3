@@ -1,34 +1,67 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView
-from .serializer import ProductSerializer, ProductCreateSerializer
-from product.models import Product
+from product.models import ProductCategory
 from django.http import JsonResponse
+from product.api.serializer import ProductCategorySerializers,ProductSerializer,ProductCreateSerializer,ProductTagSerializer
+from product.models import Product
+from rest_framework.decorators import api_view
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import RetrieveUpdateAPIView
 
-class ProductListApiView(ListCreateAPIView):
+
+def categories(request):
+    categories = ProductCategory.objects.all()
+    tags = ProductTagSerializer(many=True)
+    serializer = ProductCategorySerializers(categories, many=True)
+
+    return JsonResponse(data= serializer.data, safe=False)
+
+@api_view(http_method_names= ['GET', 'POST'])
+def products(request):
+    products=Product.objects.all()
+    if request.method == 'POST':
+        serializer = ProductCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(data=serializer.data,status=200)
+            
+        return JsonResponse(data=serializer.errors,status=400)
+
+
+    serializer = ProductSerializer(products,context = {'request':request},many=True)
+    return JsonResponse(data= serializer.data, safe=False)
+
+@api_view(http_method_names = ['PUT','PATCH'])
+def product_update(request,pk):
+    product=Product.objects.get(id = pk)
+    if request.method == 'PUT':
+        serializer = ProductCreateSerializer(data = request.data, context = {'request':request},instance=product)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(data=serializer.data,status=201)
+        return JsonResponse(data=serializer.errors,status=400)
+    if request.method =='PATCH':
+        serializer = ProductCreateSerializer(data = request.data,instance=product,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(data=serializer.data,status=201)
+        return JsonResponse(data=serializer.errors,status=400)
+    serializer = ProductSerializer(products,context = {'request':request},many=True)
+    return JsonResponse(data = serializer.data,safe=False)
+
+class ProductListAPI(ListCreateAPIView):
     serializer_class = ProductSerializer
-    queryset = Product.objects.all()
-    
+    queryset = ProductSerializer
+
     def get_serializer_class(self):
-        if self.request.method == 'POST':
+        if self.request.method =='POST':
             return ProductCreateSerializer
         return ProductSerializer
-    
-    
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return JsonResponse(
-            {"message": "Product created successfully", "data": serializer.data},
-            status=200,
-            headers=headers
-        )
-    
+
 class ProductUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
-    
+
     def get_serializer_class(self):
-        if self.request.method in ["PUT", 'PATCH']:
+        if self.request.method in ['PUT','PATCH']:
             return ProductCreateSerializer
         return ProductSerializer
+    

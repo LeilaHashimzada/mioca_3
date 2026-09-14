@@ -15,7 +15,7 @@
                     <h2 class="breadcrumb-title">Login & Register</h2>
                     <!-- breadcrumb-list start -->
                     <ul class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
                         <li class="breadcrumb-item active">Login</li>
                     </ul>
                     <!-- breadcrumb-list end -->
@@ -44,11 +44,11 @@
                             <div id="lg1" class="tab-pane active">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form method="post">
+                                        <form action="#" method="post">
                                             {% csrf_token %}
                                             {{login_form.username}}
                                             {{login_form.username.errors}}
-
+                                             
                                             {{login_form.password}}
                                             {{login_form.password.errors}}
 
@@ -58,7 +58,7 @@
                                                     <a class="flote-none" href="javascript:void(0)">Remember me</a>
                                                     <a href="#lg2">Forgot Password?</a>
                                                 </div>
-                                                <button type="submit", name="login"><span>Login</span></button>
+                                                <button type="submit" name="login_submit"><span>Login</span></button>
                                             </div>
                                         </form>
                                     </div>
@@ -67,19 +67,18 @@
                             <div id="lg2" class="tab-pane">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form  method="post">
+                                        <form action="#"  method="post">
                                             {% csrf_token %}
-                                            <!-- <input type="text" name="user-name" placeholder="Username" /> -->
-                                             {{register_form.username}}
-                                             {{register_form.username.errors}}
-                                            <!-- <input type="password" name="user-password" placeholder="Password" /> -->
-                                            {{register_form.password}}
-                                            {{register_form.password.errors}}
-                                            <!-- <input name="user-email" placeholder="Email" type="email" /> -->
+                                            {{register_form.username}}
+                                            {{register_form.username.errors}}
+
                                             {{register_form.email}}
                                             {{register_form.email.errors}}
+
+                                            {{register_form.password}}
+                                            {{register_form.password.errors}}
                                             <div class="button-box">
-                                                <button type="submit" name = "register"><span>Register</span></button>
+                                                <button type="submit" name="register_submit"><span>Register</span></button>
                                             </div>
                                         </form>
                                     </div>

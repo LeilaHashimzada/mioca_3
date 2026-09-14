@@ -5,15 +5,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic import DetailView
 from .models import User
 
-
-# Create your views here.
-def auth(request):
+def auth_view(request):
     register_form = RegisterForm()
     login_form = LoginForm()
+
     if request.method == 'POST':
-        if "register" in request.POST:
-            register_form =  RegisterForm(data=request.POST)
-            print(request.POST)
+        if 'register_submit' in request.POST:
+            register_form = RegisterForm(data=request.POST)
             if register_form.is_valid():
                 user = register_form.save()
                 user.set_password(register_form.cleaned_data['password'])
@@ -35,15 +33,17 @@ def auth(request):
         elif "logout" in request.POST:
             logout(request)
             return redirect('index')
-            
     context = {
         'register_form': register_form,
         'login_form': login_form
     }
     return render(request, "login.html", context)
 
+
 class AccountView(DetailView):
     template_name = "my-account.html"
     model = User
     context_object_name = "person"
+
+
 

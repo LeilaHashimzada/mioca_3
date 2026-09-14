@@ -45,16 +45,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for item in items %}
                                     <tr>
                                         <td class="product-thumbnail">
-                                            <a href="#"><img class="img-responsive ml-15px" src="{{wishlist.product.cover_image.url}}" alt="" /></a>
+                                            <a href="#"><img class="img-responsive ml-15px" src="{{item.product.cover_image.url}}" alt="" /></a>
                                         </td>
-                                        <td class="product-name"><a href="single_product"></a></td>
-                                        <td class="product-price-cart"><span class="amount">$30</span></td>
-                                        <td class="product-wishlist-cart add-cart">
-                                            <button>add to cart</button>
+                                        <td class="product-name"><a href="#">{{item.product.title}}</a></td>
+                                        <td class="product-price-cart"><span class="amount">${{item.product.price}}</span></td>
+                                        <td class="product-quantity">
+                                            <div class="cart-plus-minus">
+                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal">$70.00</td>
+                                        <td class="product-wishlist-cart">
+                                            <a href="#">add to cart</a>
                                         </td>
                                     </tr>
+                                    {% endfor%}
                                 </tbody>
                             </table>
                         </div>

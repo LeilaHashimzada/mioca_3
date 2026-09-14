@@ -27,7 +27,7 @@ urlpatterns = [
     path("products/", include("product.urls")),
     path("blogs/", include("blog.urls")),
     path("order/", include("order.urls")),
-    #path("blog/api/", include("blog.api.urls")),
+    path("api-auth/", include("rest_framework.urls")),
     path("api/", include("product.api.urls"))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

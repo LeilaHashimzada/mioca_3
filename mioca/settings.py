@@ -13,7 +13,12 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from django.contrib.messages import constants as message_constants
 load_dotenv()
+
+MESSAGE_TAGS = {
+    message_constants.ERROR: "danger",
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,6 +52,7 @@ INSTALLED_APPS = [
     "blog",
     "order",
     "product",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [

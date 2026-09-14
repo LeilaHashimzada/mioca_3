@@ -3,8 +3,12 @@ from django.contrib.auth import get_user_model
 User=get_user_model()
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Username'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class':'form-control',
+        'placeholder':'Password'}))
 
 class RegisterForm(forms.ModelForm):
     class Meta:
@@ -28,5 +32,4 @@ class RegisterForm(forms.ModelForm):
                 'class' : 'form-control',
                 'placeholder' : 'Password'
             }),
-           
         }
