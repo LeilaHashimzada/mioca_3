@@ -89,16 +89,6 @@ def addtowishlist(request,id):
 def wishlist(request):
     items = Wishlist.objects.filter(user=request.user)
 
-
-def shop(request):
-    product_list = Product.objects.all()
-    categories = ProductCategory.objects.filter(parent = None)
-    
-    context = {
-        'items' : items
-    }
-    return render(request, 'wishlist.html', context)
-
 @login_required
 def removefromwishlist(request, id):
     if request.method == "POST":
