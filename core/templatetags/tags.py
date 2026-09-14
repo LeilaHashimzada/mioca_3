@@ -1,6 +1,5 @@
 from django import template
 from order.models import Cart, CartItem
-from product.models import Wishlist
 
 
 register = template.Library()
@@ -19,16 +18,3 @@ def get_cart_items(context):
         
     return CartItem.objects.none()
 
-@register.simple_tag(takes_context=True)
-def get_wishlist_items(context):
-    request = context.get("request")
-    
-    if not request or not hasattr(request, 'user') or not request.user.is_authenticated:
-            return Wishlist.objects.none()
-    
-    wishlist = Wishlist.objects.filter(user=request.user)
-    
-    if wishlist:
-        return wishlist.select_related('product').all()
-    
-    return Wishlist.objects.none()

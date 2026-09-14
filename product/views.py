@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from product.models import Product, ProductCategory, Wishlist
+from product.models import Product, ProductCategory
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 import json
