@@ -18,7 +18,6 @@ class ProductCategory(AbstractModel):
         verbose_name_plural = "Product Categories"
     
         
-        
 class ProductTag(AbstractModel):
     name = models.CharField(max_length=50)
     
@@ -30,13 +29,13 @@ class Product(AbstractModel):
     title = models.CharField(max_length=50)
     price = models.FloatField()
     rating = models.IntegerField(null=True, blank=True)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     is_available = models.BooleanField(default=False)
     is_added = models.BooleanField(default=False)
-    information = models.TextField()
-    cover_image = models.ImageField(upload_to = "media", height_field=None, width_field=None, max_length=None)
-    category = models.ForeignKey(ProductCategory, related_name="products", on_delete=models.CASCADE)
-    tag = models.ManyToManyField(ProductTag)
+    information = models.TextField(null=True, blank=True)
+    cover_image = models.ImageField(upload_to = "media", height_field=None, width_field=None, max_length=None, null=True, blank=True)
+    category = models.ForeignKey(ProductCategory, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
+    tag = models.ManyToManyField(ProductTag, null=True, blank=True)
     
     def __str__(self):
         return self.title
@@ -48,7 +47,6 @@ class ProductPhoto(AbstractModel):
 
     def __str__(self):
         return self.product_id.title
-    
     
     
 class ProductReview(AbstractModel):

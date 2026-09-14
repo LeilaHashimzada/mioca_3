@@ -62,22 +62,19 @@
                                         <li class="d-flex">
                                             <ul class="d-block">
                                                 <li class="title"><a href="#">Inner Pages</a></li>
-                                                <li><a href="404.html">404 Page</a></li>
                                                 <li><a href="{% url 'faq'%}">Faq Page</a></li>
                                             </ul>
                                             <ul class="d-block">
                                                 <li class="title"><a href="{% url 'shop'%}">Other Shop Pages</a></li>
-                                                <li><a href="cart.html">Cart Page</a></li>
-                                                <li><a href="checkout.html">Checkout Page</a></li>
-                                                <li><a href="compare.html">Compare Page</a></li>
-                                                <li><a href="wishlist.html">Wishlist Page</a></li>
+                                                <li><a href="{%url 'cart'%}">Cart Page</a></li>
+                                                <li><a href="{%url 'checkout'%}">Checkout Page</a></li>
+                                                <li><a href="{%url 'compare'%}">Compare Page</a></li>
+                                                <li><a href="{%url 'wishlist'%}">Wishlist Page</a></li>
                                             </ul>
                                             <ul class="d-block">
                                                 <li class="title"><a href="{% url 'shop'%}">Related Shop Pages</a></li>
                                                 <li><a href="my-account.html">Account Page</a></li>
                                                 <li><a href="login.html">Login & Register Page</a></li>
-                                                <li><a href="empty-cart.html">Empty Cart Page</a></li>
-                                                <li><a href="thank-you-page.html">Thank You Page</a></li>
                                             </ul>
                                             <ul class="d-flex align-items-center p-0 border-0">
                                                 <li>
@@ -144,6 +141,8 @@
                 <button class="offcanvas-close">×</button>
             </div>
             <div class="body customScroll">
+                {% get_wishlist_items as wishlists %}
+                {% if wishlists %}
                 <ul class="minicart-product-list">
             {% get_wishlist_items as wishlist_items %}
             {% for item in wishlist_items %}
@@ -160,6 +159,9 @@
             </li>
             {% endfor %}                
                 </ul>
+                {%else%}
+                <h3>Empty Wishlist</h3>
+                {%endif%}
             </div>
             <div class="foot">
                 <div class="buttons">
@@ -182,15 +184,18 @@
                     {% get_cart_items as cart_items %}
                     {% for item in cart_items %}
                     <li>
-                        <a href="single-product.html" class="image"><img src="{% static 'images/product-image/1.jpg' %}"
+                        <a href="{%url 'single_product' item.product.id %}" class="image"><img src="{{item.product.cover_image.url}}"
                                 alt="Cart product Image"></a>
                         <div class="content">
                             <a href="single-product.html" class="title">{{item.product.title}}</a>
-                            <span class="quantity-price">1 x <span class="amount">${{item.product.price}}</span></span>
-                            <a href="#" class="remove">×</a>
+                            <span class="quantity-price">{{item.quantity}} x <span class="amount">${{item.price}}</span></span>
+                            <button class="remove"  data-product="{{item.product.id}}" data-action="remove"  data-url="{% url 'update-item' %}">×</button>
                         </div>
                     </li>
                     {% endfor %}
+                    {% else %}
+                    <h3>Empty Cart</h3>
+                    {% endif %}
                 </ul>
             </div>
             <div class="foot">
@@ -657,6 +662,7 @@
 
     <!-- Main Js -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/wishlist.js' %}"></script>
          {%block js%}
          {% endblock %}
 </body>

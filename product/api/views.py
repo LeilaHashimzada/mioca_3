@@ -11,21 +11,6 @@ def categories(request):
     categories = ProductCategory.objects.all()
     tags = ProductTagSerializer(many=True)
     serializer = ProductCategorySerializers(categories, many=True)
-#     category_dict = []
-#     for category in categories:
-#         if category.parent:
-#             category_dict.append(
-#                 {'parent':category.parent.id,
-#                 'id':category.id,
-#                 'title': category.title,
-#                 }
-#             )
-#         else:
-#                 category_dict.append(
-#                 {'id':category.id,
-#                 'title': category.title,
-#                 }
-#             )
 
     return JsonResponse(data= serializer.data, safe=False)
 

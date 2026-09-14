@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+
 from product.models import Product,ProductCategory
 from core.forms import ContactForm
 from django.contrib import messages
 from .models import Contact
-from django.views.generic import CreateView
+from django.views.generic.edit import FormMixin
+from django.views.generic import CreateView, TemplateView
 
 # Create your views here.
 
@@ -17,6 +19,26 @@ def index(request):
     }
 
     return render(request, "index.html" , context)
+
+class ContactView(TemplateView, FormMixin):
+    template_name = "contact.html"
+    model = Contact
+    form_class = ContactForm
+    success_url = reverse_lazy("contact")
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.get_form()
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, "SUCCESS","Successfully sent!")
+            return
+        
+        return self.get(request, *args, **kwargs)
 
 def about(request):
     return render(request, "about.html")

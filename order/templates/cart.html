@@ -54,14 +54,17 @@
                                         <td class="product-price-cart"><span class="amount">${{item.product.price}}</span></td>
                                         <td class="product-quantity">
                                             <div class="cart-plus-minus">
+                                                <div class="dec qtybutton" data-product="{{item.product.id}}" data-action="decrease"  data-url="{% url 'update-item' %}">-</div>
                                                 <input class="cart-plus-minus-box" type="text" name="qtybutton"
-                                                    value="1" />
+                                                    value="{{item.quantity}}"/>
+                                                <div class="inc qtybutton" data-product="{{item.product.id}}" data-action="add"  data-url="{% url 'update-item' %}">+</div>
                                             </div>
                                         </td>
-                                        <td class="product-subtotal">$70.00</td>
+                                        <td class="product-subtotal">${{item.price}}</td>
                                         <td class="product-remove">
-                                            <a href="#"><i class="fa fa-pencil"></i></a>
-                                            <a href="#"><i class="fa fa-times"></i></a>
+                                            <button class="remove" data-product="{{item.product.id}}" data-action="remove" data-url="{% url 'update-item' %}">
+                                                <i class="fa fa-times"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -76,7 +79,7 @@
                                     </div>
                                     <div class="cart-clear">
                                         <button>Update Shopping Cart</button>
-                                        <a href="{% url 'empty_cart' %}">Clear Shopping Cart</a>
+                                        <a href="{% url 'shop' %}">Clear Shopping Cart</a>
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +127,9 @@
                                         <button class="cart-btn-2" type="submit">Get A Quote</button>
                                     </div>
                                 </div>
-                            </div>
+                            </div>                                        <td class="product-remove">
+                                            <button class="remove fa fa-times"  data-product="{{item.product.id}}" data-action="remove" data-url="{% url 'update-item' %}"></button>
+                                        </td>
                         </div>
                         <div class="col-lg-4 col-md-6 mb-lm-30px">
                             <div class="discount-code-wrapper">
@@ -145,7 +150,7 @@
                                 <div class="title-wrap">
                                     <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                                 </div>
-                                <h5>Total products <span>$260.00</span></h5>
+                                <h5>Total products <span>${{cart.price}}</span></h5>
                                 <div class="total-shipping">
                                     <h5>Total shipping</h5>
                                     <ul>
@@ -153,8 +158,8 @@
                                         <li><input type="checkbox" /> Express <span>$30.00</span></li>
                                     </ul>
                                 </div>
-                                <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
-                                <a href="checkout.html">Proceed to Checkout</a>
+                                <h4 class="grand-totall-title">Grand Total <span>${{cart.price}}</span></h4>
+                                <a href="{% url 'checkout' %}">Proceed to Checkout</a>
                             </div>
                         </div>
                     </div>
@@ -188,6 +193,10 @@
     <!-- Empty Cart area end -->
 
     {% endif %}
+
+    {%block js%}
+    <script src="{%static 'js/cart.js'%}"></script>
+    {%endblock%}
 
 
     {% endblock  %}

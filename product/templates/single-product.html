@@ -73,7 +73,6 @@
                         <div class="pricing-meta">
                             <ul class="d-flex">
                                 <li class="new-price">${{item.price}}</li>
-                                <li class="old-price"><del>$30.90</del></li>
                             </ul>
                         </div>
                         <div class="pro-details-rating-wrap">
@@ -102,11 +101,11 @@
                                 <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
                             </div>
                             <div class="pro-details-cart">
-                                <button class="add-cart"> Add To
+                                <button class="add-cart" data-product="{{item.id}}" data-action = "add" data-url="{% url 'update-item' %}"> Add To
                                     Cart</button>
                             </div>
                             <div class="pro-details-cart">
-                                <button class="add-cart buy-button"> Buy It Now</button>
+                                <button class="add-cart buy-button" data-product="{{item.id}}" data-action = "add" data-url="{% url 'update-item' %}"> Buy It Now</button>
                             </div>
                         <div class="pro-details-compare-wishlist pro-details-wishlist">
                             <form method="post" action="{% url 'add_to_wishlist' item.pk %}">
@@ -507,4 +506,8 @@
         </div>
     </div>
     <!-- Related product Area End -->
+          {% block js %}
+    <script src="{% static 'js/product.js' %}"></script>
+    <script src="{% static 'js/wishlist.js' %}"></script>
+    {% endblock %}
 {% endblock main %}

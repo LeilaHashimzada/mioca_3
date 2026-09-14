@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from account.forms import RegisterForm, LoginForm
-from django.contrib.auth import authenticate, login as djangologin
+from django.contrib.auth import authenticate, login, logout
+from django.views.generic import DetailView
+from .models import User
 
 def auth_view(request):
     register_form = RegisterForm()
@@ -11,23 +13,26 @@ def auth_view(request):
         if 'register_submit' in request.POST:
             register_form = RegisterForm(data=request.POST)
             if register_form.is_valid():
-                user = register_form.save(commit=False)  
-                user.set_password(register_form.cleaned_data['password'])  
-                user.save()  
-                return redirect(reverse_lazy('login')) 
-            
-        elif 'login_submit' in request.POST:
+                user = register_form.save()
+                user.set_password(register_form.cleaned_data['password'])
+                user.save()
+                return redirect(reverse_lazy('my-account', pk=request.user.id))
+        elif "login" in request.POST:
             login_form = LoginForm(data=request.POST)
             if login_form.is_valid():
-                authenticate_user = authenticate(
-                    request,
+                user = authenticate(
+                    request, 
                     username=login_form.cleaned_data['username'],
                     password=login_form.cleaned_data['password']
                 )
-                if authenticate_user:
-                    djangologin(request, authenticate_user)
-                    return redirect(reverse_lazy('index'))
+                if user is not None:
+                    login(request, user)
+                    return redirect('my-account', pk=request.user.id)
+            return redirect('404')
 
+        elif "logout" in request.POST:
+            logout(request)
+            return redirect('index')
     context = {
         'register_form': register_form,
         'login_form': login_form
@@ -35,8 +40,10 @@ def auth_view(request):
     return render(request, "login.html", context)
 
 
-def account(request):
-    return render(request,"my-account.html")
+class AccountView(DetailView):
+    template_name = "my-account.html"
+    model = User
+    context_object_name = "person"
 
 
 

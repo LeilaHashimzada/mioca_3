@@ -7,6 +7,11 @@ from product.forms import ReviewForm
 from .models import Wishlist
 from django.contrib.auth.decorators import login_required
 
+from django.http import Http404
+import json
+from django.http import JsonResponse
+from order.models import Cart, CartItem
+
 # Create your views here.
 class ShopDetailView(FormMixin,DetailView):
     form_class = ReviewForm
@@ -69,7 +74,6 @@ class ListViewProduct(ListView):
 
 
 @login_required
-
 def addtowishlist(request,id):
     if request.method == "POST":
         product = get_object_or_404(Product, pk=id)
@@ -86,6 +90,10 @@ def wishlist(request):
     items = Wishlist.objects.filter(user=request.user)
 
 
+def shop(request):
+    product_list = Product.objects.all()
+    categories = ProductCategory.objects.filter(parent = None)
+    
     context = {
         'items' : items
     }
@@ -97,6 +105,41 @@ def removefromwishlist(request, id):
         Wishlist.objects.filter(user=request.user, product_id=id).delete()
     return redirect("wishlist")
 
+def update_item(request, pk):
+    data = json.loads(request.body)
+    productId = data["productId"]
+    action = data["action"]
+    
+    product = Product.objects.get(id = productId)
+    cart, created = Cart.objects.get_or_create(user = request.user, is_active=True)
+    cartItem, created = CartItem.objects.get_or_create(cart = cart, product= product)
+   
+    item_delete = False 
+    
+    if action == "add":
+        if created:
+            cartItem.quantity = 1
+        else:
+            cartItem.quantity += 1
+            
+    elif action == "decrease":
+        cartItem.quantity -=1
+        if cartItem.quantity <=0:
+            cartItem.delete()
+            item_delete = True
+        else:
+            cartItem.save()
+        
+    elif action == "remove":
+        cartItem.delete()
+        item_delete = True
 
+    else:
+        return JsonResponse({"error": "Invalid action"}, status=400)
     
-    
+    return JsonResponse({
+            "status": "success",
+            "productId": product.id,
+            "quantity": 0 if item_delete else cartItem.quantity,
+            "itemDeleted": item_delete,
+        }, status=200, safe=False)

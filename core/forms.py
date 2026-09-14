@@ -8,7 +8,7 @@ class ContactForm(forms.ModelForm):
             'name',
             'email',
             'subject',
-            'message',
+            'context',
 
         ]
 
@@ -22,7 +22,7 @@ class ContactForm(forms.ModelForm):
             'subject' : forms.TextInput(attrs={
                 'class' : 'form-control'
             }),
-            'message' : forms.Textarea(attrs={
+            'context' : forms.Textarea(attrs={
                 'class' : 'form-control'
             }),
         }
