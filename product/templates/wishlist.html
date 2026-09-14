@@ -45,18 +45,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for wishlist in wishlists %}
                                     <tr>
                                         <td class="product-thumbnail">
                                             <a href="#"><img class="img-responsive ml-15px" src="{{wishlist.product.cover_image.url}}" alt="" /></a>
                                         </td>
-                                        <td class="product-name"><a href="single_product">{{wishlist.product.title}}</a></td>
-                                        <td class="product-price-cart"><span class="amount">${{wishlist.product.price}}</span></td>
+                                        <td class="product-name"><a href="single_product"></a></td>
+                                        <td class="product-price-cart"><span class="amount">$30</span></td>
                                         <td class="product-wishlist-cart add-cart">
-                                            <button class="add-cart" data-product="{{wishlist.product.id}}" data-action="add">add to cart</button>
+                                            <button>add to cart</button>
                                         </td>
                                     </tr>
-                                    {%endfor%}
                                 </tbody>
                             </table>
                         </div>

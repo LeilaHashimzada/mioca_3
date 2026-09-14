@@ -5,16 +5,10 @@ from django.http import Http404
 import json
 from django.http import JsonResponse
 from order.models import Cart, CartItem
-from django.views.generic import ListView
 # Create your views here.
 
 def compare(request):
     return render(request, "compare.html")
-    
-class WishlistView(ListView):
-    template_name = "wishlist.html"
-    model = Wishlist
-    context_object_name = "wishlists"
     
 def single_product(request,pk):
 
@@ -38,22 +32,6 @@ def shop(request):
         "categories" : categories
     }
     return render(request,"shop.html", context)
-
-
-def wish_item(request):
-        data = json.loads(request.body)
-        productId = data["productId"]
-        action = data["action"]
-        
-        product = Product.objects.get(id = productId)
-        wishlist, created = Wishlist.objects.get_or_create(user=request.user)
-        
-        if action == "add":
-            wishlist.products.add(product)
-        elif action == "remove":
-            wishlist.products.remove(product)
-
-        return JsonResponse(status=200)
 
 
 def update_item(request, pk):
