@@ -133,28 +133,11 @@
                     <!-- Tab Start -->
                     <div class="tab-slider swiper-container slider-nav-style-1 small-nav">
                         <ul class="product-tab-nav nav swiper-wrapper ">
-                            <li class="nav-item swiper-slide"><a class="nav-link active" data-bs-toggle="tab" href="#tab-jewelry"> <img src="{% static 'images/icons/jewelry-icon.png' %}"
-                                        alt=""><span>Jewelry</span></a>
-                            </li>
-
-                            <li class="nav-item swiper-slide"><a class="nav-link" data-bs-toggle="tab" href="#tab-pottery"> <img src="{% static 'images/icons/pottery-icon.png' %}"
-                                        alt=""><span>Pottery</span></a>
-                            </li>
-                            <li class="nav-item swiper-slide"><a class="nav-link" data-bs-toggle="tab" href="#tab-fabric"> <img src="{% static 'images/icons/fabric-icon.png' %}"
-                                        alt=""><span>Fabric</span></a>
-                            </li>
-                            <li class="nav-item swiper-slide"><a class="nav-link" data-bs-toggle="tab" href="#tab-paintings"> <img src="{% static 'images/icons/paintings-icon.png' %}"
-                                        alt=""><span>Paintings</span></a>
-                            </li>
-                            <li class="nav-item swiper-slide"><a class="nav-link" data-bs-toggle="tab" href="#tab-sculptures"> <img src="{% static 'images/icons/sculptures-icon.png' %}"
-                                        alt=""><span>Sculptures</span></a>
-                            </li>
-                            <li class="nav-item swiper-slide"><a class="nav-link" data-bs-toggle="tab" href="#tab-wooden"> <img src="{% static 'images/icons/wooden-icon.png' %}"
-                                        alt=""><span>Wooden</span></a>
-                            </li>
-                            <li class="nav-item swiper-slide"><a class="nav-link" data-bs-toggle="tab" href="#tab-pottery"> <img src="{% static 'images/icons/pottery-icon.png' %}"
-                                        alt=""><span>Pottery</span></a>
-                            </li>
+                            {% for category in category_list %}
+                            <li class="nav-item swiper-slide"><a class="nav-link active" data-bs-toggle="tab" href="#tab-jewelry"> <img src="{{ category.category_image.url }}"
+                                        alt=""><span>{{category.title}}</span></a>
+                            {% endfor %}
+                            
                         </ul>
                         <!-- Add Arrows -->
                         <div class="swiper-buttons">
@@ -169,13 +152,13 @@
             </div>
             <!-- Section Title & Tab End -->
 
-            {% for product in product_list %}
             <div class="row">
                 <div class="col">
                     <div class="tab-content mt-60px">
                         <!-- 1st tab start -->
                         <div class="tab-pane fade show active" id="tab-jewelry">
                             <div class="row">
+                            {% for product in product_list %}
                                 <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px">
                                     <!-- Single Prodect -->
                                     <div class="product">
@@ -185,9 +168,7 @@
                                                 <img class="hover-image" src="{{product.cover_image.url}}"
                                                     alt="Product" />
                                             </a>
-                                            <span class="badges">
-                                                <span class="new">New</span>
-                                            </span>
+
                                             <div class="actions">
                                                 <a href="{% url 'wishlist' %}" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                                 <a href="#" class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-expand"></i></a>
@@ -197,7 +178,7 @@
                                         <div class="content">
                                            <span class="ratings">
                                             <span class="rating-wrap">
-                                                <span class="star" style="width: {% widthratio product.rating 5 100 %}%"></span>\
+                                                <span class="star" style="width: auto"></span>\
                                             </span>
                                             
                                             <span class="rating-num">{{ product.rating }}</span>
@@ -215,9 +196,13 @@
                                             To Cart</button>
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px"> -->
-            {% endfor %}
-                                   
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                                     
 
     {% include "includes/feature.html" %}
 
@@ -256,20 +241,15 @@
                 <!-- Section Title Start -->
                 <div class="col-12">
                     <div class="section-title text-center m-0">
-                        <h2 class="title">Bestsellers Items</h2>
+                        <h2 class="title">Bestseller Items</h2>
                     </div>
                     <!-- Tab Start -->
                     <div class="tab-slider nav-center">
                         <ul class="product-tab-nav nav justify-content-center align-items-center">
-                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-fabric-2"><span>Fabric</span></a>
+                            {% for category in category_list %}
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-fabric-2"><span>{{category.title}}</span></a>
                             </li>
-                            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab-wooden-2"><span>Wooden</span></a>
-                            </li>
-
-                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-pottery-2"><span>Pottery</span></a>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-jewelry-2"><span>Jewelry</span></a>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <!-- Tab End -->

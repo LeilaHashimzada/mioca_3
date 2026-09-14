@@ -108,10 +108,15 @@
                             <div class="pro-details-cart">
                                 <button class="add-cart buy-button"> Buy It Now</button>
                             </div>
-                            <div class="pro-details-compare-wishlist pro-details-wishlist ">
-                                <a href="wishlist.html"><i class="pe-7s-like"></i></a>
-                            </div>
-                        </div>
+                        <div class="pro-details-compare-wishlist pro-details-wishlist">
+                            <form method="post" action="{% url 'add_to_wishlist' item.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </form>
+                        </div>                        
+                    </div>
                         <div class="pro-details-categories-info pro-details-same-style d-flex">
                             <span>Categories: </span>
                             <ul class="d-flex">
@@ -268,8 +273,7 @@
                                     <span class="new">New</span>
                                 </span>
                                 <div class="actions">
-                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                            class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                     <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="pe-7s-look"></i></a>
@@ -308,8 +312,7 @@
                                     <span class="new">New</span>
                                 </span>
                                 <div class="actions">
-                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                            class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                     <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="pe-7s-look"></i></a>
@@ -349,8 +352,7 @@
                                     <span class="new">Sale</span>
                                 </span>
                                 <div class="actions">
-                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                            class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                     <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="pe-7s-look"></i></a>
@@ -388,8 +390,7 @@
                                     <span class="sale">-5%</span>
                                 </span>
                                 <div class="actions">
-                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                            class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                     <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="pe-7s-look"></i></a>
@@ -468,8 +469,7 @@
                                     <span class="new">New</span>
                                 </span>
                                 <div class="actions">
-                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                            class="pe-7s-like"></i></a>
+                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
                                     <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                             class="pe-7s-look"></i></a>

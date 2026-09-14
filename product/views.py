@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from product.models import Product, ProductCategory,ProductReview
+from product.models import Product, ProductCategory,ProductReview,ProductTag
 from django.views.generic import ListView,DetailView
 from django.views.generic.edit import FormMixin
 from product.forms import ReviewForm
+from .models import Wishlist
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 class ShopDetailView(FormMixin,DetailView):
@@ -43,56 +45,58 @@ class ShopDetailView(FormMixin,DetailView):
 def compare(request):
     return render(request, "compare.html")
 
-def wishlist(request):
-    return render(request, "wishlist.html")
-
-# def single_product(request,pk):
-#     item = get_object_or_404(Product,id=pk)
-#     review_form = ReviewForm()
-#     if request.method == 'POST':
-#         review_form = ReviewForm(data=request.POST)
-#         if review_form.is_valid():
-#             review = review_form.save(commit=False)
-#             review.user = request.user
-#             review.product = item
-#             review.save()
-#             messages.success(request, "Successful review!")
-#             return redirect('single_product', pk=item.pk)
-#     context = {
-#         'item' : item,
-#         'review_form' : review_form,
-#     }
-#     return render(request,"single-product.html" , context)
-
-
-# def shop(request):
-#     product_list = Product.objects.all()
-#     categories = ProductCategory.objects.filter(parent = None)
-    
-#     context = {
-#         "product_list" : product_list,
-#         "categories" : categories
-#     }
-#     return render(request,"shop-left-sidebar.html", context)
-
-
 class ListViewProduct(ListView):
     template_name = 'shop.html'
     model = Product
-    paginate_by = 1
+    paginate_by = 2
 
     def get_queryset(self):
         queryset = super().get_queryset()
         category_id = self.request.GET.get('category')
+        tag_id = self.request.GET.get('tag')
         if category_id:
             queryset = queryset.filter(category=category_id)
+        if tag_id:
+            queryset = queryset.filter(tag=tag_id)
         return queryset
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = ProductCategory.objects.filter(parent = None)
+        context['tags'] = ProductTag.objects.all()
         return context
+
+
+@login_required
+
+def addtowishlist(request,id):
+    if request.method == "POST":
+        product = get_object_or_404(Product, pk=id)
+
+        Wishlist.objects.get_or_create(
+            user=request.user,
+            product=product,
+        )
+
+        return redirect("wishlist")
+
+@login_required
+def wishlist(request):
+    items = Wishlist.objects.filter(user=request.user)
+
+
+    context = {
+        'items' : items
+    }
+    return render(request, 'wishlist.html', context)
+
+@login_required
+def removefromwishlist(request, id):
+    if request.method == "POST":
+        Wishlist.objects.filter(user=request.user, product_id=id).delete()
+    return redirect("wishlist")
+
 
     
     

@@ -5,6 +5,23 @@
 <title>Shop</title>
 {% endblock title %}
 
+{% block css %}
+<style>
+    .sidebar-widget-category .collapse {
+        max-height: none !important;
+        opacity: 1 !important;
+        overflow: visible !important;
+        display: none;
+    }
+    .sidebar-widget-category .collapse.show {
+        display: block;
+    }
+    .sidebar-widget-category li > .collapse.collapsing {
+        display: block;
+    }
+</style>
+{% endblock css %}
+
 {% block main %}
 
 
@@ -199,15 +216,23 @@
         <ul>
             {% for category in categories %}
         <li>
-            <a href="#"
-               data-bs-toggle="collapse"
-               data-bs-target="#cat-{{ forloop.counter }}"
-               aria-expanded="false"
-               aria-controls="cat-{{ forloop.counter }}">
-                <i class="fa fa-angle-right"></i>
-                {{ category.title }}
-                <span></span>
-            </a>
+            <div style="display:flex;align-items:center;">
+                <a href="{% url 'shop' %}?category={{ category.id }}" style="flex:1;text-decoration:none;color:inherit;padding:0;">
+                    <i class="fa fa-angle-right"></i>
+                    {{ category.title }}
+                </a>
+                {% if category.child.all %}
+                <button type="button"
+                   class="btn-link"
+                   data-bs-toggle="collapse"
+                   data-bs-target="#cat-{{ forloop.counter }}"
+                   aria-expanded="false"
+                   aria-controls="cat-{{ forloop.counter }}"
+                   style="background:none;border:none;color:inherit;padding:0 5px;cursor:pointer;font-size:10px;">
+                    <i class="fa fa-plus"></i>
+                </button>
+                {% endif %}
+            </div>
 
             <ul id="cat-{{ forloop.counter }}" class="collapse">
                 {% for subcategory in category.child.all %}
@@ -282,12 +307,10 @@
                             <h4 class="sidebar-title">Tags</h4>
                             <div class="sidebar-widget-tag">
                                 <ul>
-                                    <li><a href="#">Fashion</a></li>
-                                    <li><a href="#">Organic</a></li>
-                                    <li><a href="#">Old Fashion</a></li>
-                                    <li><a href="#">Men</a></li>
-                                    <li><a href="#">Fashion</a></li>
-                                    <li><a href="#">Dress</a></li>
+                                    {% for tag in tags %}
+                                    <li><a href="?tag={{tag.id}}">{{tag.name}}</a></li>
+                                    {% endfor %}
+
                                 </ul>
                             </div>
                         </div>

@@ -7,6 +7,7 @@ User = get_user_model()
 class ProductCategory(AbstractModel):
     parent = models.ForeignKey('self',related_name='child',on_delete=models.CASCADE,blank=True, null=True)
     title = models.CharField(max_length=200)
+    category_image = models.ImageField(upload_to = "media", height_field=None, width_field=None, max_length=None,null=True)
     
     def __str__(self):
         if self.parent:
@@ -61,3 +62,15 @@ class ProductReview(AbstractModel):
 
     def __str__(self):
         return self.product.title
+
+
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, related_name="wishlist",on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name="wishlist",on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.product.title
+    class Meta:
+        verbose_name_plural = "Wishlist"
+
+
