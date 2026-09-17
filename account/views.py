@@ -33,6 +33,7 @@ def auth_view(request):
         elif "logout" in request.POST:
             logout(request)
             return redirect('index')
+        
     context = {
         'register_form': register_form,
         'login_form': login_form

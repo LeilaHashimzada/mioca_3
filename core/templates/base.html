@@ -105,9 +105,19 @@
                             <div class="header-bottom-set dropdown">
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i class="fa-solid fa-circle-user"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    
-                                    <li><a class="dropdown-item" href="{%url 'checkout'%}">Checkout</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'auth' %}">Sign in</a></li>
+                                    {% if user.is_authenticated %}
+                                        <li>
+                                            <form action="{% url 'auth' %}" method="post" class="m-0 p-0">
+                                                {% csrf_token %}
+                                                <button type="submit" name="logout" class="dropdown-item btn btn-link text-decoration-none">
+                                                    Logout
+                                                </button>
+                                            </form>
+                                        </li>
+                                    {% else %}
+                                        <li><a class="dropdown-item" href="{% url 'checkout' %}">Checkout</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'auth' %}">Sign in</a></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                             <!-- Single Wedge Start -->
