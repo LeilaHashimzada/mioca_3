@@ -1,6 +1,7 @@
 from django.urls import path
-from blog.api.views import blogs
+from blog.api.views import BlogListAPI, BlogListUpdateDeleteAPI
 
 urlpatterns = [
-    path('blogs/', blogs, name="blogs")
+    path('blogs/', BlogListAPI, name="blogs"),
+    path('blogs/<int:pk>', BlogListUpdateDeleteAPI, name="blogs")
 ]

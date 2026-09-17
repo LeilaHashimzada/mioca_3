@@ -49,7 +49,7 @@ def product_update(request,pk):
 
 class ProductListAPI(ListCreateAPIView):
     serializer_class = ProductSerializer
-    queryset = ProductSerializer
+    queryset = Product.objects.all()
 
     def get_serializer_class(self):
         if self.request.method =='POST':

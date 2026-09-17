@@ -35,7 +35,7 @@ class Product(AbstractModel):
     information = models.TextField(null=True, blank=True)
     cover_image = models.ImageField(upload_to = "media", height_field=None, width_field=None, max_length=None, null=True, blank=True)
     category = models.ForeignKey(ProductCategory, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
-    tag = models.ManyToManyField(ProductTag, null=True, blank=True)
+    tag = models.ManyToManyField(ProductTag)
     
     def __str__(self):
         return self.title
