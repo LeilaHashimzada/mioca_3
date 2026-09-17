@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from product.models import Product, ProductCategory,ProductReview,ProductTag, Wishlist
+from product.models import (Product, ProductCategory,ProductReview,ProductTag,
+                            Wishlist, ProductColor, ProductSize)
 from django.views.generic import ListView,DetailView
 from django.views.generic.edit import FormMixin
 from product.forms import ReviewForm
@@ -56,10 +57,18 @@ class ListViewProduct(ListView):
         queryset = super().get_queryset()
         category_id = self.request.GET.get('category')
         tag_id = self.request.GET.get('tag')
+        color_id = self.request.GET.get('color')
+        size_id = self.request.GET.get("size")
+        
         if category_id:
             queryset = queryset.filter(category=category_id)
         if tag_id:
             queryset = queryset.filter(tag=tag_id)
+        if color_id:
+            queryset = queryset.filter(color=color_id)
+        if size_id:
+            queryset = queryset.filter(size=size_id)
+            
         return queryset
 
 
@@ -67,6 +76,9 @@ class ListViewProduct(ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = ProductCategory.objects.filter(parent = None)
         context['tags'] = ProductTag.objects.all()
+        context['colors'] = ProductColor.objects.all()
+        context['sizes'] = ProductSize.objects.all()
+        context["total_product_count"] = Product.objects.count()
         return context
 
 
