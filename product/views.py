@@ -122,7 +122,7 @@ def removefromwishlist(request, id):
         Wishlist.objects.filter(user=request.user, product_id=id).delete()
     return redirect("wishlist")
 
-def update_item(request, pk):
+def update_item(request, pk=1):
     data = json.loads(request.body)
     productId = data["productId"]
     action = data["action"]

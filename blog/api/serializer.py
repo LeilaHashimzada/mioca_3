@@ -7,12 +7,14 @@ class BlogSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=Blog
-        fields = ['id', 'title', 'user']
+        fields = ['id', 'title', 'user', 'content']
         
 class BlogCreateSerializer(serializers.ModelSerializer):
+    
+    user = serializers.CharField(source = 'user.username')
     
     class Meta:
         model = Blog
         fields = [
-            'id', 'title', 'user'
+            'id', 'title', 'user', 'content'
         ]
