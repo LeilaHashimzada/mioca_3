@@ -9,7 +9,6 @@ class CartSerializer(serializers.ModelSerializer):
         model=Cart
         fields = ["username", "is_active"]
         
-
 class CartCreateSerializer(serializers.ModelSerializer):
     
     username = serializers.CharField("user.username")
