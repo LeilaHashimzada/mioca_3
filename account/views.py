@@ -16,8 +16,8 @@ def auth_view(request):
                 user = register_form.save()
                 user.set_password(register_form.cleaned_data['password'])
                 user.save()
-                return redirect(reverse_lazy('my-account', pk=request.user.id))
-        elif "login" in request.POST:
+                return redirect(reverse_lazy('my-account'))
+        elif "login_submit" in request.POST:
             login_form = LoginForm(data=request.POST)
             if login_form.is_valid():
                 user = authenticate(
@@ -27,7 +27,7 @@ def auth_view(request):
                 )
                 if user is not None:
                     login(request, user)
-                    return redirect('my-account', pk=request.user.id)
+                    return redirect('index')
             return redirect('404')
 
         elif "logout" in request.POST:

@@ -170,7 +170,12 @@
                                             </a>
 
                                             <div class="actions">
-                                                <a href="{% url 'wishlist' %}" class="action wishlist" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
+                                                <form method="post" action="{% url 'add_to_wishlist' product.pk %}" style="display: inline;">
+                                                    {% csrf_token %}
+                                                <button type="submit" class="action wishlist" title="Wishlist">
+                                                    <i class="fa-regular fa-heart"></i>
+                                                </button>
+                                                </form>                                                
                                                 <a href="#" class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-expand"></i></a>
                                                 <a href="{% url 'compare' %}" class="action compare" title="Compare"><i class="fa-regular fa-chart-bar"></i></a>
                                             </div>
