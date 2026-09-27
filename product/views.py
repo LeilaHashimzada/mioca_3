@@ -59,9 +59,9 @@ class ListViewProduct(ListView):
         queryset = super().get_queryset()
         category_id = self.request.GET.get('category')
         tag_id = self.request.GET.get('tag')
-        if category_id:
+        if category_id and category_id.isdigit():
             queryset = queryset.filter(category=category_id)
-        if tag_id:
+        if tag_id and tag_id.isdigit():
             queryset = queryset.filter(tag=tag_id)
         return queryset
 
@@ -83,11 +83,12 @@ def addtowishlist(request,id):
             product=product,
         )
 
-        return redirect("wishlist")
+    return redirect("wishlist")
 
 @login_required
 def wishlist(request):
     items = Wishlist.objects.filter(user=request.user)
+    return render(request,"wishlist.html", {"items":items})
 
 @login_required
 def removefromwishlist(request, id):

@@ -47,6 +47,9 @@ def about(request):
 def faq(request):
     return render(request,'faq.html')
 
+def code_404(request):
+    return render(request, '404.html', status=404)
+
 class ContactView(CreateView):
     template_name = 'contact.html'
     form_class = ContactForm

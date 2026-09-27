@@ -19,7 +19,7 @@ class ProductCategory(AbstractModel):
     
         
 class ProductTag(AbstractModel):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     
     def __str__(self):
         return self.name
@@ -35,7 +35,7 @@ class Product(AbstractModel):
     information = models.TextField(null=True, blank=True)
     cover_image = models.ImageField(upload_to = "media", height_field=None, width_field=None, max_length=None, null=True, blank=True)
     category = models.ForeignKey(ProductCategory, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
-    tag = models.ManyToManyField(ProductTag, null=True, blank=True)
+    tag = models.ManyToManyField(ProductTag, blank=True)
     
     def __str__(self):
         return self.title

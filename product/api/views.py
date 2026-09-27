@@ -1,7 +1,7 @@
 from product.models import ProductCategory
 from django.http import JsonResponse
 from product.api.serializer import ProductCategorySerializers,ProductSerializer,ProductCreateSerializer,ProductTagSerializer
-from product.models import Product
+from product.models import Product, ProductTag
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.generics import RetrieveUpdateAPIView
@@ -9,22 +9,21 @@ from rest_framework.generics import RetrieveUpdateAPIView
 
 def categories(request):
     categories = ProductCategory.objects.all()
-    tags = ProductTagSerializer(many=True)
+    tags = ProductTag.objects.all()
+    tag_serializer = ProductTagSerializer(tags, many=True)
     serializer = ProductCategorySerializers(categories, many=True)
 
-    return JsonResponse(data= serializer.data, safe=False)
+    return JsonResponse(data={"categories": serializer.data, "tags": tag_serializer.data}, safe=False)
 
 @api_view(http_method_names= ['GET', 'POST'])
 def products(request):
     products=Product.objects.all()
     if request.method == 'POST':
-        serializer = ProductCreateSerializer(data=request.data)
+        serializer = ProductCreateSerializer(data=request.data, context={'request':request})
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(data=serializer.data,status=200)
-            
+            return JsonResponse(data=serializer.data,status=201)
         return JsonResponse(data=serializer.errors,status=400)
-
 
     serializer = ProductSerializer(products,context = {'request':request},many=True)
     return JsonResponse(data= serializer.data, safe=False)
@@ -49,7 +48,7 @@ def product_update(request,pk):
 
 class ProductListAPI(ListCreateAPIView):
     serializer_class = ProductSerializer
-    queryset = ProductSerializer
+    queryset = Product.objects.all()
 
     def get_serializer_class(self):
         if self.request.method =='POST':

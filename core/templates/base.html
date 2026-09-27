@@ -105,9 +105,13 @@
                             <div class="header-bottom-set dropdown">
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i class="fa-solid fa-circle-user"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a class="dropdown-item" href="{%url 'my-account'%}">My account</a></li>
+                                    {% if user.is_authenticated %}
+                                    <li><a class="dropdown-item" href="{% url 'my-account' user.pk %}">My account</a></li>
+                                    {% else %}
+                                    <li><a class="dropdown-item" href="{% url 'auth' %}">My account</a></li>
+                                    {% endif %}
                                     <li><a class="dropdown-item" href="{%url 'checkout'%}">Checkout</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'login' %}">Sign in</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'auth' %}">Sign in</a></li>
                                 </ul>
                             </div>
                             <!-- Single Wedge Start -->
@@ -180,8 +184,9 @@
             </div>
             
             <div class="body customScroll">
+                {% get_cart_items as cart_items %}
+                {% if cart_items %}
                 <ul class="minicart-product-list">
-                    {% get_cart_items as cart_items %}
                     {% for item in cart_items %}
                     <li>
                         <a href="{%url 'single_product' item.product.id %}" class="image"><img src="{{item.product.cover_image.url}}"
@@ -193,10 +198,10 @@
                         </div>
                     </li>
                     {% endfor %}
-                    {% else %}
-                    <h3>Empty Cart</h3>
-                    {% endif %}
                 </ul>
+                {% else %}
+                <h3>Empty Cart</h3>
+                {% endif %}
             </div>
             <div class="foot">
                 <div class="buttons mt-30px">

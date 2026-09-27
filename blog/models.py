@@ -11,7 +11,7 @@ class Blog(AbstractModel):
     user = models.ForeignKey(User, related_name="blogs", on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     content = models.TextField()
-    tag = models.ManyToManyField(ProductTag, related_name="blogs")
+    tag = models.ManyToManyField(ProductTag, related_name="blogs", blank=True)
     image = models.ImageField(upload_to="media", height_field=None, width_field=None, max_length=None, null = True, blank=True)
 
 

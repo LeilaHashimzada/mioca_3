@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("order", "0009_delete_wishlist"),
-        ("product", "0017_remove_wishlist_user_wishlist_user"),
+        ("product", "0018_alter_product_category_alter_product_cover_image_and_more"),
     ]
 
     operations = [

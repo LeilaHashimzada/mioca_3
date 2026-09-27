@@ -9,7 +9,11 @@ class ProductCreateSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'price',
+            'rating',
             'description',
+            'information',
+            'is_available',
+            'is_added',
             'cover_image',
             'category',
             'tag'
