@@ -7,6 +7,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("blog", "0012_alter_blogcomment_blog_alter_blogcomment_user"),
+        ("product", "0019_alter_product_tag_alter_producttag_name"),
         ("product", "0022_productcolor_product_color"),
     ]
 

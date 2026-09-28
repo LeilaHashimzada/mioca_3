@@ -190,6 +190,8 @@
             </div>
             
             <div class="body customScroll">
+                {% get_cart_items as cart_items %}
+                {% if cart_items %}
                 <ul class="minicart-product-list">
                     {% get_cart_items as cart_items %}
                     {% if cart_items %}
@@ -204,10 +206,10 @@
                         </div>
                     </li>
                     {% endfor %}
-                    {% else %}
-                    <h3>Empty Cart</h3>
-                    {% endif %}
                 </ul>
+                {% else %}
+                <h3>Empty Cart</h3>
+                {% endif %}
             </div>
             <div class="foot">
                 <div class="buttons mt-30px">

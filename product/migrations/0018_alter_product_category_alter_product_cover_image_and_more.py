@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("product", "0017_remove_wishlist_user_wishlist_user"),
+        ("product", "0017_alter_wishlist_options_and_more"),
     ]
 
     operations = [

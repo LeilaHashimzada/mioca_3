@@ -92,7 +92,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "mioca_db",
         "USER": "hp",
-        "PASSWORD": 123456,
+        "PASSWORD": "123456",
         "HOST": "localhost",
         "PORT": 5432,
     }
@@ -119,6 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = "account.user"
 
+LOGIN_URL = "auth"
+LOGIN_REDIRECT_URL = "index"
+
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -143,3 +146,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # URL that handles the media served from MEDIA_ROOT
 MEDIA_URL = '/media/'
+
+

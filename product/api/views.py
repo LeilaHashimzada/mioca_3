@@ -9,22 +9,21 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
 def categories(request):
     categories = ProductCategory.objects.all()
-    tags = ProductTagSerializer(many=True)
+    tags = ProductTag.objects.all()
+    tag_serializer = ProductTagSerializer(tags, many=True)
     serializer = ProductCategorySerializers(categories, many=True)
 
-    return JsonResponse(data= serializer.data, safe=False)
+    return JsonResponse(data={"categories": serializer.data, "tags": tag_serializer.data}, safe=False)
 
 @api_view(http_method_names= ['GET', 'POST'])
 def products(request):
     products=Product.objects.all()
     if request.method == 'POST':
-        serializer = ProductCreateSerializer(data=request.data)
+        serializer = ProductCreateSerializer(data=request.data, context={'request':request})
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(data=serializer.data,status=200)
-            
+            return JsonResponse(data=serializer.data,status=201)
         return JsonResponse(data=serializer.errors,status=400)
-
 
     serializer = ProductSerializer(products,context = {'request':request},many=True)
     return JsonResponse(data= serializer.data, safe=False)

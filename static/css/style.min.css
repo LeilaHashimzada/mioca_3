@@ -4134,6 +4134,7 @@ only screen and (max-width:767px) {
     background-color: #eaaa85;
     border-radius: 0;
     color: #fff;
+    display: inline-block;
     font-size: 14px;
     font-weight: 500;
     line-height: 1;

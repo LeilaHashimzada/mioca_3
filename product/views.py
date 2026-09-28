@@ -62,7 +62,7 @@ class ListViewProduct(ListView):
         
         if category_id:
             queryset = queryset.filter(category=category_id)
-        if tag_id:
+        if tag_id and tag_id.isdigit():
             queryset = queryset.filter(tag=tag_id)
         if color_id:
             queryset = queryset.filter(color=color_id)
@@ -92,7 +92,7 @@ def addtowishlist(request,id):
             product=product,
         )
 
-        return redirect("wishlist")
+    return redirect("wishlist")
 
 
 #@login_required
@@ -114,7 +114,6 @@ def wishlist(request):
         "items": items
     }
     return render(request, "wishlist.html", context)
-    
 
 @login_required
 def removefromwishlist(request, id):
