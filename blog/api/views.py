@@ -26,6 +26,9 @@ class BlogListAPI(ListCreateAPIView):
             return BlogCreateSerializer
         return BlogSerializer
     
+    def perform_create(self, serializer):
+        serializer.save(user = self.request.user)
+    
 class BlogListUpdateDeleteAPI(RetrieveUpdateDestroyAPIView):
     serializer_class = BlogSerializer
     queryset = Blog.objects.all()

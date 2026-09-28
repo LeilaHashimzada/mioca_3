@@ -253,16 +253,12 @@
                             <h4 class="sidebar-title">Color</h4>
                             <div class="sidebar-widget-color">
                                 <ul>
-                                    <li><a href="#" class="selected m-0"><i class="fa fa-angle-right"></i> All
-                                            <span>(65)</span> </a></li>
-                                    <li><a href="#" class=""><i class="fa fa-angle-right"></i> Gold <span>(14)</span>
+                                    <li><a href="{% url 'shop' %}" class="selected m-0"><i class="fa fa-angle-right"></i> All
+                                            <span>({{total_product_count}})</span> </a></li>
+                                    {% for color in colors %}
+                                    <li><a href="{% url 'shop' %}?color={{ color.id }}" class=""><i class="fa fa-angle-right"></i> {{color.name}} <span>({{color.quantity}})</span>
                                         </a></li>
-                                    <li><a href="#" class=""><i class="fa fa-angle-right"></i> Golden <span>(21)</span>
-                                        </a></li>
-                                    <li><a href="#" class=""><i class="fa fa-angle-right"></i> White <span>(16)</span>
-                                        </a></li>
-                                    <li><a href="#" class=""><i class="fa fa-angle-right"></i> Black <span>(12)</span>
-                                        </a></li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
@@ -271,16 +267,12 @@
                             <h4 class="sidebar-title">Size</h4>
                             <div class="sidebar-widget-size">
                                 <ul>
-                                    <li><a href="#" class="selected m-0"><i class="fa fa-angle-right"></i> All
-                                            <span>(6)</span> </a></li>
-                                    <li><a href="#" class=""><i class="fa fa-angle-right"></i> S <span>(12)</span> </a>
+                                    <li><a href="{% url 'shop' %}" class="selected m-0"><i class="fa fa-angle-right"></i> All
+                                            <span>({{total_product_count}})</span> </a></li>
+                                    {% for size in sizes %}
+                                    <li><a href="{% url 'shop' %}?size={{size.id}}" class=""><i class="fa fa-angle-right"></i> {{size.size}} <span>({{size.quantity}})</span> </a>
                                     </li>
-                                    <li><a href="#" class=""><i class="fa fa-angle-right"></i> M <span>(21)</span> </a>
-                                    </li>
-                                    <li><a href="#" class=""><i class="fa fa-angle-right"></i> L <span>(16)</span> </a>
-                                    </li>
-                                    <li><a href="#" class=""><i class="fa fa-angle-right"></i> XL <span>(22)</span> </a>
-                                    </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
