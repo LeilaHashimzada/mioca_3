@@ -40,7 +40,9 @@
                                     <tr>
                                         <th>Image</th>
                                         <th>Product Name</th>
-                                        <th>Until Price</th>
+                                        <th>Unit Price</th>
+                                        <th>Quantity</th>
+                                        <th>Subtotal</th>
                                         <th>Add To Cart</th>
                                     </tr>
                                 </thead>
@@ -57,9 +59,12 @@
                                                 <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
                                             </div>
                                         </td>
-                                        <td class="product-subtotal">$70.00</td>
+                                        <td class="product-subtotal">${{item.product.price}}</td>
                                         <td class="product-wishlist-cart">
-                                            <a href="#">add to cart</a>
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="add-cart" data-product={{item.product.id}} data-action="add" data-url="{% url 'update_item' %}">Add to cart</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     {% endfor%}
@@ -73,5 +78,9 @@
     </div>
 
     <!-- Wishlist Area End -->
+
+    {% block js %}
+        <script src="{% static 'js/product.js' %}"></script>
+    {% endblock %}
+
 {% endblock main %}
- 

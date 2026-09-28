@@ -106,12 +106,18 @@
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i class="fa-solid fa-circle-user"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     {% if user.is_authenticated %}
-                                    <li><a class="dropdown-item" href="{% url 'my-account' user.pk %}">My account</a></li>
+                                        <li>
+                                            <form action="{% url 'auth' %}" method="post" class="m-0 p-0">
+                                                {% csrf_token %}
+                                                <button type="submit" name="logout" class="dropdown-item btn btn-link text-decoration-none">
+                                                    Logout
+                                                </button>
+                                            </form>
+                                        </li>
                                     {% else %}
-                                    <li><a class="dropdown-item" href="{% url 'auth' %}">My account</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'checkout' %}">Checkout</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'auth' %}">Sign in</a></li>
                                     {% endif %}
-                                    <li><a class="dropdown-item" href="{%url 'checkout'%}">Checkout</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'auth' %}">Sign in</a></li>
                                 </ul>
                             </div>
                             <!-- Single Wedge Start -->
@@ -187,6 +193,8 @@
                 {% get_cart_items as cart_items %}
                 {% if cart_items %}
                 <ul class="minicart-product-list">
+                    {% get_cart_items as cart_items %}
+                    {% if cart_items %}
                     {% for item in cart_items %}
                     <li>
                         <a href="{%url 'single_product' item.product.id %}" class="image"><img src="{{item.product.cover_image.url}}"
@@ -236,6 +244,7 @@
                                 <ul class="sub-menu">
                                     <li><a href="privacy-policy.html">Privacy Policy</a></li>
                                     <li><a href="faq.html">Faq Page</a></li>
+                                    <li><a href="create-blog.html">Blog Create Page</a></li>
                                     <li><a href="coming-soon.html">Coming Soon Page</a></li>
                                 </ul>
                             </li>

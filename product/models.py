@@ -24,7 +24,27 @@ class ProductTag(AbstractModel):
     def __str__(self):
         return self.name
         
-
+class ProductColor(AbstractModel):
+    name = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.name
+    
+    @property
+    def quantity(self):
+        return self.products.count()
+    
+class ProductSize(AbstractModel):
+    size = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.size
+    
+    @property
+    def quantity(self):
+        return self.products.count()
+    
+    
 class Product(AbstractModel):
     title = models.CharField(max_length=50)
     price = models.FloatField()
@@ -35,10 +55,14 @@ class Product(AbstractModel):
     information = models.TextField(null=True, blank=True)
     cover_image = models.ImageField(upload_to = "media", height_field=None, width_field=None, max_length=None, null=True, blank=True)
     category = models.ForeignKey(ProductCategory, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
-    tag = models.ManyToManyField(ProductTag, blank=True)
+    tag = models.ManyToManyField(ProductTag)
+    color = models.ForeignKey(ProductColor, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
+    size = models.ForeignKey(ProductSize, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
+
     
     def __str__(self):
         return self.title
+    
     
     
 class ProductPhoto(AbstractModel):

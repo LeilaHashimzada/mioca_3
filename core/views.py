@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from product.models import Product,ProductCategory
@@ -22,29 +22,8 @@ def index(request):
 
     return render(request, "index.html" , context)
 
-class ContactView(TemplateView, FormMixin):
-    template_name = "contact.html"
-    model = Contact
-    form_class = ContactForm
-    success_url = reverse_lazy("contact")
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = self.get_form()
-        return context
-    
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.INFO, "SUCCESS","Successfully sent!")
-            return
-        
-        return self.get(request, *args, **kwargs)
-
 def about(request):
     return render(request, "about.html")
-
 
 def faq(request):
     return render(request,'faq.html')
@@ -55,13 +34,13 @@ def code_404(request):
 class ContactView(CreateView):
     template_name = 'contact.html'
     form_class = ContactForm
+    model = Contact
     success_url = reverse_lazy('contact')
-    # context_object_name = 'formm'
+    context_object_name = 'form'
 
     def form_valid(self, form):
         messages.add_message(self.request,messages.WARNING,"Successfully sent!")
         return super().form_valid(form)
-
 
 @login_required
 def add_to_wishlist(request, id):
@@ -75,4 +54,4 @@ def add_to_wishlist(request, id):
 
     return redirect("wishlist")
    
-    
+

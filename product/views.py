@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from product.models import Product, ProductCategory,ProductReview,ProductTag
+from product.models import (Product, ProductCategory,ProductReview,ProductTag,
+                            Wishlist, ProductColor, ProductSize)
 from django.views.generic import ListView,DetailView
 from django.views.generic.edit import FormMixin
 from product.forms import ReviewForm
-from .models import Wishlist
 from django.contrib.auth.decorators import login_required
 
 from django.http import Http404
@@ -45,8 +45,6 @@ class ShopDetailView(FormMixin,DetailView):
         messages.success(self.request, "Successful review!")
         return super().form_valid(form)
 
-
-
 def compare(request):
     return render(request, "compare.html")
 
@@ -59,10 +57,18 @@ class ListViewProduct(ListView):
         queryset = super().get_queryset()
         category_id = self.request.GET.get('category')
         tag_id = self.request.GET.get('tag')
-        if category_id and category_id.isdigit():
+        color_id = self.request.GET.get('color')
+        size_id = self.request.GET.get("size")
+        
+        if category_id:
             queryset = queryset.filter(category=category_id)
         if tag_id and tag_id.isdigit():
             queryset = queryset.filter(tag=tag_id)
+        if color_id:
+            queryset = queryset.filter(color=color_id)
+        if size_id:
+            queryset = queryset.filter(size=size_id)
+            
         return queryset
 
 
@@ -70,6 +76,9 @@ class ListViewProduct(ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = ProductCategory.objects.filter(parent = None)
         context['tags'] = ProductTag.objects.all()
+        context['colors'] = ProductColor.objects.all()
+        context['sizes'] = ProductSize.objects.all()
+        context["total_product_count"] = Product.objects.count()
         return context
 
 
@@ -85,10 +94,26 @@ def addtowishlist(request,id):
 
     return redirect("wishlist")
 
+
+#@login_required
+class WishlistListView(ListView):
+    template_name = "wishlist.html"
+    model = Wishlist
+    context_object_name = "items"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["items"] = Wishlist.objects.filter(user=self.request.user)
+        return context
+
+
 @login_required
 def wishlist(request):
     items = Wishlist.objects.filter(user=request.user)
-    return render(request,"wishlist.html", {"items":items})
+    context = {
+        "items": items
+    }
+    return render(request, "wishlist.html", context)
 
 @login_required
 def removefromwishlist(request, id):
@@ -96,7 +121,7 @@ def removefromwishlist(request, id):
         Wishlist.objects.filter(user=request.user, product_id=id).delete()
     return redirect("wishlist")
 
-def update_item(request, pk):
+def update_item(request, pk=1):
     data = json.loads(request.body)
     productId = data["productId"]
     action = data["action"]

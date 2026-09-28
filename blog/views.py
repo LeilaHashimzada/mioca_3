@@ -2,8 +2,8 @@ from django.shortcuts import render
 from .models import Blog
 from django.urls import reverse_lazy
 from django.contrib import messages
-from .forms import BlogCommentForm
-from django.views.generic import ListView, DetailView
+from .forms import BlogCommentForm, BlogFrom
+from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import FormMixin
 
 class BlogListView(ListView):
@@ -30,5 +30,18 @@ class BlogDetailView(DetailView, FormMixin):
             form.save()
         return super().form_valid(form)
     
+    
+class BlogCreateView(CreateView):
+    template_name="create-blog.html"
+    form_class=BlogFrom
+    model = Blog
+    success_url=reverse_lazy("blog")
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+        
+    
+
 #messages.add_message(request, messages.SUCCESS, "Successfully sent!")
         

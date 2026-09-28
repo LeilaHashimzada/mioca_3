@@ -164,9 +164,13 @@
                                     <div class="product">
                                         <div class="thumb">
                                             <a href="{% url 'single_product' product.pk %}" class="image">
-                                                <img src="{{product.cover_image.url}}" alt="Product" />
-                                                <img class="hover-image" src="{{product.cover_image.url}}"
-                                                    alt="Product" />
+                                                {% if product.cover_image %}
+                                                    <img src="{{product.cover_image.url}}" alt="Product" />
+                                                    <img class="hover-image" src="{{product.cover_image.url}}"
+                                                        alt="Product" />
+                                                {% else %}
+                                                    <span style="color:red;">No image uploaded for ID {{ product.id }}</span>
+                                                {% endif %}
                                             </a>
 
                                             <div class="actions">

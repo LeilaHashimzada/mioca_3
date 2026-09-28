@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, about, faq, ContactView, code_404
+from .views import index, about, faq, ContactView
 from order.views import update_item
 
 urlpatterns = [
@@ -7,6 +7,5 @@ urlpatterns = [
     path('about/', about, name = "about"),
     path('faq/', faq, name = "faq"),
     path('contact/', ContactView.as_view(), name = "contact"),
-    path('PageNotFound/', code_404, name="404"),
     path('update_item/', update_item, name="update_item")
 ]

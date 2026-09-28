@@ -1,10 +1,10 @@
-from product.models import ProductCategory
+from product.models import ProductCategory, ProductColor, ProductSize, ProductTag
 from django.http import JsonResponse
-from product.api.serializer import ProductCategorySerializers,ProductSerializer,ProductCreateSerializer,ProductTagSerializer
-from product.models import Product, ProductTag
+from product.api.serializer import ProductCategorySerializers,ProductSerializer,ProductCreateSerializer,ProductTagSerializer, ProductColorSerializer, ProductSizeSerializer
+from product.models import Product
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListCreateAPIView
-from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
 
 def categories(request):
@@ -55,7 +55,7 @@ class ProductListAPI(ListCreateAPIView):
             return ProductCreateSerializer
         return ProductSerializer
 
-class ProductUpdateAPIView(RetrieveUpdateAPIView):
+class ProductUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
@@ -64,3 +64,29 @@ class ProductUpdateAPIView(RetrieveUpdateAPIView):
             return ProductCreateSerializer
         return ProductSerializer
     
+class ProductColorListAPI(ListCreateAPIView):
+    serializer_class = ProductColorSerializer
+    queryset = ProductColor.objects.all()
+
+    '''def get_serializer_class(self):
+        if self.request.method =='POST':
+            return ProductColorCreateSerializer
+        return ProductSerializer'''
+    
+class ProductTagListAPI(ListCreateAPIView):
+    serializer_class = ProductTagSerializer
+    queryset = ProductTag.objects.all()
+
+    '''def get_serializer_class(self):
+        if self.request.method =='POST':
+            return ProductCreateSerializer
+        return ProductSerializer'''
+    
+class ProductSizeListAPI(ListCreateAPIView):
+    serializer_class = ProductSizeSerializer
+    queryset = ProductSize.objects.all()
+
+    '''def get_serializer_class(self):
+        if self.request.method =='POST':
+            return ProductCreateSerializer
+        return ProductSerializer'''
