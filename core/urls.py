@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import index, about, faq, ContactView
+from .views import HomePageView, about, faq, ContactView
 from order.views import update_item
 
 urlpatterns = [
-    path('index/', index, name = "index"),
+    path('homepage/', HomePageView.as_view(), name = "homepage"),
     path('about/', about, name = "about"),
     path('faq/', faq, name = "faq"),
     path('contact/', ContactView.as_view(), name = "contact"),

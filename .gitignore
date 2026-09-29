@@ -2,3 +2,4 @@
 pgdb
 .env
 __pycache__
+.vscode

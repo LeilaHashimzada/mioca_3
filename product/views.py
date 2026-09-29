@@ -23,6 +23,7 @@ class ShopDetailView(FormMixin,DetailView):
         context['review_form'] = self.get_form()
         context['item'] = self.object
         context['reviews'] = ProductReview.objects.filter(product=self.object)
+        context["products"] = Product.objects.filter(category=self.object.category)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -59,6 +60,8 @@ class ListViewProduct(ListView):
         tag_id = self.request.GET.get('tag')
         color_id = self.request.GET.get('color')
         size_id = self.request.GET.get("size")
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
         
         if category_id:
             queryset = queryset.filter(category=category_id)
@@ -68,6 +71,8 @@ class ListViewProduct(ListView):
             queryset = queryset.filter(color=color_id)
         if size_id:
             queryset = queryset.filter(size=size_id)
+        if min_price and max_price:
+            queryset = queryset.filter(price__gte=float(min_price),price__lte=float(max_price))
             
         return queryset
 
@@ -121,10 +126,12 @@ def removefromwishlist(request, id):
         Wishlist.objects.filter(user=request.user, product_id=id).delete()
     return redirect("wishlist")
 
+@login_required
 def update_item(request, pk=1):
     data = json.loads(request.body)
     productId = data["productId"]
     action = data["action"]
+    added_quantity = int(data.get("quantity", 1))
     
     product = Product.objects.get(id = productId)
     cart, created = Cart.objects.get_or_create(user = request.user, is_active=True)
@@ -134,9 +141,10 @@ def update_item(request, pk=1):
     
     if action == "add":
         if created:
-            cartItem.quantity = 1
+            cartItem.quantity = added_quantity
         else:
-            cartItem.quantity += 1
+            cartItem.quantity += added_quantity
+        cartItem.save()
             
     elif action == "decrease":
         cartItem.quantity -=1

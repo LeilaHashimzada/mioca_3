@@ -1,10 +1,31 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block css %}
+    <style>
+        .dashboard-list li form {
+            width: 100%;
+        }
+
+        .dashboard-list li .logout-btn {
+            width: 100%;
+            text-align: left;
+            background: black;
+            padding-left: 15px;
+            border: none;
+            font: bold;
+            color: white;
+            cursor: pointer;
+            display: block;
+        }
+    </style>
+{% endblock %}
 
 {% block title %}
 <title>Account</title>
 {% endblock %}
+
+
 
 {% block main %}
 
@@ -16,7 +37,7 @@
                     <h2 class="breadcrumb-title">My Account</h2>
                     <!-- breadcrumb-list start -->
                     <ul class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
                         <li class="breadcrumb-item active">Product</li>
                     </ul>
                     <!-- breadcrumb-list end -->
@@ -25,9 +46,6 @@
         </div>
     </div>
     <!-- breadcrumb-area end -->
-     <p style="text-align: center; font-size: 24px;">
-    <b>Welcome, {{ user.username }}!</b>
-    </p>
 
     
     <!-- account area start -->
@@ -40,11 +58,16 @@
                         <ul role="tablist" class="nav flex-column dashboard-list">
                             <li><a href="#dashboard" data-bs-toggle="tab" class="nav-link active">Dashboard</a></li>
                             <li> <a href="#orders" data-bs-toggle="tab" class="nav-link">Orders</a></li>
-                            <li><a href="#downloads" data-bs-toggle="tab" class="nav-link">Downloads</a></li>
                             <li><a href="#address" data-bs-toggle="tab" class="nav-link">Addresses</a></li>
-                            <li><a href="#account-details" data-bs-toggle="tab" class="nav-link">Account details</a>
+                            <li><a href="#account-details" data-bs-toggle="tab" class="nav-link">Account details</a></li>
+                            <li>
+                                <form action="{% url 'auth' %}" method="post" class="w-100">
+                                    {% csrf_token %}
+                                    <button type="submit" name="logout" class="nav-link logout-btn">
+                                        Logout
+                                    </button>
+                                </form>
                             </li>
-                            <li><a href="{% url 'auth' %}" class="nav-link">logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -86,35 +109,6 @@
                                             <td><a href="{% url 'cart' %}" class="view">view</a></td>
                                         </tr>
                                     {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="downloads">
-                            <h4>Downloads</h4>
-                            <div class="table_page table-responsive">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Downloads</th>
-                                            <th>Expires</th>
-                                            <th>Download</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Shopnovilla - Free Real Estate PSD Template</td>
-                                            <td>May 10, 2023</td>
-                                            <td><span class="danger">Expired</span></td>
-                                            <td><a href="#" class="view">Click Here To Download Your File</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Organic - ecommerce html template</td>
-                                            <td>Sep 11, 2023</td>
-                                            <td>Never</td>
-                                            <td><a href="#" class="view">Click Here To Download Your File</a></td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

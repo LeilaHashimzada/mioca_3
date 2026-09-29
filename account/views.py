@@ -4,6 +4,7 @@ from account.forms import RegisterForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import DetailView
 from .models import User
+from order.models import Cart
 
 def auth_view(request):
     register_form = RegisterForm()
@@ -16,7 +17,7 @@ def auth_view(request):
                 user = register_form.save()
                 user.set_password(register_form.cleaned_data['password'])
                 user.save()
-                return redirect(reverse_lazy('my-account'))
+                return redirect('my_account', pk=user.id)
         elif "login_submit" in request.POST:
             login_form = LoginForm(data=request.POST)
             if login_form.is_valid():
@@ -27,12 +28,12 @@ def auth_view(request):
                 )
                 if user is not None:
                     login(request, user)
-                    return redirect('index')
+                    return redirect('my_account', pk=user.id)
             return redirect('404')
 
         elif "logout" in request.POST:
             logout(request)
-            return redirect('index')
+            return redirect('homepage')
         
     context = {
         'register_form': register_form,
@@ -45,6 +46,11 @@ class AccountView(DetailView):
     template_name = "my-account.html"
     model = User
     context_object_name = "person"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["carts"] = Cart.objects.filter(user=self.request.user)
+        return context
 
 
 

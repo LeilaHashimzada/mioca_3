@@ -22,17 +22,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("core/", include("core.urls")),
-    path("account/", include("account.urls")),
-    path("products/", include("product.urls")),
-    path("blogs/", include("blog.urls")),
-    path("order/", include("order.urls")),
-    path("api-auth/", include("rest_framework.urls")),
-    path("api/p/", include("product.api.urls")),
-    path("api/b/", include("blog.api.urls")),
-    path("api/order/", include("order.api.urls"))
+    path("mioca/", include("core.urls")),
+    path("mioca/", include("account.urls")),
+    path("mioca/", include("product.urls")),
+    path("mioca/", include("blog.urls")),
+    path("mioca/", include("order.urls")),
+    path("api/", include("rest_framework.urls")),
+    path("api/", include("product.api.urls")),
+    path("api/", include("blog.api.urls")),
+    path("api/", include("order.api.urls"))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# urlpatterns += 

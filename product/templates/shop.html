@@ -6,20 +6,53 @@
 {% endblock title %}
 
 {% block css %}
-<style>
-    .sidebar-widget-category .collapse {
-        max-height: none !important;
-        opacity: 1 !important;
-        overflow: visible !important;
-        display: none;
-    }
-    .sidebar-widget-category .collapse.show {
-        display: block;
-    }
-    .sidebar-widget-category li > .collapse.collapsing {
-        display: block;
-    }
-</style>
+    <style>
+        .category-tree, .subcategory-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .category-item {
+            margin-bottom: 10px;
+        }
+        .category-header {
+            padding: 4px 0;
+        }
+        .category-link {
+            color: #333;
+            text-decoration: none;
+            flex-grow: 1;
+        }
+        .category-link:hover {
+            color: #eaaa85; /* Adjust to match your theme hover color */
+        }
+        .subcategory-toggle {
+            cursor: pointer;
+            padding: 2px 8px;
+            font-size: 12px;
+            color: #666;
+            user-select: none;
+        }
+        .subcategory-toggle:hover {
+            color: #000;
+        }
+        .subcategory-list {
+            display: none; /* Hidden by default */
+            padding-left: 18px;
+            margin-top: 5px;
+        }
+        .subcategory-list li {
+            padding: 3px 0;
+        }
+        .subcategory-list a {
+            color: #666;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .subcategory-list a:hover {
+            color: #eaaa85;
+        }
+    </style>
 {% endblock css %}
 
 {% block main %}
@@ -32,7 +65,7 @@
                 <div class="col-lg-9 order-lg-last col-md-12 order-md-first">
                     <div class="sidebar-widget-image">
                         <a href="#" class="single-banner">
-                            <img src="assets/images/banner/12.jpg" alt="">
+                            <img src="{% static 'images/banner/12.jpg' %}" alt="">
                         </a>
                     </div>
                     <!-- Shop Top Area Start -->
@@ -42,9 +75,6 @@
                             <div class="shop-tab nav">
                                 <a class="active" href="#shop-grid" data-bs-toggle="tab">
                                     <i class="fa fa-th" aria-hidden="true"></i>
-                                </a>
-                                <a href="#shop-list" data-bs-toggle="tab">
-                                    <i class="fa fa-list" aria-hidden="true"></i>
                                 </a>
                             </div>
                             <!-- Right Side Start -->
@@ -95,9 +125,6 @@
                                 <a class="active" href="#shop-grid" data-bs-toggle="tab">
                                     <i class="fa fa-th" aria-hidden="true"></i>
                                 </a>
-                                <a href="#shop-list" data-bs-toggle="tab">
-                                    <i class="fa fa-list" aria-hidden="true"></i>
-                                </a>
                             </div>
                             <!-- Right Side Start -->
                             <div class="select-shoing-wrap d-flex align-items-center">
@@ -145,36 +172,38 @@
                     <div class="shop-bottom-area">
 
 
-                        
                         <!-- Tab Content Area Start -->
-<div class="row">
-    <div class="col">
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="shop-grid">
-                <div class="row mb-n-30px">
-
-                    {% for product in product_list %}
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-30px" data-aos="fade-up">
-                        <div class="product">
-                            <div class="thumb">
-                                <a href="{% url 'single_product' pk=product.id %}" class="image">
-                                    <img src="{{product.cover_image.url}}" alt="{{product.title}}">
-                                </a>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="shop-grid">
+                                            <div class="row mb-n-30px">
+                                                {% for product in product_list %}
+                                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-30px" data-aos="fade-up">
+                                                    <div class="product">
+                                                        <div class="thumb">
+                                                            <a href="{% url 'single_product' pk=product.id %}" class="image">
+                                                                {% if product.cover_image %}
+                                                                <img src="{{ product.cover_image.url }}" alt="{{ product.title }}">
+                                                                {% endif %}
+                                                            </a>
+                                                        </div>
+                                                        <div class="content">
+                                                            <h5><a href="{% url 'single_product' pk=product.id %}">{{ product.title }}</a></h5>
+                                                            <span class="price">${{ product.price }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% empty %}
+                                                <div class="col-12 text-center py-5">
+                                                    <h4>No products found matching your criteria.</h4>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="content">
-                                <h5>{{ product.title }}</h5>
-                                <span>${{ product.price }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
                                    
                         <!--  Pagination Area Start -->
                         <div class="pro-pagination-style text-center text-lg-end" data-aos="fade-up" data-aos-delay="200">
@@ -210,53 +239,49 @@
                 <div class="col-lg-3 order-lg-first col-md-12 order-md-last">
                     <div class="shop-sidebar-wrap">
                         <!-- Sidebar single item -->
-                        <div class="sidebar-widget">
-                            <h4 class="sidebar-title">Categories</h4>
-                            <div class="sidebar-widget-category">
-        <ul>
-            {% for category in categories %}
-        <li>
-            <div style="display:flex;align-items:center;">
-                <a href="{% url 'shop' %}?category={{ category.id }}" style="flex:1;text-decoration:none;color:inherit;padding:0;">
-                    <i class="fa fa-angle-right"></i>
-                    {{ category.title }}
-                </a>
-                {% if category.child.all %}
-                <button type="button"
-                   class="btn-link"
-                   data-bs-toggle="collapse"
-                   data-bs-target="#cat-{{ forloop.counter }}"
-                   aria-expanded="false"
-                   aria-controls="cat-{{ forloop.counter }}"
-                   style="background:none;border:none;color:inherit;padding:0 5px;cursor:pointer;font-size:10px;">
-                    <i class="fa fa-plus"></i>
-                </button>
-                {% endif %}
-            </div>
+                            <div class="sidebar-widget">
+                                <h4 class="sidebar-title">Categories</h4>
+                                <div class="sidebar-widget-category">
+                                    <ul class="category-tree">
+                                        {% for category in categories %}
+                                        <li class="category-item">
+                                            <div class="category-header d-flex align-items-center justify-content-between">
+                                                {% if category.child.all %}
+                                                <span class="subcategory-toggle" onclick="toggleSubcat(this, event)">
+                                                    <i class="fa fa-plus"></i>
+                                                </span>
+                                                {% endif %}
+                                                <a href="?category={{ category.id }}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}" 
+                                                class="category-link">
+                                                    {{ category.title }}
+                                                </a>
+                                            </div>
 
-            <ul id="cat-{{ forloop.counter }}" class="collapse">
-                {% for subcategory in category.child.all %}
-                    <li>
-                        <a href="{% url 'shop' %}?category={{subcategory.id}}">
-                            {{ subcategory.title }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </li>
-            {% endfor %}
-        </ul>
+                                            {% if category.child.all %}
+                                            <ul class="subcategory-list">
+                                                {% for subcategory in category.child.all %}
+                                                <li>
+                                                    <a href="?category={{ subcategory.id }}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}{% if request.GET.size %}&size={{ request.GET.size }}{% endif %}">
+                                                       {{ subcategory.title }}
+                                                    </a>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
                         <!-- Sidebar single item -->
                         <div class="sidebar-widget">
                             <h4 class="sidebar-title">Color</h4>
                             <div class="sidebar-widget-color">
                                 <ul>
-                                    <li><a href="{% url 'shop' %}" class="selected m-0"><i class="fa fa-angle-right"></i> All
+                                    <li><a href="{% url 'shop' %}" class="selected m-0">All
                                             <span>({{total_product_count}})</span> </a></li>
                                     {% for color in colors %}
-                                    <li><a href="{% url 'shop' %}?color={{ color.id }}" class=""><i class="fa fa-angle-right"></i> {{color.name}} <span>({{color.quantity}})</span>
+                                    <li><a href="{% url 'shop' %}?color={{ color.id }}" class=""> {{color.name}} <span>({{color.quantity}})</span>
                                         </a></li>
                                     {% endfor %}
                                 </ul>
@@ -267,10 +292,10 @@
                             <h4 class="sidebar-title">Size</h4>
                             <div class="sidebar-widget-size">
                                 <ul>
-                                    <li><a href="{% url 'shop' %}" class="selected m-0"><i class="fa fa-angle-right"></i> All
+                                    <li><a href="{% url 'shop' %}" class="selected m-0"></i> All
                                             <span>({{total_product_count}})</span> </a></li>
                                     {% for size in sizes %}
-                                    <li><a href="{% url 'shop' %}?size={{size.id}}" class=""><i class="fa fa-angle-right"></i> {{size.size}} <span>({{size.quantity}})</span> </a>
+                                    <li><a href="{% url 'shop' %}?size={{size.id}}" class=""></i> {{size.size}} <span>({{size.quantity}})</span> </a>
                                     </li>
                                     {% endfor %}
                                 </ul>
@@ -281,18 +306,25 @@
                         <div class="sidebar-widget mt-8">
                             <h4 class="sidebar-title">Price Filter</h4>
                             <div class="price-filter">
-                                <div class="price-slider-amount">
-                                    <input type="text" id="amount" class="p-0 h-auto lh-1" name="price"
-                                        placeholder="Add Your Price" />
-                                </div>
-                                <div id="slider-range"></div>
+                                <form method="get" action="{% url 'shop' %}" id="price-filter-form">
+                                    
+                                    {% if request.GET.category %}<input type="hidden" name="category" value="{{ request.GET.category }}">{% endif %}
+                                    {% if request.GET.tag %}<input type="hidden" name="tag" value="{{ request.GET.tag }}">{% endif %}
+                                    {% if request.GET.color %}<input type="hidden" name="color" value="{{ request.GET.color }}">{% endif %}
+                                    {% if request.GET.size %}<input type="hidden" name="size" value="{{ request.GET.size }}">{% endif %}
+
+                                    
+                                    <input type="hidden" name="min_price" id="min_price_input" value="{{ request.GET.min_price|default:'0' }}">
+                                    <input type="hidden" name="max_price" id="max_price_input" value="{{ request.GET.max_price|default:'500' }}">
+
+                                    <div class="price-slider-amount">
+                                        <input type="text" id="amount" class="p-0 h-auto lh-1" name="price" placeholder="Add Your Price" readonly />
+                                    </div>
+                                    <div id="slider-range"></div>
+
+                                    <button type="submit" class="btn btn-primary btn-hover-dark mt-3 w-100">Filter</button>
+                                </form>
                             </div>
-                        </div>
-                        <!-- Sidebar single item -->
-                        <div class="sidebar-widget-image ">
-                            <a href="#" class="single-banner">
-                                <img src="assets/images/banner/11.jpg" alt="">
-                            </a>
                         </div>
                         <!-- Sidebar single item -->
                         <div class="sidebar-widget tag m-0">
@@ -314,3 +346,45 @@
     </div>
     <!-- Shop Page End  -->
 {% endblock main %}
+
+{% block js %}
+    <script>
+        function toggleSubcat(element, event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const parentLi = element.closest('.category-item');
+            const subList = parentLi.querySelector('.subcategory-list');
+            const icon = element.querySelector('i');
+
+            if (subList) {
+                if (subList.style.display === "block") {
+                    subList.style.display = "none";
+                    icon.className = "fa fa-plus";
+                } else {
+                    subList.style.display = "block";
+                    icon.className = "fa fa-minus";
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            var minVal = parseInt($("#min_price_input").val()) || 0;
+            var maxVal = parseInt($("#max_price_input").val()) || 500;
+
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [minVal, maxVal],
+                slide: function (event, ui) {
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                    $("#min_price_input").val(ui.values[0]);
+                    $("#max_price_input").val(ui.values[1]);
+                }
+            });
+
+            $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
+        });
+    </script>
+{% endblock %}

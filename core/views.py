@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from product.models import Product,ProductCategory
@@ -9,18 +9,20 @@ from django.views.generic.edit import FormMixin
 from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.decorators import login_required
 from product.models import Wishlist
+from blog.models import Blog
 
 # Create your views here.
 
-def index(request):
-    product_list = Product.objects.all()
-    category_list = ProductCategory.objects.filter(parent__isnull=True)
-    context = {
-        "product_list" : product_list,
-        "category_list" : category_list,
-    }
-
-    return render(request, "index.html" , context)
+class HomePageView(TemplateView):
+    template_name="index.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["products"] = Product.objects.all().order_by("-created_at")[:5]
+        context["categories"] = ProductCategory.objects.filter(parent__isnull=True)
+        context["blogs"] = Blog.objects.all().order_by("-created_at")[:3]
+        
+        return context
 
 def about(request):
     return render(request, "about.html")

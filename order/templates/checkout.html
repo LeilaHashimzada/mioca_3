@@ -14,7 +14,7 @@
                     <h2 class="breadcrumb-title">Checkout</h2>
                     <!-- breadcrumb-list start -->
                     <ul class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
                         <li class="breadcrumb-item active">Checkout</li>
                     </ul>
                     <!-- breadcrumb-list end -->
@@ -49,13 +49,6 @@
                                     <label>Last Name</label>
                                     {{form.last_name}}
                                      {{form.last_name.errors}}
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="billing-info mb-4">
-                                    <label>Company Name</label>
-                                    {{form.company}}
-                                     {{form.company.errors}}
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -117,6 +110,7 @@
                             <div class="additional-info">
                                 <label>Order notes</label>
                                 {{form.note}}
+                                {{form.note.error}}
                             </div>
                         </div>
                         <div class="checkout-account mt-25">
@@ -144,20 +138,15 @@
                                 <div class="col-lg-12">
                                     <div class="billing-info mb-4">
                                         <label>Company Name</label>
-                                        form.company
+                                        {{form.company}}
+                                        {{form.company.errors}}
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="billing-select mb-4">
                                         <label>Country</label>
-                                        <select>
-                                            <option>Select a country</option>
-                                            <option>Azerbaijan</option>
-                                            <option>Bahamas</option>
-                                            <option>Bahrain</option>
-                                            <option>Bangladesh</option>
-                                            <option>Barbados</option>
-                                        </select>
+                                        {{form.country}}
+                                        {{form.country.errors}}
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -214,8 +203,10 @@
                                 </div>
                                 <div class="your-order-middle">
                                     <ul>
-                                        <li><span class="order-middle-left">Product Name X 1</span> <span
-                                                class="order-price">$100 </span></li>
+                                        {% for item in items %}
+                                        <li><span class="order-middle-left">{{item.product.title}} X {{item.quantity}}</span> <span
+                                                class="order-price">${{item.price}} </span></li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="your-order-bottom">

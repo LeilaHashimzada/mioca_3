@@ -15,7 +15,7 @@
                     <h2 class="breadcrumb-title">Login & Register</h2>
                     <!-- breadcrumb-list start -->
                     <ul class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
                         <li class="breadcrumb-item active">Login</li>
                     </ul>
                     <!-- breadcrumb-list end -->
@@ -44,13 +44,18 @@
                             <div id="lg1" class="tab-pane active">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form action="#" method="post">
+                                        <form action="{% url 'auth' %}" method="post">
                                             {% csrf_token %}
-                                            {{login_form.username}}
-                                            {{login_form.username.errors}}
+                                            
+                                            <div class="mb-3">
+                                                {{ login_form.username }}
+                                                {{ login_form.username.errors }}
+                                            </div>
                                              
-                                            {{login_form.password}}
-                                            {{login_form.password.errors}}
+                                            <div class="mb-3">
+                                                {{ login_form.password }}
+                                                {{ login_form.password.errors }}
+                                            </div>
 
                                             <div class="button-box">
                                                 <div class="login-toggle-btn">
@@ -67,16 +72,25 @@
                             <div id="lg2" class="tab-pane">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form action="#"  method="post">
+                                        <!-- Point action directly to your auth URL -->
+                                        <form action="{% url 'auth' %}" method="post">
                                             {% csrf_token %}
-                                            {{register_form.username}}
-                                            {{register_form.username.errors}}
+                                            
+                                            <div class="mb-3">
+                                                {{ register_form.username }}
+                                                {{ register_form.username.errors }}
+                                            </div>
 
-                                            {{register_form.email}}
-                                            {{register_form.email.errors}}
+                                            <div class="mb-3">
+                                                {{ register_form.email }}
+                                                {{ register_form.email.errors }}
+                                            </div>
 
-                                            {{register_form.password}}
-                                            {{register_form.password.errors}}
+                                            <div class="mb-3">
+                                                {{ register_form.password }}
+                                                {{ register_form.password.errors }}
+                                            </div>
+
                                             <div class="button-box">
                                                 <button type="submit" name="register_submit"><span>Register</span></button>
                                             </div>

@@ -12,7 +12,7 @@
                     <h2 class="breadcrumb-title">Cart</h2>
                     <!-- breadcrumb-list start -->
                     <ul class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
                         <li class="breadcrumb-item active">Cart</li>
                     </ul>
                     <!-- breadcrumb-list end -->
@@ -54,15 +54,15 @@
                                         <td class="product-price-cart"><span class="amount">${{item.product.price}}</span></td>
                                         <td class="product-quantity">
                                             <div class="cart-plus-minus">
-                                                <div class="dec qtybutton" data-product="{{item.product.id}}" data-action="decrease"  data-url="{% url 'update-item' %}">-</div>
+                                                <div class="dec qtybutton" data-product="{{item.product.id}}" data-action="decrease"  data-url="{% url 'update_item' %}">-</div>
                                                 <input class="cart-plus-minus-box" type="text" name="qtybutton"
                                                     value="{{item.quantity}}"/>
-                                                <div class="inc qtybutton" data-product="{{item.product.id}}" data-action="add"  data-url="{% url 'update-item' %}">+</div>
+                                                <div class="inc qtybutton" data-product="{{item.product.id}}" data-action="add"  data-url="{% url 'update_item' %}">+</div>
                                             </div>
                                         </td>
                                         <td class="product-subtotal">${{item.price}}</td>
                                         <td class="product-remove">
-                                            <button class="remove" data-product="{{item.product.id}}" data-action="remove" data-url="{% url 'update-item' %}">
+                                            <button class="remove" data-product="{{item.product.id}}" data-action="remove" data-url="{% url 'update_item' %}">
                                                 <i class="fa fa-times"></i>
                                             </button>
                                         </td>
@@ -127,8 +127,9 @@
                                         <button class="cart-btn-2" type="submit">Get A Quote</button>
                                     </div>
                                 </div>
-                            </div>                                        <td class="product-remove">
-                                            <button class="remove fa fa-times"  data-product="{{item.product.id}}" data-action="remove" data-url="{% url 'update-item' %}"></button>
+                            </div>                                        
+                                        <td class="product-remove">
+                                            <button class="remove fa fa-times"  data-product="{{item.product.id}}" data-action="remove" data-url="{% url 'update_item' %}"></button>
                                         </td>
                         </div>
                         <div class="col-lg-4 col-md-6 mb-lm-30px">

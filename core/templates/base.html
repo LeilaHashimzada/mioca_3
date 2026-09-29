@@ -49,13 +49,13 @@
                 <div class="row">
                     <div class="col-auto align-self-center">
                         <div class="header-logo">
-                            <a href="index.html"><img src="{% static 'images/logo/logo.png' %}" alt="Site Logo" /></a>
+                            <a href="{% url 'homepage' %}"><img src="{% static 'images/logo/logo.png' %}" alt="Site Logo" /></a>
                         </div>
                     </div>
                     <div class="col align-self-center d-none d-lg-block"> 
                         <div class="main-menu">
                             <ul>
-                                <li class="dropdown"><a href="{% url 'index'%}">Home </a></li>
+                                <li class="dropdown"><a href="{% url 'homepage'%}">Home </a></li>
                                 <li><a href="{% url 'about'%}">About</a></li>
                                 <li class="dropdown position-static"><a href="{% url 'about'%}">Pages <i class="fa fa-angle-down"></i></a>
                                     <ul class="mega-menu d-block">
@@ -63,6 +63,7 @@
                                             <ul class="d-block">
                                                 <li class="title"><a href="#">Inner Pages</a></li>
                                                 <li><a href="{% url 'faq'%}">Faq Page</a></li>
+                                                <li><a href="{% url 'create_blog'%}">Blog Create Page</a></li>
                                             </ul>
                                             <ul class="d-block">
                                                 <li class="title"><a href="{% url 'shop'%}">Other Shop Pages</a></li>
@@ -88,7 +89,7 @@
                                 </li>
                                 <li class="dropdown position-static"><a href="{% url 'shop'%}">Shop </a>                                   
                                 </li>
-                                <li class="dropdown "><a href="{% url 'blog' %}">Blog</a>
+                                <li class="dropdown "><a href="{% url 'blogs' %}">Blogs</a>
                                     
                                     <li><a href="{% url 'contact' %}">Contact</a></li>
                             </ul>
@@ -106,6 +107,8 @@
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i class="fa-solid fa-circle-user"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     {% if user.is_authenticated %}
+                                        <li><a class="dropdown-item" href="{% url 'checkout' %}">Checkout</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'my_account' pk=user.pk %}">My Account</a></li>
                                         <li>
                                             <form action="{% url 'auth' %}" method="post" class="m-0 p-0">
                                                 {% csrf_token %}
@@ -115,8 +118,7 @@
                                             </form>
                                         </li>
                                     {% else %}
-                                        <li><a class="dropdown-item" href="{% url 'checkout' %}">Checkout</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'auth' %}">Sign in</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'auth' %}">Login&Register</a></li>
                                     {% endif %}
                                 </ul>
                             </div>
@@ -193,8 +195,6 @@
                 {% get_cart_items as cart_items %}
                 {% if cart_items %}
                 <ul class="minicart-product-list">
-                    {% get_cart_items as cart_items %}
-                    {% if cart_items %}
                     {% for item in cart_items %}
                     <li>
                         <a href="{%url 'single_product' item.product.id %}" class="image"><img src="{{item.product.cover_image.url}}"
@@ -202,7 +202,9 @@
                         <div class="content">
                             <a href="single-product.html" class="title">{{item.product.title}}</a>
                             <span class="quantity-price">{{item.quantity}} x <span class="amount">${{item.price}}</span></span>
-                            <button class="remove"  data-product="{{item.product.id}}" data-action="remove"  data-url="{% url 'update-item' %}">×</button>
+                                 <button class="remove" data-product="{{item.product.id}}" data-action="remove" data-url="{% url 'update_item' %}">
+                                    <i class="fa fa-times"></i>
+                                </button>
                         </div>
                     </li>
                     {% endfor %}
@@ -401,10 +403,8 @@
                                 <div class="footer-links">
                                     <div class="footer-row">
                                         <ul class="align-items-center">
-                                            <li class="li"><a class="single-link" href="about.html">About us</a></li>
-                                            <li class="li"><a class="single-link" href="#">Delivery information</a></li>
-                                            <li class="li"><a class="single-link" href="privacy-policy.html">Privacy
-                                                    Policy</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'about' %}">About us</a></li>
+                                            <li class="li"><a class="single-link" href="privacy-policy.html">Privacy Policy</a></li>
                                             <li class="li"><a class="single-link" href="#">Sales</a></li>
                                             <li class="li"><a class="single-link" href="#">Terms & Conditions</a></li>
                                             <li class="li"><a class="single-link" href="#">Shipping Policy</a></li>
@@ -422,14 +422,12 @@
                                 <div class="footer-links">
                                     <div class="footer-row">
                                         <ul class="align-items-center">
-                                            <li class="li"><a class="single-link" href="my-account.html"> My account</a>
+                                            <li class="li"><a class="single-link" href="{% url 'auth' %}"> My account</a>
                                             </li>
-                                            <li class="li"><a class="single-link" href="cart.html">My orders</a></li>
-                                            <li class="li"><a class="single-link" href="#">Returns</a></li>
-                                            <li class="li"><a class="single-link" href="shop-left-sidebar.html">Shipping</a></li>
-                                            <li class="li"><a class="single-link" href="wishlist.html">Wishlist</a></li>
-                                            <li class="li"><a class="single-link" href="#">How Does It Work</a></li>
-                                            <li class="li"><a class="single-link" href="#">Merchant Sign Up</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'cart' %}">My orders</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'checkout' %}">Shipping</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'wishlist' %}">Wishlist</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'auth' %}">Merchant Sign Up</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -443,13 +441,13 @@
                                 <div class="footer-links">
                                     <div class="footer-row">
                                         <ul class="align-items-center">
-                                            <li class="li"><a class="single-link" href="index.html">Affiliate</a></li>
-                                            <li class="li"><a class="single-link" href="shop-left-sidebar.html">Bestsellers</a></li>
-                                            <li class="li"><a class="single-link" href="#">Discount</a></li>
-                                            <li class="li"><a class="single-link" href="#">Latest products</a></li>
-                                            <li class="li"><a class="single-link" href="#">Sale</a></li>
-                                            <li class="li"><a class="single-link" href="#">All Collection</a></li>
-                                            <li class="li"><a class="single-link" href="contact.html">Contact Us</a>
+                                            <li class="li"><a class="single-link" href="#">Affiliate</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'shop' %}">Bestsellers</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'checkout' %}">Discount</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'shop' %}">Latest products</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'shop' %}">Sale</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'shop' %}">All Collection</a></li>
+                                            <li class="li"><a class="single-link" href="{% url 'contact' %}">Contact Us</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -678,6 +676,7 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/wishlist.js' %}"></script>
          {%block js%}
+         <script src="{% static 'js/cart.js' %}"></script>
          {% endblock %}
 </body>
 
