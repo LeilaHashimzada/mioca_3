@@ -17,7 +17,7 @@ class BlogDetailView(DetailView, FormMixin):
     context_object_name = "blog"
     model = Blog
     form_class = BlogCommentForm
-    success_url = reverse_lazy('blog')
+    success_url = reverse_lazy('blogs')
     
     def post(self, request, *args, **kwargs):
         form = self.get_form()
@@ -35,7 +35,7 @@ class BlogCreateView(CreateView):
     template_name="create-blog.html"
     form_class=BlogFrom
     model = Blog
-    success_url=reverse_lazy("blog")
+    success_url=reverse_lazy("blogs")
     
     def form_valid(self, form):
         form.instance.user = self.request.user
