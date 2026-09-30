@@ -112,7 +112,6 @@
                             </div>
                             <!-- Right Side End -->
                             <!-- Left Side start -->
-                            <p class="compare-product">Product Compare <span>(0) </span></p>
                         </div>
                     </div>
                     <!-- Shop Top Area End -->
@@ -163,7 +162,6 @@
                             </div>
                             <!-- Right Side End -->
                             <!-- Left Side start -->
-                            <p class="compare-product">Product Compare <span>(0) </span></p>
                         </div>
                     </div>
                     <!-- Mobile shop bar -->
@@ -187,6 +185,10 @@
                                                                 <img src="{{ product.cover_image.url }}" alt="{{ product.title }}">
                                                                 {% endif %}
                                                             </a>
+                                                        
+                                                            <div class="actions">
+                                                                <a href="{% url 'compare' pk=product.id %}" class="action compare" title="Compare"><i class="fa-regular fa-chart-bar"></i></a>
+                                                            </div>
                                                         </div>
                                                         <div class="content">
                                                             <h5><a href="{% url 'single_product' pk=product.id %}">{{ product.title }}</a></h5>

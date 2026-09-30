@@ -41,104 +41,73 @@
                                     <tr>
                                         <td class="first-column">Product</td>
                                         <td class="product-image-title">
-                                            <a href="#" class="image"><img class="img-responsive"
-                                                    src="assets/images/product-image/1.jpg" alt="Compare Product" /></a>
-                                            <a href="#" class="category">Mortar</a>
-                                            <a href="#" class="title">Hand-Made Garlic Mortar</a>
+                                            <a href="{% url 'single_product' pk=product.id %}" class="image"><img class="img-responsive"
+                                                    src="{{product.cover_image.url}}" alt="Compare Product" /></a>
+                                            <a href="{% url 'single_product' pk=product.id %}" class="category">{{product.category}}</a>
+                                            <a href="{% url 'single_product' pk=product.id %}" class="title">{{product.title}}</a>
                                         </td>
+                                        {% for related_product in related_products %}
                                         <td class="product-image-title">
-                                            <a href="#" class="image"><img class="img-responsive"
-                                                    src="assets/images/product-image/2.jpg" alt="Compare Product" /></a>
-                                            <a href="#" class="category">Pottery</a>
-                                            <a href="#" class="title">Handmade Ceramic Pottery</a>
+                                            <a href="{% url 'single_product' pk=related_product.id %}" class="image"><img class="img-responsive"
+                                                    src="{{related_product.cover_image.url}}" alt="Compare Product" /></a>
+                                            <a href="{% url 'single_product' pk=related_product.id %}" class="category">{{related_product.category}}</a>
+                                            <a href="{% url 'single_product' pk=related_product.id %}" class="title">{{related_product.title}}</a>
                                         </td>
-                                        <td class="product-image-title">
-                                            <a href="#" class="image"><img class="img-responsive"
-                                                    src="assets/images/product-image/3.jpg" alt="Compare Product" /></a>
-                                            <a href="#" class="category">Bowls</a>
-                                            <a href="#" class="title">Hand Painted Bowls</a>
-                                        </td>
+                                        {% endfor %}
                                     </tr>
                                     <tr>
                                         <td class="first-column">Description</td>
                                         <td class="pro-desc">
-                                            <p>Lorem ipsum dolor sit amet, consect adipisicing elit, sed do eiusmod tempor incidi ut labore
-                                                et dolore magna aliqua.</p>
+                                            <p>{{product.description}}</p>
                                         </td>
-                                        <td class="pro-desc">
-                                            <p>Lorem ipsum dolor sit amet, consect adipisicing elit, sed do eiusmod tempor incidi ut labore
-                                                et dolore magna aliqua.</p>
-                                        </td>
-                                        <td class="pro-desc">
-                                            <p>Lorem ipsum dolor sit amet, consect adipisicing elit, sed do eiusmod tempor incidi ut labore
-                                                et dolore magna aliqua. </p>
-                                        </td>
+                                        {% for related_product in related_products %}
+                                            <td class="pro-desc">
+                                                <p>{{related_product.description}}</p>
+                                            </td>
+                                        {% endfor %}
                                     </tr>
                                     <tr>
                                         <td class="first-column">Price</td>
-                                        <td class="pro-price">$295</td>
-                                        <td class="pro-price">$275</td>
-                                        <td class="pro-price">$395</td>
+                                        <td class="pro-price">${{product.price}}</td>
+                                        {% for related_product in related_products %}
+                                            <td class="pro-price">${{related_product.price}}</td>
+                                        {% endfor %}
                                     </tr>
                                     <tr>
                                         <td class="first-column">Color</td>
-                                        <td class="pro-color">Black</td>
-                                        <td class="pro-color">Black</td>
-                                        <td class="pro-color">Black</td>
+                                        <td class="pro-color">{{product.color.name}}</td>
+                                        {% for related_product in related_products %}
+                                            <td class="pro-color">{{related_product.color.name}}</td>
+                                        {% endfor %}
                                     </tr>
                                     <tr>
                                         <td class="first-column">Stock</td>
-                                        <td class="pro-stock">In Stock</td>
-                                        <td class="pro-stock">In Stock</td>
-                                        <td class="pro-stock">In Stock</td>
+                                        <td class="pro-stock">{% if product.is_available %}In Stock{% else %}Not available{% endif %}</td>
+                                        {% for related_product in related_products %}
+                                            <td class="pro-stock">{% if related_product.is_available %}In Stock{% else %}Not available{% endif %}</td>
+                                        {% endfor %}
                                     </tr>
                                     <tr>
                                         <td class="first-column">Add to cart</td>
                                         <td class="pro-addtocart">
-                                            <a href="#" class="add-to-cart" tabindex="0"><span>ADD TO CART</span></a>
+                                            <button title="Add To Cart" class="add-to-cart add-cart" data-product="{{product.id}}" data-action = "add" data-url="{% url 'update_item' %}">Add To Cart</button>
                                         </td>
-                                        <td class="pro-addtocart">
-                                            <a href="#" class="add-to-cart" tabindex="0"><span>ADD TO CART</span></a>
-                                        </td>
-                                        <td class="pro-addtocart">
-                                            <a href="#" class="add-to-cart" tabindex="0"><span>ADD TO CART</span></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="first-column">Delete</td>
-                                        <td class="pro-remove">
-                                            <button><i class="fa fa-trash-o"></i></button>
-                                        </td>
-                                        <td class="pro-remove">
-                                            <button><i class="fa fa-trash-o"></i></button>
-                                        </td>
-                                        <td class="pro-remove">
-                                            <button><i class="fa fa-trash-o"></i></button>
-                                        </td>
+                                        {% for related_product in related_products %}
+                                            <td class="pro-addtocart">
+                                                <button title="Add To Cart" class="add-to-cart add-cart" data-product="{{related_product.id}}" data-action = "add" data-url="{% url 'update_item' %}">Add To Cart</button>
+                                            </td>
+                                        {% endfor %}
                                     </tr>
                                     <tr>
                                         <td class="first-column">Rating</td>
                                         <td class="pro-ratting">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            {{product.rating}}
                                         </td>
+                                        {% for related_product in related_products %}
                                         <td class="pro-ratting">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            {{related_product.rating}}
                                         </td>
-                                        <td class="pro-ratting">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </td>
+                                        {% endfor %}
                                     </tr>
                                 </tbody>
                             </table>
@@ -151,4 +120,9 @@
 
     <!-- Compare Area End -->
 {% endblock main %}
+
+    {%block js%}
+    <script src="{% static 'js/product.js' %}"></script>
+    <script src="{%static 'js/cart.js'%}"></script>
+    {%endblock%}
  

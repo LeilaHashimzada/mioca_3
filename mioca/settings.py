@@ -39,6 +39,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     "rest_framework",
     "dbbackup",
     "account",
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     "blog",
     "order",
     "product",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -141,10 +143,18 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
 # Absolute filesystem path to the directory that holds user-uploaded files
 MEDIA_ROOT = BASE_DIR / 'media'
-
-# URL that handles the media served from MEDIA_ROOT
 MEDIA_URL = '/media/'
 
 
+# Celery settings
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+#CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+
+# settings.py (Local Development)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST_USER = 'noreply@mioca.local'

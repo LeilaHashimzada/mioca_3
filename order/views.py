@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from .models import Cart, OrderCheckout, CartItem
 from product.models import Product
 from .forms import CheckoutFrom
@@ -43,7 +43,6 @@ class CheckoutView(LoginRequiredMixin, FormMixin, TemplateView):
             order = form.save(commit=False)
             order.user = request.user
             
-            
             cart = Cart.objects.filter(user=request.user, is_active=True).first()
             if cart:
                 order.cart = cart
@@ -56,6 +55,7 @@ class CheckoutView(LoginRequiredMixin, FormMixin, TemplateView):
             return redirect('homepage')
         
         return self.render_to_response(self.get_context_data(form=form))
+    
       
 def update_item(request):
     data = json.loads(request.body)

@@ -24,4 +24,8 @@ services:
     depends_on:
       - db
 
-
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"

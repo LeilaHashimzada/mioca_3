@@ -7,13 +7,12 @@ from django.views.generic.edit import FormMixin
 from product.forms import ReviewForm
 from django.contrib.auth.decorators import login_required
 
-from django.http import Http404
 import json
 from django.http import JsonResponse
 from order.models import Cart, CartItem
 
 # Create your views here.
-class ShopDetailView(FormMixin,DetailView):
+class ShopDetailView(FormMixin, DetailView):
     form_class = ReviewForm
     model = Product
     template_name = 'single-product.html'
@@ -46,8 +45,18 @@ class ShopDetailView(FormMixin,DetailView):
         messages.success(self.request, "Successful review!")
         return super().form_valid(form)
 
-def compare(request):
-    return render(request, "compare.html")
+class CompareView(DetailView):
+    template_name="compare.html"
+    model = Product
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.object
+        context["product"] = product
+        context["related_products"] = Product.objects.filter(
+            category=product.category
+        ).exclude(pk=product.pk)[:2]
+        return context   
 
 class ListViewProduct(ListView):
     template_name = 'shop.html'
