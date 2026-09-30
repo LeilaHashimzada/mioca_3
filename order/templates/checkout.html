@@ -33,113 +33,23 @@
                 <div class="col-lg-7">
                     <div class="billing-info-wrap">
                         <h3>Billing Details</h3>
-                    <form method="post">
-                        {% csrf_token %}
-                        {% include "includes/messages.html" %}
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-4">
-                                    <label>First Name</label>
-                                    {{form.first_name}}
-                                    {{form.first_name.errors}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-4">
-                                    <label>Last Name</label>
-                                    {{form.last_name}}
-                                     {{form.last_name.errors}}
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="billing-select mb-4">
-                                    <label>Country</label>
-                                    {{form.country}}
-                                     {{form.country.errors}}
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="billing-info mb-4">
-                                    <label>Street Address</label>
-                                    {{form.street}}
-                                    {{form.appartment}}
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="billing-info mb-4">
-                                    <label>Town / City</label>
-                                    {{form.city}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-4">
-                                    <label>State / County</label>
-                                    {{form.state}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-4">
-                                    <label>Postcode / ZIP</label>
-                                    {{form.zip}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-4">
-                                    <label>Phone</label>
-                                   {{form.phone}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-4">
-                                    <label>Email Address</label>
-                                    {{form.email}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="checkout-account mb-30px">
-                            <input class="checkout-toggle2 w-auto h-auto" type="checkbox" />
-                            <label>Create an account?</label>
-                        </div>
-                        <div class="checkout-account-toggle open-toggle2 mb-30">
-                            <input placeholder="Email address" type="email" />
-                            <input placeholder="Password" type="password" />
-                            <button class="btn-hover checkout-btn" type="submit">register</button>
-                        </div>
-                        <div class="additional-info-wrap">
-                            <h4>Additional information</h4>
-                            <div class="additional-info">
-                                <label>Order notes</label>
-                                {{form.note}}
-                                {{form.note.error}}
-                            </div>
-                        </div>
-                        <div class="checkout-account mt-25">
-                            <input class="checkout-toggle w-auto h-auto" type="checkbox" />
-                            <label>Ship to a different address?</label>
-                        </div>
-                         <div class="Place-order mt-25">
-                            <a class="btn-hover" href="#"><button type="submit">Place Order</button></a>
-                        </div>
-                    </form>
-                        <div class="different-address open-toggle mt-30px">
+                        <form method="post" action="{% url 'checkout' %}">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            {% include "includes/messages.html" %}
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>First Name</label>
                                         {{form.first_name}}
+                                        {{form.first_name.errors}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>Last Name</label>
                                         {{form.last_name}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="billing-info mb-4">
-                                        <label>Company Name</label>
-                                        {{form.company}}
-                                        {{form.company.errors}}
+                                        {{form.last_name.errors}}
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -158,36 +68,45 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="billing-info mb-4">
-                                        <label>Town / City</label>
+                                        <label>Town / City / State / Country</label>
                                         {{form.city}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="billing-info mb-4">
-                                        <label>State / County</label>
-                                        {{form.state}}
+                                        {{form.city.errors}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>Postcode / ZIP</label>
                                         {{form.zip}}
+                                        {{form.zip.errors}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>Phone</label>
                                         {{form.phone}}
+                                        {{form.phone.errors}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="billing-info mb-4">
                                         <label>Email Address</label>
                                         {{form.email}}
+                                        {{form.email.errors}}
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="additional-info-wrap">
+                                <h4>Additional information</h4>
+                                <div class="additional-info">
+                                    <label>Order notes</label>
+                                    {{form.note}}
+                                    {{form.note.errors}}
+                                </div>
+                            </div>
+                            <div class="Place-order mt-25">
+                                <button type="submit">Place Order</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-lg-5 mt-md-30px mt-lm-30px ">

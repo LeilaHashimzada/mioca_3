@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from account.forms import RegisterForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import User
 from order.models import Cart
@@ -52,7 +52,4 @@ class AccountView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["carts"] = Cart.objects.filter(user=self.request.user)
-        return context
-
-
-
+        return context        

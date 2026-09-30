@@ -105,8 +105,8 @@
                                                     <span class="success">Completed</span>
                                                 {% endif %}
                                             </td>
-                                            <td>$25.00 for 1 item </td>
-                                            <td><a href="{% url 'cart' %}" class="view">view</a></td>
+                                            <td>${{cart.price}} for {{cart.quantity}} item(s) </td>
+                                            <td><a href="{% url 'old_cart' pk=cart.id %}" class="view">view</a></td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

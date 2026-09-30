@@ -9,12 +9,10 @@ class CheckoutFrom(forms.ModelForm):
         fields = [
             'first_name',
             'last_name',
-            "company",
             "country",
             "street",
             "appartment",
             "city",
-            "state",
             "zip",
             "phone",
             "email",
@@ -35,3 +33,4 @@ class CheckoutFrom(forms.ModelForm):
         value = self.cleaned_data['email']
         if not value.endswith("gmail.com"):
             raise ValidationError("Email must contain gmail.com")
+        return value
