@@ -78,38 +78,49 @@
                                 </a>
                             </div>
                             <!-- Right Side Start -->
-                            <div class="select-shoing-wrap d-flex align-items-center">
-                                <div class="shot-product">
-                                    <p>Sort By:</p>
-                                </div>
-                                <div class="shop-select">
-                                    <select class="shop-sort">
-                                        <option data-display="Default">Default</option>
-                                        <option value="1"> Name, A to Z</option>
-                                        <option value="2"> Name, Z to A</option>
-                                        <option value="3"> Price, low to high</option>
-                                        <option value="4"> Price, high to low</option>
-                                    </select>
+                            <form method="get" id="sorting-form" class="shop-filter-form">
+                                <!-- Preserve all existing query parameters (including multi-select filters) except sort_by, show, and page -->
+                                {% for key, values in request.GET.lists %}
+                                    {% if key != 'sort_by' and key != 'show' and key != 'page' %}
+                                        {% for value in values %}
+                                            <input type="hidden" name="{{ key }}" value="{{ value }}">
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
 
-                                </div>
-                            </div>
-                            <!-- Right Side End -->
-                            <!-- Right Side Start -->
-                            <div class="select-shoing-wrap d-flex align-items-center">
-                                <div class="shot-product">
-                                    <p>Show:</p>
-                                </div>
-                                <div class="shop-select show">
-                                    <select class="shop-sort">
-                                        <option data-display="12">12</option>
-                                        <option value="1"> 12</option>
-                                        <option value="2"> 10</option>
-                                        <option value="3"> 25</option>
-                                        <option value="4"> 20</option>
-                                    </select>
+                                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                                    <!-- Sort By Block -->
+                                    <div class="select-shoing-wrap d-flex align-items-center">
+                                        <div class="shot-product">
+                                            <p class="mb-0 me-2">Sort By:</p>
+                                        </div>
+                                        <div class="shop-select">
+                                            <select class="shop-sort" name="sort_by" onchange="this.form.submit()" class="shop-sort">
+                                                <option value="default" {% if request.GET.sort_by == 'default' or not request.GET.sort_by %}selected{% endif %}>Default</option>
+                                                <option value="title_asc" {% if request.GET.sort_by == 'title_asc' %}selected{% endif %}>Name, A to Z</option>
+                                                <option value="title_desc" {% if request.GET.sort_by == 'title_desc' %}selected{% endif %}>Name, Z to A</option>
+                                                <option value="price_asc" {% if request.GET.sort_by == 'price_asc' %}selected{% endif %}>Price, low to high</option>
+                                                <option value="price_desc" {% if request.GET.sort_by == 'price_desc' %}selected{% endif %}>Price, high to low</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
+                                    <!-- Show / Items Per Page Block -->
+                                    <div class="select-shoing-wrap d-flex align-items-center">
+                                        <div class="shot-product">
+                                            <p class="mb-0 me-2">Show:</p>
+                                        </div>
+                                        <div class="shop-select show">
+                                            <select name="show" onchange="this.form.submit()" class="shop-sort">
+                                                <option value="10" {% if request.GET.show == '10' or not request.GET.show %}selected{% endif %}>10</option>
+                                                <option value="15" {% if request.GET.show == '15' %}selected{% endif %}>15</option>
+                                                <option value="20" {% if request.GET.show == '20' %}selected{% endif %}>20</option>
+                                                <option value="25" {% if request.GET.show == '25' %}selected{% endif %}>25</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                             <!-- Right Side End -->
                             <!-- Left Side start -->
                         </div>
@@ -143,7 +154,7 @@
                                             <p class="mb-0 me-2">Sort By:</p>
                                         </div>
                                         <div class="shop-select">
-                                            <select name="sort_by" onchange="this.form.submit()" class="shop-sort">
+                                            <select class="shop-sort" name="sort_by" onchange="this.form.submit()" class="shop-sort">
                                                 <option value="default" {% if request.GET.sort_by == 'default' or not request.GET.sort_by %}selected{% endif %}>Default</option>
                                                 <option value="title_asc" {% if request.GET.sort_by == 'title_asc' %}selected{% endif %}>Name, A to Z</option>
                                                 <option value="title_desc" {% if request.GET.sort_by == 'title_desc' %}selected{% endif %}>Name, Z to A</option>
@@ -160,8 +171,8 @@
                                         </div>
                                         <div class="shop-select show">
                                             <select name="show" onchange="this.form.submit()" class="shop-sort">
-                                                <option value="12" {% if request.GET.show == '12' or not request.GET.show %}selected{% endif %}>12</option>
-                                                <option value="10" {% if request.GET.show == '10' %}selected{% endif %}>10</option>
+                                                <option value="10" {% if request.GET.show == '10' or not request.GET.show %}selected{% endif %}>10</option>
+                                                <option value="15" {% if request.GET.show == '15' %}selected{% endif %}>15</option>
                                                 <option value="20" {% if request.GET.show == '20' %}selected{% endif %}>20</option>
                                                 <option value="25" {% if request.GET.show == '25' %}selected{% endif %}>25</option>
                                             </select>
