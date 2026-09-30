@@ -61,16 +61,25 @@ class CompareView(DetailView):
 class ListViewProduct(ListView):
     template_name = 'shop.html'
     model = Product
-    paginate_by = 2
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        
+        sort_mapping = {
+            'price_asc': 'price',     
+            'price_desc': '-price',        
+            'title_asc': 'title',          
+            'title_desc': '-title',               
+        }
+        
         category_id = self.request.GET.get('category')
         tag_id = self.request.GET.get('tag')
         color_id = self.request.GET.get('color')
         size_id = self.request.GET.get("size")
         min_price = self.request.GET.get('min_price')
         max_price = self.request.GET.get('max_price')
+        
+        sorting = self.request.GET.get('sort_by', 'default')
         
         if category_id:
             queryset = queryset.filter(category=category_id)
@@ -82,6 +91,8 @@ class ListViewProduct(ListView):
             queryset = queryset.filter(size=size_id)
         if min_price and max_price:
             queryset = queryset.filter(price__gte=float(min_price),price__lte=float(max_price))
+        if sorting in sort_mapping:
+            queryset = queryset.order_by(sort_mapping[sorting])
             
         return queryset
 
@@ -94,6 +105,14 @@ class ListViewProduct(ListView):
         context['sizes'] = ProductSize.objects.all()
         context["total_product_count"] = Product.objects.count()
         return context
+    
+    
+    def get_paginate_by(self, queryset):
+        show_option = self.request.GET.get('show', 20)
+        try:
+            return int(show_option)
+        except ValueError:
+            return 20
 
 
 @login_required

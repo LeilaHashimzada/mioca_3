@@ -58,7 +58,9 @@ class Product(AbstractModel):
     tag = models.ManyToManyField(ProductTag)
     color = models.ForeignKey(ProductColor, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
     size = models.ForeignKey(ProductSize, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
-
+    
+    class Meta:
+        ordering = ['-id']
     
     def __str__(self):
         return self.title
