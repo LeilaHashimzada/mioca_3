@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from core.models import AbstractModel
+from core.validators import validate_email
 # Create your models here.
 
 class User(AbstractUser):
-    pass
+    email = models.EmailField(blank=True, validators=[validate_email])

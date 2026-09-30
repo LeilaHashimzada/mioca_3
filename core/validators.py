@@ -1,16 +1,12 @@
 from django.core.validators import ValidationError
+from country_list import countries_for_language
 
-countries = [
-    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", 
-    "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", 
-    "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", 
-    "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", 
-    "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", 
-    "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", 
-    "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica", "Croatia", "Cuba"
-]
-
+countries = dict(countries_for_language('en'))
 
 def validate_country(country):
-    if country not in countries:
+    if country not in list(countries.keys()):
         raise ValidationError("Country is not available for shipping")
+    
+def validate_email(email):
+    if '@gmail.com' not in email:
+        raise ValidationError("Email should ends with \'@gmail.com\'")

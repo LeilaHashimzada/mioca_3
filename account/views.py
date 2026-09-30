@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from account.forms import RegisterForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import User
 from order.models import Cart
 
@@ -18,6 +19,7 @@ def auth_view(request):
                 user.set_password(register_form.cleaned_data['password'])
                 user.save()
                 return redirect('my_account', pk=user.id)
+            
         elif "login_submit" in request.POST:
             login_form = LoginForm(data=request.POST)
             if login_form.is_valid():
@@ -29,7 +31,7 @@ def auth_view(request):
                 if user is not None:
                     login(request, user)
                     return redirect('my_account', pk=user.id)
-            return redirect('404')
+            return redirect('NotFound')
 
         elif "logout" in request.POST:
             logout(request)
@@ -42,7 +44,7 @@ def auth_view(request):
     return render(request, "login.html", context)
 
 
-class AccountView(DetailView):
+class AccountView(LoginRequiredMixin, DetailView):
     template_name = "my-account.html"
     model = User
     context_object_name = "person"

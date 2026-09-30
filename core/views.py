@@ -30,8 +30,8 @@ def about(request):
 def faq(request):
     return render(request,'faq.html')
 
-def code_404(request):
-    return render(request, '404.html', status=404)
+class View404(TemplateView):
+    template_name="404.html"
 
 class ContactView(CreateView):
     template_name = 'contact.html'
