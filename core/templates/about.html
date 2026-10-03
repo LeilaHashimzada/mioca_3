@@ -5,6 +5,26 @@
 <title>About</title>
 {% endblock %}
 
+{% block css %}
+<style>
+    .service-left {
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+        padding: 40px 0;
+    }
+
+    /* Iframe üçün responsive ölçü */
+    .service-left .promo-video iframe {
+        width: 100%;
+        height: 250px;
+        border-radius: 10px;
+        border: none;
+    }
+</style>
+{% endblock css %}
+
 {% block main %}
    <!-- breadcrumb-area start -->
     <div class="breadcrumb-area">
@@ -12,12 +32,10 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-12 text-center">
                     <h2 class="breadcrumb-title">About Us</h2>
-                    <!-- breadcrumb-list start -->
                     <ul class="breadcrumb-list">
                         <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
                         <li class="breadcrumb-item active">About Us</li>
                     </ul>
-                    <!-- breadcrumb-list end -->
                 </div>
             </div>
         </div>
@@ -30,35 +48,48 @@
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col-md-12 col-lg-5">
                     <div class="service-left">
-                        <img src="{% static  'images/about-image/srevice-left-img.png' %}" alt="" class="service-left-image">
-                        <img src="{% static  'images/about-image/srevice-left-shape.png' %}" alt="" class="service-left-image-2">
                         <div class="promo-video">
-                            <a href="https://youtu.be/7rmQIzbgpoA" class="venobox overlay-box" data-vbtype="video"><span
-                                    class="fa fa-play"><i class="ripple"></i></span></a>
+                            <iframe 
+                              src="https://www.youtube.com/embed/7rmQIzbgpoA" 
+                              referrerpolicy="strict-origin-when-cross-origin" 
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen>
+                            </iframe>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-7">
                     <div class="service-right-content">
                         <h2 class="title">Our Stories</h2>
-                        <p class="para-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo templ
-                            incididunt ut labore et dolore magna aliqua.</p>
-                        <p class="para-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididun ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitat ullamco labori nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            repreh in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+                        <p class="para-1">
+
+Every great learning journey starts with the right tools.
+
+Our story began with a simple idea: to make high-quality and practical school supplies easy to find for students, parents, teachers, and anyone who loves learning and creativity. We believe that the right stationery can make studying more organized, comfortable, and enjoyable.
+
+Our store offers a wide range of school essentials, including school bags, colorful pens, highlighters, notebooks, sketchbooks, pen holders, water bottles, and other everyday supplies. We carefully choose products that combine quality, functionality, and attractive designs.
+
+We understand that school life is about more than books and lessons. It is also about creativity, new ideas, personal growth, and discovering new interests. That is why we want our products to be more than simple school supplies. We want them to become useful companions throughout every student's learning journey.
+
+Whether you are preparing for a new school year, organizing your study desk, looking for creative stationery, or simply need reliable everyday supplies, we are here to help you find what you need.
+
+Our goal is simple: **to make every student's learning journey a little more organized, creative, and enjoyable.**
+
+Thank you for being part of our story!
+</p>
+                        <p class="para-2"> </p>
                         <div class="mision-vision">
                             <div class="mision">
                                 <span class="heading">Our Mission</span>
-                                <p class="mision-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elitkill sed
-                                    do eius tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-                                    quislkl .</p>
+                                <p class="mision-desc">Our mission is to provide students, parents, teachers, and learning enthusiasts with high-quality, practical, and affordable school supplies. We aim to make everyday learning easier and more enjoyable by offering products that combine functionality, comfort, and style.
+
+From school bags and notebooks to colorful pens, highlighters, sketchbooks, and other essentials, we want to help our customers find everything they need in one convenient place. We are committed to providing a simple and enjoyable shopping experience while supporting students throughout their educational journey.</p>
                             </div>
                             <div class="vision">
-                                <span class="heading">Our Mission</span>
-                                <p class="vision-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elitkill sed
-                                    do eius tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-                                    quislkl .</p>
+                                <span class="heading">Our Vision</span>
+                                <p class="vision-desc">Our vision is to become a trusted destination for school and stationery products, inspiring students to learn, create, and achieve their goals.
+
+We hope to build a community where education and creativity go hand in hand. By continuously expanding our product range and focusing on quality and customer satisfaction, we want to make school preparation and everyday learning more organized, creative, and enjoyable for everyone.</p>
                             </div>
                         </div>
                     </div>
@@ -77,8 +108,7 @@
                 <div class="col-12">
                     <div class="section-title text-center">
                         <h2 class="title line-height-1">Team Member</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod incididunt ut labore
-                            et dolore magna aliqua. </p>
+                        <p>Our creative team focuses on making our store fresh, attractive, and inspiring. They work on product presentation, content, and ideas that help customers discover new and useful school supplies. </p>
                     </div>
                 </div>
             </div>
@@ -108,7 +138,7 @@
                     <!-- Single Team -->
                     <div class="team-wrapper">
                         <div class="team-image overflow-hidden">
-                            <img src="{% static  'images/team/2.jpg' %}" alt="">
+                            <img src="{% static  'images/team/2.png' %}" alt="">
                         </div>
                         <div class="team-inner">
                             <div class="team-content">
@@ -129,7 +159,7 @@
                     <!-- Single Team -->
                     <div class="team-wrapper">
                         <div class="team-image overflow-hidden">
-                            <img src="{% static  'images/team/3.jpg' %}" alt="">
+                            <img src="{% static  'images/team/3.png' %}" alt="">
                         </div>
                         <div class="team-inner">
                             <div class="team-content">
@@ -150,7 +180,7 @@
                     <!-- Single Team -->
                     <div class="team-wrapper">
                         <div class="team-image overflow-hidden">
-                            <img src="{% static  'images/team/4.jpg' %}" alt="">
+                            <img src="{% static  'images/team/3new.png' %}" alt="">
                         </div>
                         <div class="team-inner">
                             <div class="team-content">
@@ -179,8 +209,7 @@
                 <div class="col-12">
                     <div class="section-title text-center">
                         <h2 class="title line-height-1">What Client Says</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod incididunt ut labore
-                            et dolore magna aliqua. </p>
+                        <p> What clients say about our services </p>
                     </div>
                 </div>
             </div>
@@ -194,8 +223,7 @@
                                 <img src="{% static  'images/testimonial-image/1.png' %}" alt="">
                             </div>
                             <div class="testi-content">
-                                <p>Lorem ipsum dolor sit ametju consectadipisicing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                                <p>I ordered a school bag and several stationery items for my daughter. Everything arrived in excellent condition, and the quality was even better than expected. The products are practical, colorful, and perfect for school.
                                 </p>
                             </div>
                             <div class="testi-author text-center">
@@ -220,29 +248,6 @@
     <!-- Testimonial Area End -->
 
     <!-- Brand area start -->
-    <div class="brand-area pt-100px pb-100px">
-        <div class="container">
-            <div class="brand-slider swiper-container">
-                <div class="swiper-wrapper align-items-center">
-                    <div class="swiper-slide brand-slider-item text-center">
-                        <a href="#"><img class=" img-fluid" src="{% static  'images/logo/logo.png' %}" alt="" /></a>
-                    </div>
-                    <div class="swiper-slide brand-slider-item text-center">
-                        <a href="#"><img class=" img-fluid" src="{% static  'images/logo/logo.png' %}" alt="" /></a>
-                    </div>
-                    <div class="swiper-slide brand-slider-item text-center">
-                        <a href="#"><img class=" img-fluid" src="{% static  'images/logo/logo.png' %}" alt="" /></a>
-                    </div>
-                    <div class="swiper-slide brand-slider-item text-center">
-                        <a href="#"><img class=" img-fluid" src="{% static  'images/logo/logo.png' %}" alt="" /></a>
-                    </div>
-                    <div class="swiper-slide brand-slider-item text-center">
-                        <a href="#"><img class=" img-fluid" src="{% static  'images/logo/logo.png' %}" alt="" /></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Brand area end -->
+   
      
 {% endblock %}

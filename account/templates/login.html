@@ -75,11 +75,9 @@
                                         <!-- Point action directly to your auth URL -->
                                         <form action="{% url 'auth' %}" method="post">
                                             {% csrf_token %}
-                                            
-                                            <div class="mb-3">
-                                                {{ register_form.username }}
-                                                {{ register_form.username.errors }}
-                                            </div>
+                                            {% include "includes/messages.html" %}
+                                            {{register_form.username}}
+                                            {{register_form.username.errors}}
 
                                             <div class="mb-3">
                                                 {{ register_form.email }}

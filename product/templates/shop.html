@@ -6,6 +6,68 @@
 {% endblock title %}
 
 {% block css %}
+<style>
+    .sidebar-widget-category .collapse {
+        max-height: none !important;
+        opacity: 1 !important;
+        overflow: visible !important;
+        display: none;
+    }
+    .sidebar-widget-category .collapse.show {
+        display: block;
+    }
+    .sidebar-widget-category li > .collapse.collapsing {
+        display: block;
+    }
+
+    .shop-sidebar-wrap .sidebar-widget.tag {
+        width: calc(100% + 300px);
+    }
+
+    .shop-sidebar-wrap .sidebar-widget.tag .sidebar-title {
+        width: calc(100% + 300px);
+    }
+
+    .shop-sidebar-wrap .sidebar-widget-tag li a {
+        white-space: nowrap;
+    }
+
+    .shop-sidebar-wrap .sidebar-widget-tag {
+        padding: 0 20px 16px;
+        position: relative;
+        z-index: 20
+    }
+
+    .shop-sidebar-wrap .sidebar-widget-tag ul {
+        display: grid;
+        grid-template-rows: repeat(2, auto);
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        align-content: start;
+        justify-content: start;
+        column-gap: 10px;
+        row-gap: 10px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .shop-sidebar-wrap .sidebar-widget-tag li {
+        margin: 4px 0;
+    }
+
+    .shop-sidebar-wrap .sidebar-widget-tag li a {
+        float: none;
+        margin-left: 0;
+    }
+
+    @media only screen and (max-width:1199px) {
+
+        .shop-sidebar-wrap .sidebar-widget.tag,
+        .shop-sidebar-wrap .sidebar-widget.tag .sidebar-title {
+            width: 100%;
+        }
+    }
+</style>
     <style>
         .category-tree, .subcategory-list {
             list-style: none;
@@ -112,10 +174,10 @@
                                         </div>
                                         <div class="shop-select show">
                                             <select name="show" onchange="this.form.submit()" class="shop-sort">
-                                                <option value="10" {% if request.GET.show == '10' or not request.GET.show %}selected{% endif %}>10</option>
+                                                <option value="3" {% if request.GET.show == '3' or not request.GET.show %}selected{% endif %}>3</option>
+                                                <option value="5" {% if request.GET.show == '5' %}selected{% endif %}>5</option>
+                                                <option value="10" {% if request.GET.show == '10' %}selected{% endif %}>10</option>
                                                 <option value="15" {% if request.GET.show == '15' %}selected{% endif %}>15</option>
-                                                <option value="20" {% if request.GET.show == '20' %}selected{% endif %}>20</option>
-                                                <option value="25" {% if request.GET.show == '25' %}selected{% endif %}>25</option>
                                             </select>
                                         </div>
                                     </div>

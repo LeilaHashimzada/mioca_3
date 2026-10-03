@@ -26,7 +26,6 @@
 {% endblock %}
 
 
-
 {% block main %}
 
     <!-- breadcrumb-area start -->
@@ -46,6 +45,11 @@
         </div>
     </div>
     <!-- breadcrumb-area end -->
+     <p style="text-align: center; font-size: 24px;">
+        {% if user.is_authenticated  %}
+        <b>Welcome, {{ user.username }}!</b>
+        {% endif %}
+    </p>
 
     
     <!-- account area start -->
@@ -56,16 +60,14 @@
                     <!-- Nav tabs -->
                     <div class="dashboard_tab_button" data-aos="fade-up" data-aos-delay="0">
                         <ul role="tablist" class="nav flex-column dashboard-list">
-                            <li><a href="#dashboard" data-bs-toggle="tab" class="nav-link active">Dashboard</a></li>
                             <li> <a href="#orders" data-bs-toggle="tab" class="nav-link">Orders</a></li>
-                            <li><a href="#address" data-bs-toggle="tab" class="nav-link">Addresses</a></li>
-                            <li><a href="#account-details" data-bs-toggle="tab" class="nav-link">Account details</a></li>
+                            <li><a href="#account-details" data-bs-toggle="tab" class="nav-link">Account details</a>
+                            </li>
                             <li>
-                                <form action="{% url 'auth' %}" method="post" class="w-100">
+                                <form action="{% url 'auth' %}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit" name="logout" class="nav-link logout-btn">
-                                        Logout
-                                    </button>
+                                    
+                                    <button type="submit" name="logout" class="nav-link logout-btn">Logout</button>
                                 </form>
                             </li>
                         </ul>
@@ -75,10 +77,6 @@
                     <!-- Tab panes -->
                     <div class="tab-content dashboard_content" data-aos="fade-up" data-aos-delay="200">
                         <div class="tab-pane fade show active" id="dashboard">
-                            <h4>Dashboard </h4>
-                            <p>From your account dashboard. you can easily check & view your <a href="#">recent
-                                    orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a
-                                    href="#">Edit your password and account details.</a></p>
                         </div>
                         <div class="tab-pane fade" id="orders">
                             <h4>Orders</h4>

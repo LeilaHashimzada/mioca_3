@@ -6,6 +6,7 @@ from django.views.generic import ListView,DetailView
 from django.views.generic.edit import FormMixin
 from product.forms import ReviewForm
 from django.contrib.auth.decorators import login_required
+ 
 
 import json
 from django.http import JsonResponse
@@ -61,6 +62,21 @@ class CompareView(DetailView):
 class ListViewProduct(ListView):
     template_name = 'shop.html'
     model = Product
+    
+
+    def get_category_ids(self, category_id):
+        ids = [category_id]
+        pending = [category_id]
+        while pending:
+            parent_id = pending.pop()
+            child_ids = ProductCategory.objects.filter(
+                parent_id=parent_id
+            ).values_list('id', flat=True)
+            for child_id in child_ids:
+                if child_id not in ids:
+                    ids.append(child_id)
+                    pending.append(child_id)
+        return ids
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -81,8 +97,8 @@ class ListViewProduct(ListView):
         
         sorting = self.request.GET.get('sort_by', 'default')
         
-        if category_id:
-            queryset = queryset.filter(category=category_id)
+        if category_id and category_id.isdigit():
+            queryset = queryset.filter(category__in=self.get_category_ids(int(category_id)))
         if tag_id and tag_id.isdigit():
             queryset = queryset.filter(tag=tag_id)
         if color_id:
